@@ -52,6 +52,7 @@ enum class eColliderLayer
 	Player_Projecttile,
 	Monster,
 	Monster_Projecttile,
+	Rock,
 	Ground,
 
 	//UI

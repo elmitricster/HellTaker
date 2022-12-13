@@ -4,6 +4,8 @@
 
 namespace ya
 {
+	class Monster;
+	class Rock;
 	class PlayScene : public Scene
 	{
 	public:
@@ -20,6 +22,8 @@ namespace ya
 	private:
 		Player* mPlayer;
 		Vector2 mPlayerPos;
+		Monster* mons[3];
+		Rock* rocks[4];
 	};
 
 }

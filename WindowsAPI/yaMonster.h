@@ -18,11 +18,13 @@ namespace ya
 		virtual void OnCollisionStay(Collider* other) override;
 		virtual void OnCollisionExit(Collider* other) override;
 
+		void WalkComplete();
+
 		//void Dead();
 
 	private:
+		Animator* mAnimator;
 		Image* mImage;
-		float mTime;
 	};
 
 }

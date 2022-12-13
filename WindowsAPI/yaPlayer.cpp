@@ -20,40 +20,47 @@ namespace ya
 		, mHp(100)
 	{
 		SetName(L"Player");
-		SetPos({ 500.0f, 200.0f });
+		SetPos({ 950.0f, 220.0f });
 		SetScale({ 1.0f, 1.0f });
 
 		
 
 		if (mImage == nullptr)
 		{
-			mImage = Resources::Load<Image>(L"Player", L"..\\Resources\\Image\\link.bmp");
+			mImage = Resources::Load<Image>(L"Player", L"..\\Resources\\Image\\Hero.bmp");
 		}
 		
 		mAnimator = new Animator();
-		mAnimator->CreateAnimations(L"..\\Resources\\Animations\\Player\\Idle", L"PlaneIdle");
+		//mAnimator->CreateAnimations(L"..\\Resources\\Animations\\Player\\Idle", L"HeroIdle");
 
 
-		/*mAnimator->CreateAnimation(L"Idle", mImage
-			, Vector2(0.0f, 0.0f), Vector2(120.0f, 130.0f)
-			, Vector2(5.0f, -20.0f), 3, 0.1f);
+		mAnimator->CreateAnimation(L"Idle", mImage
+			, Vector2(0.0f, 0.0f), Vector2(100.0f, 130.0f)
+			, Vector2(5.0f, -20.0f), 12, 0.12f);
 
-		mAnimator->CreateAnimation(L"MoveDown", mImage
-			, Vector2(0.0f, 520.0f), Vector2(120.0f, 130.0f)
-			, Vector2(5.0f, -20.0f), 10, 0.1f);
-		mAnimator->CreateAnimation(L"MoveLeft", mImage
-			, Vector2(0.0f, 650.0f), Vector2(120.0f, 130.0f)
-			, Vector2(5.0f, -20.0f), 10, 0.1f);
-		mAnimator->CreateAnimation(L"MoveUp", mImage
-			, Vector2(0.0f, 780.0f), Vector2(120.0f, 130.0f)
-			, Vector2(5.0f, -20.0f), 10, 0.1f);
-		mAnimator->CreateAnimation(L"MoveRight", mImage
-			, Vector2(0.0f, 910.0f), Vector2(120.0f, 130.0f)
-			, Vector2(5.0f, -20.0f), 10, 0.1f);*/
+		mAnimator->CreateAnimation(L"Move", mImage
+			, Vector2(0.0f, 440.0f), Vector2(100.0f, 130.0f)
+			, Vector2(5.0f, -20.0f), 6, 0.12f);
 
-		mAnimator->Play(L"PlaneIdle", true);
-		//mAnimator->FindEvents(L"MoveRight")->mCompleteEvent = std::bind(&Player::WalkComplete, this);
-		//mAnimator->GetCompleteEvent(L"MoveRight") = std::bind(&Player::WalkComplete, this);
+		mAnimator->CreateAnimation(L"Attack", mImage
+			, Vector2(0.0f, 220.0f), Vector2(100.0f, 130.0f)
+			, Vector2(5.0f, -20.0f), 13, 0.12f);
+
+		mAnimator->CreateAnimation(L"Win", mImage
+			, Vector2(0.0f, 440.0f), Vector2(100.0f, 130.0f)
+			, Vector2(5.0f, -20.0f), 25, 0.12f);
+
+
+		mAnimator->Play(L"Idle", true);
+
+		mAnimator->FindEvents(L"Move")->mCompleteEvent = std::bind(&Player::WalkComplete, this);
+		mAnimator->GetCompleteEvent(L"Move") = std::bind(&Player::WalkComplete, this);
+
+		mAnimator->FindEvents(L"Attack")->mCompleteEvent = std::bind(&Player::WalkComplete, this);
+		mAnimator->GetCompleteEvent(L"Attack") = std::bind(&Player::WalkComplete, this);
+
+		mAnimator->FindEvents(L"Win")->mCompleteEvent = std::bind(&Player::WalkComplete, this);
+		mAnimator->GetCompleteEvent(L"Win") = std::bind(&Player::WalkComplete, this);
 
 		//mAnimator->Play(L"MoveRight", true);
 		//mAnimator->mCompleteEvent = std::bind(&Player::WalkComplete, this);
@@ -75,8 +82,6 @@ namespace ya
 		//AddComponent(rigidBody);
 
 		//AddComponent<Rigidbody>();
-
-
 		
 		mCoff = 0.1f;
 		mMisiileDir = Vector2::One;
@@ -98,22 +103,22 @@ namespace ya
 
 		if (KEY_DOWN(eKeyCode::W))
 		{
-			//mAnimator->Play(L"MoveUp", true);
+			mAnimator->Play(L"Move", true);
 		}
 		if (KEY_DOWN(eKeyCode::S))
 		{
-			//mAnimator->Play(L"MoveDown", true);
+			mAnimator->Play(L"Move", true);
 		}
 		if (KEY_DOWN(eKeyCode::A))
 		{
 			//Vector2 pos = GetPos();
 			//dest = Vector2(pos.x + 200.0f, pos.y);
 
-			//mAnimator->Play(L"MoveLeft", true);
+			mAnimator->Play(L"Move", true);
 		}
 		if (KEY_DOWN(eKeyCode::D))
 		{
-			//mAnimator->Play(L"MoveRight", true);
+			mAnimator->Play(L"Move", true);
 		}
 
 		Vector2 pos = GetPos();
@@ -137,8 +142,7 @@ namespace ya
 			//GetComponent<Rigidbody>()->AddForce(Vector2(-200.0f, 0.0f));
 
 			//Vector2 pos = GetPos();
-			
-
+		
 			//pos = math::lerp(pos, dest, 0.003f);
 			//SetPos(pos);
 			//pos = math::lerp(pos, )
@@ -163,8 +167,17 @@ namespace ya
 			UIManager::Pop(eUIType::OPTION);
 		}*/
 
+		if (KEY_DOWN(eKeyCode::SPACE))
+		{
+			mAnimator->Play(L"Attack", true);
+		}
 
-		
+		if (KEY_DOWN(eKeyCode::ENTER))
+		{
+			mAnimator->Play(L"Win", true);
+		}
+
+
 	}
 
 	void Player::Render(HDC hdc)
@@ -199,7 +212,7 @@ namespace ya
 
 	void Player::WalkComplete()
 	{
-		Missile* missile = new Missile();
+		/*Missile* missile = new Missile();
 
 		Scene* playScene = SceneManager::GetPlayScene();
 		playScene->AddGameObject(missile, eColliderLayer::Player_Projecttile);
@@ -208,6 +221,9 @@ namespace ya
 		Vector2 playerScale = GetScale() / 2.0f;
 		Vector2 missileScale = missile->GetScale();
 
-		missile->SetPos((playerPos + playerScale) - (missileScale / 2.0f));
+		missile->SetPos((playerPos + playerScale) - (missileScale / 2.0f));*/
+
+		mAnimator->Play(L"Idle", true);
+
 	}
 }

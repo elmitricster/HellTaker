@@ -27,6 +27,15 @@ namespace ya
 
 		mPlayer = ya::object::Instantiate<Player>(eColliderLayer::Player);
 		bg->mPlayer = mPlayer;
+
+		mons[0] = ya::object::Instantiate<Monster>(Vector2{ 870, 380 }, eColliderLayer::Monster);
+		mons[1] = ya::object::Instantiate<Monster>(Vector2{ 790, 300 }, eColliderLayer::Monster);
+		mons[2] = ya::object::Instantiate<Monster>(Vector2{ 710, 380 }, eColliderLayer::Monster);
+
+		rocks[0] = ya::object::Instantiate<Rock>(Vector2{ 870, 550 }, eColliderLayer::Rock);
+		rocks[1] = ya::object::Instantiate<Rock>(Vector2{ 630, 550 }, eColliderLayer::Rock);
+		rocks[2] = ya::object::Instantiate<Rock>(Vector2{ 630, 640 }, eColliderLayer::Rock);
+		rocks[3] = ya::object::Instantiate<Rock>(Vector2{ 790, 640 }, eColliderLayer::Rock);
 	}
 
 	void PlayScene::Tick()
@@ -50,10 +59,10 @@ namespace ya
 		int strLen = wcsnlen_s(szFloat, 50);
 		TextOut(hdc, 10, 30, szFloat, strLen);
 
-		wchar_t szFloat2[50] = {};
-		swprintf_s(szFloat2, 50, L"ÇöÀç ÁÂÇ¥ : ", mPlayerPos.x);
-		int strLen2 = wcsnlen_s(szFloat2, 50);
-		TextOut(hdc, 10, 60, szFloat2, strLen2);
+		std::wstring pos = L"x : " + std::to_wstring(mPlayerPos.x)
+			+ L" y : " + std::to_wstring(mPlayerPos.y);
+
+		TextOut(hdc, 10, 60, pos.c_str(), pos.length());
 
 	}
 

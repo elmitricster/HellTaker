@@ -196,6 +196,9 @@
     <ClInclude Include="yaSound.h">
       <Filter>Engine\Resource</Filter>
     </ClInclude>
+    <ClInclude Include="yaRock.h">
+      <Filter>Engine\GameObject\Game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WindowsAPI.rc">
@@ -327,6 +330,9 @@
     </ClCompile>
     <ClCompile Include="yaSound.cpp">
       <Filter>Engine\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="yaRock.cpp">
+      <Filter>Engine\GameObject\Game</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
