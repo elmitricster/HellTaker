@@ -3,6 +3,7 @@
 #include "yaInput.h"
 #include "yaSceneManager.h"
 #include "yaBgImageObject.h"
+#include "yaRock.h"
 #include "yaObject.h"
 
 namespace ya
@@ -28,14 +29,19 @@ namespace ya
 		mPlayer = ya::object::Instantiate<Player>(eColliderLayer::Player);
 		bg->mPlayer = mPlayer;
 
-		mons[0] = ya::object::Instantiate<Monster>(Vector2{ 870, 380 }, eColliderLayer::Monster);
-		mons[1] = ya::object::Instantiate<Monster>(Vector2{ 790, 300 }, eColliderLayer::Monster);
-		mons[2] = ya::object::Instantiate<Monster>(Vector2{ 710, 380 }, eColliderLayer::Monster);
+		mons[0] = ya::object::Instantiate<Monster>(Vector2{ 880, 400 }, eColliderLayer::Monster);
+		mons[1] = ya::object::Instantiate<Monster>(Vector2{ 800, 320 }, eColliderLayer::Monster);
+		mons[2] = ya::object::Instantiate<Monster>(Vector2{ 720, 400 }, eColliderLayer::Monster);
 
-		rocks[0] = ya::object::Instantiate<Rock>(Vector2{ 870, 550 }, eColliderLayer::Rock);
-		rocks[1] = ya::object::Instantiate<Rock>(Vector2{ 630, 550 }, eColliderLayer::Rock);
-		rocks[2] = ya::object::Instantiate<Rock>(Vector2{ 630, 640 }, eColliderLayer::Rock);
-		rocks[3] = ya::object::Instantiate<Rock>(Vector2{ 790, 640 }, eColliderLayer::Rock);
+		rocks[0] = ya::object::Instantiate<Rock>(Vector2{ 880, 560 }, eColliderLayer::Rock);
+		rocks[1] = ya::object::Instantiate<Rock>(Vector2{ 640, 560 }, eColliderLayer::Rock);
+		rocks[2] = ya::object::Instantiate<Rock>(Vector2{ 640, 640 }, eColliderLayer::Rock);
+		rocks[3] = ya::object::Instantiate<Rock>(Vector2{ 800, 640 }, eColliderLayer::Rock);
+
+		mNPC = ya::object::Instantiate<NPC>(eColliderLayer::NPC);
+
+		flameBases[0] = ya::object::Instantiate<FlameBase>(Vector2{ 556, 260 }, eColliderLayer::FlameBase);
+		flameBases[1] = ya::object::Instantiate<FlameBase>(Vector2{ 1056, 465 }, eColliderLayer::FlameBase);
 	}
 
 	void PlayScene::Tick()

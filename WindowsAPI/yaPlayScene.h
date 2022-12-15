@@ -6,6 +6,8 @@ namespace ya
 {
 	class Monster;
 	class Rock;
+	class NPC;
+	class FlameBase;
 	class PlayScene : public Scene
 	{
 	public:
@@ -24,6 +26,8 @@ namespace ya
 		Vector2 mPlayerPos;
 		Monster* mons[3];
 		Rock* rocks[4];
+		NPC* mNPC;
+		FlameBase* flameBases[4];
 	};
 
 }

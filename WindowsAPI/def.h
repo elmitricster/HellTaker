@@ -52,7 +52,9 @@ enum class eColliderLayer
 	Player_Projecttile,
 	Monster,
 	Monster_Projecttile,
+	NPC,
 	Rock,
+	FlameBase,
 	Ground,
 
 	//UI

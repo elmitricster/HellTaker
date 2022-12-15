@@ -15,7 +15,7 @@ namespace ya
 	{
 		SetName(L"Monster");
 		SetPos({ 870, 380 });
-		SetScale({ 1.0f, 1.0f });
+		SetScale({ 0.8333f, 0.8333f });
 
 		if (mImage == nullptr)
 		{
@@ -46,7 +46,7 @@ namespace ya
 	{
 		SetName(L"Monster");
 		SetPos(position);
-		SetScale({ 1.0f, 1.0f });
+		SetScale({ 0.8333f, 0.8333f });
 
 		if (mImage == nullptr)
 		{

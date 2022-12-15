@@ -20,10 +20,9 @@ namespace ya
 		, mHp(100)
 	{
 		SetName(L"Player");
-		SetPos({ 950.0f, 220.0f });
-		SetScale({ 1.0f, 1.0f });
+		SetPos({ 960.0f, 240.0f });
+		SetScale({ 0.8333f, 0.8333f });
 
-		
 
 		if (mImage == nullptr)
 		{

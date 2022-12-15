@@ -199,6 +199,12 @@
     <ClInclude Include="yaRock.h">
       <Filter>Engine\GameObject\Game</Filter>
     </ClInclude>
+    <ClInclude Include="yaNPC.h">
+      <Filter>Engine\GameObject\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="yaFlameBase.h">
+      <Filter>Engine\GameObject\Game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WindowsAPI.rc">
@@ -332,6 +338,12 @@
       <Filter>Engine\Resource</Filter>
     </ClCompile>
     <ClCompile Include="yaRock.cpp">
+      <Filter>Engine\GameObject\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="yaNPC.cpp">
+      <Filter>Engine\GameObject\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="yaFlameBase.cpp">
       <Filter>Engine\GameObject\Game</Filter>
     </ClCompile>
   </ItemGroup>

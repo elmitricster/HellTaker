@@ -20,13 +20,12 @@ namespace ya
 	{
 		SetName(L"Rock");
 		SetPos(position);
-		SetScale({ 1.0f, 1.0f });
+		SetScale({ 0.8333f, 0.8333f });
 
 		if (mImage == nullptr)
 		{
-			mImage = Resources::Load<Image>(L"Rock", L"..\\Resources\\Image\\Rock.bmp");
+			mImage = Resources::Load<Image>(L"Rock", L"..\\Resources\\Image\\Rock01.bmp");
 		}
-
 		
 		//AddComponent(new Collider());
 	}
@@ -62,7 +61,6 @@ namespace ya
 		
 		GameObject::Render(hdc);
 	}
-
 
 
 }
