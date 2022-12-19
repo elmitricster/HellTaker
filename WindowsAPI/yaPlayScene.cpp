@@ -35,8 +35,11 @@ namespace ya
 
 		rocks[0] = ya::object::Instantiate<Rock>(Vector2{ 880, 560 }, eColliderLayer::Rock);
 		rocks[1] = ya::object::Instantiate<Rock>(Vector2{ 640, 560 }, eColliderLayer::Rock);
+		rocks[1]->SetImage(L"rock02", L"Rock02.bmp");
 		rocks[2] = ya::object::Instantiate<Rock>(Vector2{ 640, 640 }, eColliderLayer::Rock);
+		rocks[2]->SetImage(L"rock03", L"Rock03.bmp");
 		rocks[3] = ya::object::Instantiate<Rock>(Vector2{ 800, 640 }, eColliderLayer::Rock);
+		rocks[3]->SetImage(L"rock04", L"Rock04.bmp");
 
 		mNPC = ya::object::Instantiate<NPC>(eColliderLayer::NPC);
 

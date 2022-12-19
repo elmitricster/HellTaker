@@ -17,7 +17,6 @@ namespace ya
 {
 	Player::Player()
 		: mSpeed(1.0f)
-		, mHp(100)
 	{
 		SetName(L"Player");
 		SetPos({ 960.0f, 240.0f });
@@ -35,19 +34,19 @@ namespace ya
 
 		mAnimator->CreateAnimation(L"Idle", mImage
 			, Vector2(0.0f, 0.0f), Vector2(100.0f, 130.0f)
-			, Vector2(5.0f, -20.0f), 12, 0.12f);
+			, Vector2(10.0f, -20.0f), 12, 0.12f);
 
 		mAnimator->CreateAnimation(L"Move", mImage
 			, Vector2(0.0f, 440.0f), Vector2(100.0f, 130.0f)
-			, Vector2(5.0f, -20.0f), 6, 0.12f);
+			, Vector2(10.0f, -20.0f), 6, 0.12f);
 
 		mAnimator->CreateAnimation(L"Attack", mImage
 			, Vector2(0.0f, 220.0f), Vector2(100.0f, 130.0f)
-			, Vector2(5.0f, -20.0f), 13, 0.12f);
+			, Vector2(10.0f, -20.0f), 13, 0.12f);
 
 		mAnimator->CreateAnimation(L"Win", mImage
 			, Vector2(0.0f, 440.0f), Vector2(100.0f, 130.0f)
-			, Vector2(5.0f, -20.0f), 25, 0.12f);
+			, Vector2(10.0f, -20.0f), 25, 0.12f);
 
 
 		mAnimator->Play(L"Idle", true);
@@ -61,31 +60,27 @@ namespace ya
 		mAnimator->FindEvents(L"Win")->mCompleteEvent = std::bind(&Player::WalkComplete, this);
 		mAnimator->GetCompleteEvent(L"Win") = std::bind(&Player::WalkComplete, this);
 
-		//mAnimator->Play(L"MoveRight", true);
-		//mAnimator->mCompleteEvent = std::bind(&Player::WalkComplete, this);
 		AddComponent(mAnimator);
 
-		Collider* coliider = new Collider();
-		AddComponent(coliider);
+		/*mColliderLeft = new Collider();
+		mColliderRight = new Collider();
+		mColliderUp = new Collider();
+		mColliderDown = new Collider();
 
-		coliider->SetOffset(Vector2(0.0f, 50.0f));
-		coliider->SetScale(Vector2(10.0f, 10.0f));
+		AddComponent(mColliderLeft);
+		AddComponent(mColliderRight);
+		AddComponent(mColliderUp);
+		AddComponent(mColliderDown);
 
-		//Collider* coliider2 = new Collider();
-		//AddComponent(coliider2);
+		mColliderLeft->SetScale(Vector2(50.0f, 50.0f));
+		mColliderRight->SetScale(Vector2(50.0f, 50.0f));
+		mColliderUp->SetScale(Vector2(50.0f, 50.0f));
+		mColliderDown->SetScale(Vector2(50.0f, 50.0f));
 
-		//coliider2->SetOffset(Vector2(60.0f, 0.0f));
-		//coliider2->SetScale(Vector2(10.0f, 10.0f));
-
-		//Rigidbody* rigidBody = new Rigidbody();
-		//AddComponent(rigidBody);
-
-		//AddComponent<Rigidbody>();
-		
-		mCoff = 0.1f;
-		mMisiileDir = Vector2::One;
-
-		//float x = math::lerp(1.0f, 3.0f, 0.5f);
+		mColliderLeft->SetOffset(Vector2(-50.0f, 0.0f));
+		mColliderRight->SetOffset(Vector2(50.0f, 0.0f));
+		mColliderUp->SetOffset(Vector2(0.0f, -50.0f));
+		mColliderDown->SetOffset(Vector2(0.0f, 50.0f));*/
 	}
 
 	Player::~Player()
@@ -97,74 +92,50 @@ namespace ya
 	{
 		GameObject::Tick();
 		
-		top.Tick();
-		bottom.Tick();
-
-		if (KEY_DOWN(eKeyCode::W))
+		switch (mState)
 		{
-			mAnimator->Play(L"Move", true);
-		}
-		if (KEY_DOWN(eKeyCode::S))
-		{
-			mAnimator->Play(L"Move", true);
-		}
-		if (KEY_DOWN(eKeyCode::A))
-		{
-			//Vector2 pos = GetPos();
-			//dest = Vector2(pos.x + 200.0f, pos.y);
-
-			mAnimator->Play(L"Move", true);
-		}
-		if (KEY_DOWN(eKeyCode::D))
-		{
-			mAnimator->Play(L"Move", true);
+		case ya::Player::State::IDLE:
+			Idle();
+			break;
+		case ya::Player::State::MOVE:
+			Move(mDir);
+			break;
+		case ya::Player::State::ATTACK:
+			Attack();
+			break;
+		case ya::Player::State::VICTORY:
+			Victory();
+			break;
+		case ya::Player::State::DEAD:
+			Dead();
+			break;
+		default:
+			break;
 		}
 
-		Vector2 pos = GetPos();
+		//Vector2 pos = GetPos();
 
-		if (KEY_PREESE(eKeyCode::W))
-		{
-			pos.y -= 120.0f * Time::DeltaTime();
-			//missile->mDir.y = -1.0f;
+		//if (KEY_PREESE(eKeyCode::W))
+		//{
+		//	pos.y -= 120.0f * Time::DeltaTime();
+		//}
+		//if (KEY_PREESE(eKeyCode::S))
+		//{
+		//	pos.y += 120.0f * Time::DeltaTime();
+		//}
+		//if (KEY_PREESE(eKeyCode::A))
+		//{
+		//	pos.x -= 120.0f * Time::DeltaTime();
 
-			//GetComponent<Rigidbody>()->AddForce(Vector2(0.0f, -200.0f));
-		}
-		if (KEY_PREESE(eKeyCode::S))
-		{
-			pos.y += 120.0f * Time::DeltaTime();
-			//GetComponent<Rigidbody>()->AddForce(Vector2(0.0f, 200.0f));
-		}
-		if (KEY_PREESE(eKeyCode::A))
-		{
-			pos.x -= 120.0f * Time::DeltaTime();
-			//missile->mDir.x = 1.0f;
-			//GetComponent<Rigidbody>()->AddForce(Vector2(-200.0f, 0.0f));
-
-			//Vector2 pos = GetPos();
-		
-			//pos = math::lerp(pos, dest, 0.003f);
-			//SetPos(pos);
-			//pos = math::lerp(pos, )
-
-		}
-		if (KEY_PREESE(eKeyCode::D))
-		{
-			pos.x += 120.0f * Time::DeltaTime();
-			//GetComponent<Rigidbody>()->AddForce(Vector2(200.0f, 0.0f));
-		}
-		SetPos(pos);
-
-		/*if (KEY_DOWN(eKeyCode::SPACE))
-		{
-			Rigidbody* rigidbody = GetComponent<Rigidbody>();
-			Vector2 velocity = rigidbody->GetVelocity();
-			velocity.y = -500.0f;
-			rigidbody->SetVelocity(velocity);
-
-			rigidbody->SetGround(false);
-
-			UIManager::Pop(eUIType::OPTION);
-		}*/
+		//	//Vector2 pos = GetPos();
+		//	//pos = math::lerp(pos, dest, 0.003f);
+		//	//SetPos(pos);
+		//}
+		//if (KEY_PREESE(eKeyCode::D))
+		//{
+		//	pos.x += 120.0f * Time::DeltaTime();
+		//}
+		//SetPos(pos);
 
 		if (KEY_DOWN(eKeyCode::SPACE))
 		{
@@ -176,21 +147,10 @@ namespace ya
 			mAnimator->Play(L"Win", true);
 		}
 
-
 	}
 
 	void Player::Render(HDC hdc)
 	{
-		//HBRUSH blueBrush = CreateSolidBrush(RGB(153, 204, 255));
-		//Brush brush(hdc, blueBrush);
-
-		//HPEN redPen = CreatePen(PS_SOLID, 2, RGB(255, 0, 0));
-		//Pen pen(hdc, redPen);
-
-
-
-
-
 		GameObject::Render(hdc);
 	}
 
@@ -211,18 +171,104 @@ namespace ya
 
 	void Player::WalkComplete()
 	{
-		/*Missile* missile = new Missile();
-
-		Scene* playScene = SceneManager::GetPlayScene();
-		playScene->AddGameObject(missile, eColliderLayer::Player_Projecttile);
-
-		Vector2 playerPos = GetPos();
-		Vector2 playerScale = GetScale() / 2.0f;
-		Vector2 missileScale = missile->GetScale();
-
-		missile->SetPos((playerPos + playerScale) - (missileScale / 2.0f));*/
-
 		mAnimator->Play(L"Idle", true);
+	}
+	void Player::Idle()
+	{
+		if (KEY_DOWN(eKeyCode::W))
+		{
+			mAnimator->Play(L"Move", true);
+			mDir = Direction::UP;
+			mDest = GetPos();
+			mDest.y -= 80.0f;
+			mState = State::MOVE;
+		}
+		if (KEY_DOWN(eKeyCode::S))
+		{
+			mAnimator->Play(L"Move", true);
+			mDir = Direction::DOWN;
+			mDest = GetPos();
+			mDest.y += 80.0f;
+			mState = State::MOVE;
+		}
+		if (KEY_DOWN(eKeyCode::A))
+		{
+			mAnimator->Play(L"Move", true);
+			mDir = Direction::LEFT;
+			mDest = GetPos();
+			mDest.x -= 80.0f;
+			mState = State::MOVE;
+		}
+		if (KEY_DOWN(eKeyCode::D))
+		{
+			mAnimator->Play(L"Move", true);
+			mDir = Direction::RIGHT;
+			mDest = GetPos();
+			mDest.x += 80.0f;
+			mState = State::MOVE;
+		}
+	}
+	void Player::Attack()
+	{
+	}
+	void Player::Move(Direction dir)
+	{
+		Vector2 pos = GetPos();
+		pos = math::lerp(pos, mDest, 0.05f);
+		SetPos(pos);
 
+		switch (mDir)
+		{
+		case ya::Player::Direction::LEFT:
+		{
+			if (abs(pos.x - mDest.x) < 1.0f)
+			{
+				SetPos(mDest);
+				mState = State::IDLE;
+				mAnimator->Play(L"Idle", true);
+			}
+		}
+			break;
+		case ya::Player::Direction::RIGHT:
+		{
+			if (abs(pos.x - mDest.x) < 1.0f)
+			{
+				SetPos(mDest);
+				mState = State::IDLE;
+				mAnimator->Play(L"Idle", true);
+			}
+		}
+			break;
+		case ya::Player::Direction::UP:
+		{
+			if (abs(pos.y - mDest.y) < 1.0f)
+			{
+				SetPos(mDest);
+				mState = State::IDLE;
+				mAnimator->Play(L"Idle", true);
+			}
+		}
+			break;
+		case ya::Player::Direction::DOWN:
+		{
+			if (abs(pos.y - mDest.y) < 1.0f)
+			{
+				SetPos(mDest);
+				mState = State::IDLE;
+				mAnimator->Play(L"Idle", true);
+			}
+		}
+			break;
+		case ya::Player::Direction::NONE:
+			break;
+		default:
+			break;
+		}
+	}
+	void Player::Victory()
+	{
+	}
+	void Player::Dead()
+	{
 	}
 }

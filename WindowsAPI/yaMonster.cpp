@@ -38,7 +38,7 @@ namespace ya
 		mAnimator->GetCompleteEvent(L"Damaged") = std::bind(&Monster::WalkComplete, this);
 
 		//AddComponent(new Animator());
-		AddComponent(new Collider());
+		//AddComponent(new Collider());
 		AddComponent(mAnimator);
 	}
 
@@ -57,11 +57,11 @@ namespace ya
 
 		mAnimator->CreateAnimation(L"Idle", mImage
 			, Vector2(0.0f, 0.0f), Vector2(100.0f, 130.0f)
-			, Vector2(5.0f, -20.0f), 12, 0.12f);
+			, Vector2(10.0f, -20.0f), 12, 0.12f);
 
 		mAnimator->CreateAnimation(L"Damaged", mImage
 			, Vector2(0.0f, 220.0f), Vector2(100.0f, 130.0f)
-			, Vector2(5.0f, -20.0f), 6, 0.12f);
+			, Vector2(10.0f, -20.0f), 6, 0.12f);
 
 		mAnimator->Play(L"Idle", true);
 

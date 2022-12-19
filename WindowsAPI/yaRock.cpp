@@ -26,8 +26,10 @@ namespace ya
 		{
 			mImage = Resources::Load<Image>(L"Rock", L"..\\Resources\\Image\\Rock01.bmp");
 		}
-		
+
 		//AddComponent(new Collider());
+		
+
 	}
 
 	Rock::~Rock()
@@ -62,5 +64,12 @@ namespace ya
 		GameObject::Render(hdc);
 	}
 
+	void Rock::SetImage(const std::wstring& key, const std::wstring& fileName)
+	{
+		std::wstring path = L"..\\Resources\\Image\\";
+		path += fileName;
+
+		mImage = Resources::Load<Image>(key, path);
+	}
 
 }

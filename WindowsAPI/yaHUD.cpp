@@ -45,10 +45,6 @@ namespace ya
 
 		if (mTarget == nullptr)
 			return;
-		
-		Player* playerObj = dynamic_cast<Player*>(mTarget);
-		int hp = playerObj->GetHp();
-		float xRatio = (hp / 100.0f);
 
 		BLENDFUNCTION func = {};
 		func.BlendOp = AC_SRC_OVER;
@@ -57,7 +53,7 @@ namespace ya
 		func.SourceConstantAlpha = 255;
 
 		AlphaBlend(hdc, (int)mScreenPos.x, (int)mScreenPos.y
-			, mImage->GetWidth() * xRatio, mImage->GetHeight()
+			, mImage->GetWidth(), mImage->GetHeight()
 			, mImage->GetDC(), 0, 0, mImage->GetWidth() , mImage->GetHeight(), func);
 	}
 

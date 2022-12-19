@@ -12,8 +12,7 @@ namespace ya
 		, mScale(Vector2::One)
 		, mCollisionCount(0)
 	{
-		mScale = Vector2(100.0f, 100.0f);
-
+		mScale = Vector2(83.33f, 83.33f);
 	}
 
 	Collider::~Collider()

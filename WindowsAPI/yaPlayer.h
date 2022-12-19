@@ -8,6 +8,24 @@ namespace ya
 	class Player : public GameObject
 	{
 	public:
+		enum class State
+		{
+			IDLE,
+			MOVE,
+			ATTACK,
+			VICTORY,
+			DEAD,
+		};
+		enum class Direction
+		{
+			LEFT,
+			RIGHT,
+			UP,
+			DOWN,
+			NONE,
+		};
+
+
 		Player();
 		~Player();
 
@@ -20,21 +38,27 @@ namespace ya
 
 		void WalkComplete();
 
-		void SetHp(int hp) { mHp = hp; }
-		int GetHp() { return mHp; }
+		void Idle();
+		void Attack();
+		void Move(Direction dir);
+		void Victory();
+		void Dead();
 
 	private:
+		State mState;
+		Direction mDir;
+		Vector2 mDest;
+
 		float mCoff;
 		float mSpeed;
 		Image* mImage;
 		Animator* mAnimator;
-		Vector2 mMisiileDir;
 
-		int mHp;
-		Vector2 dest;
+		Collider* mColliderLeft;
+		Collider* mColliderRight;
+		Collider* mColliderUp;
+		Collider* mColliderDown;
 
-		GameObject top;
-		GameObject bottom;
 	};
 
 }

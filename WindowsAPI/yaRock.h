@@ -14,6 +14,7 @@ namespace ya
 		virtual void Tick() override;
 		virtual void Render(HDC hdc) override;
 
+		void SetImage(const std::wstring& key, const std::wstring& fileName);
 
 	private:
 		Animator* mAnimator;
