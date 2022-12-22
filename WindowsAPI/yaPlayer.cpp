@@ -221,7 +221,7 @@ namespace ya
 		{
 		case ya::Player::Direction::LEFT:
 		{
-			if (abs(pos.x - mDest.x) < 1.0f)
+			if (abs(pos.x - mDest.x) < 3.0f)
 			{
 				SetPos(mDest);
 				mState = State::IDLE;
@@ -231,7 +231,7 @@ namespace ya
 			break;
 		case ya::Player::Direction::RIGHT:
 		{
-			if (abs(pos.x - mDest.x) < 1.0f)
+			if (abs(pos.x - mDest.x) < 3.0f)
 			{
 				SetPos(mDest);
 				mState = State::IDLE;
@@ -241,7 +241,7 @@ namespace ya
 			break;
 		case ya::Player::Direction::UP:
 		{
-			if (abs(pos.y - mDest.y) < 1.0f)
+			if (abs(pos.y - mDest.y) < 3.0f)
 			{
 				SetPos(mDest);
 				mState = State::IDLE;
@@ -251,7 +251,7 @@ namespace ya
 			break;
 		case ya::Player::Direction::DOWN:
 		{
-			if (abs(pos.y - mDest.y) < 1.0f)
+			if (abs(pos.y - mDest.y) < 3.0f)
 			{
 				SetPos(mDest);
 				mState = State::IDLE;
