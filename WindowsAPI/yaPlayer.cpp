@@ -62,25 +62,10 @@ namespace ya
 
 		AddComponent(mAnimator);
 
-		/*mColliderLeft = new Collider();
-		mColliderRight = new Collider();
-		mColliderUp = new Collider();
-		mColliderDown = new Collider();
+		mCollider = new Collider();
+		AddComponent(mCollider);
+		mCollider->SetScale(Vector2(50.0f, 50.0f));
 
-		AddComponent(mColliderLeft);
-		AddComponent(mColliderRight);
-		AddComponent(mColliderUp);
-		AddComponent(mColliderDown);
-
-		mColliderLeft->SetScale(Vector2(50.0f, 50.0f));
-		mColliderRight->SetScale(Vector2(50.0f, 50.0f));
-		mColliderUp->SetScale(Vector2(50.0f, 50.0f));
-		mColliderDown->SetScale(Vector2(50.0f, 50.0f));
-
-		mColliderLeft->SetOffset(Vector2(-50.0f, 0.0f));
-		mColliderRight->SetOffset(Vector2(50.0f, 0.0f));
-		mColliderUp->SetOffset(Vector2(0.0f, -50.0f));
-		mColliderDown->SetOffset(Vector2(0.0f, 50.0f));*/
 	}
 
 	Player::~Player()
@@ -109,8 +94,6 @@ namespace ya
 		case ya::Player::State::DEAD:
 			Dead();
 			break;
-		default:
-			break;
 		}
 
 		//Vector2 pos = GetPos();
@@ -137,16 +120,6 @@ namespace ya
 		//}
 		//SetPos(pos);
 
-		if (KEY_DOWN(eKeyCode::SPACE))
-		{
-			mAnimator->Play(L"Attack", true);
-		}
-
-		if (KEY_DOWN(eKeyCode::ENTER))
-		{
-			mAnimator->Play(L"Win", true);
-		}
-
 	}
 
 	void Player::Render(HDC hdc)
@@ -155,28 +128,33 @@ namespace ya
 	}
 
 	void Player::OnCollisionEnter(Collider* other)
-	{
-		int a = 0;
+	{	
+		mAnimator->Play(L"Attack", true);
+		mState = State::IDLE;
 	}
 
 	void Player::OnCollisionStay(Collider* other)
 	{
-
+		
 	}
 
 	void Player::OnCollisionExit(Collider* other)
 	{
-
+		mCollider->SetOffset(Vector2(0.0f, 0.0f));
+		mState = State::IDLE;
 	}
 
 	void Player::WalkComplete()
 	{
 		mAnimator->Play(L"Idle", true);
 	}
+
 	void Player::Idle()
 	{
 		if (KEY_DOWN(eKeyCode::W))
-		{
+		{	
+			mCollider->SetOffset(Vector2(0.0f, -30.0f));
+
 			mAnimator->Play(L"Move", true);
 			mDir = Direction::UP;
 			mDest = GetPos();
@@ -185,6 +163,8 @@ namespace ya
 		}
 		if (KEY_DOWN(eKeyCode::S))
 		{
+			mCollider->SetOffset(Vector2(0.0f, 30.0f));
+
 			mAnimator->Play(L"Move", true);
 			mDir = Direction::DOWN;
 			mDest = GetPos();
@@ -192,7 +172,9 @@ namespace ya
 			mState = State::MOVE;
 		}
 		if (KEY_DOWN(eKeyCode::A))
-		{
+		{	
+			mCollider->SetOffset(Vector2(-30.0f, 0.0f));
+
 			mAnimator->Play(L"Move", true);
 			mDir = Direction::LEFT;
 			mDest = GetPos();
@@ -201,6 +183,8 @@ namespace ya
 		}
 		if (KEY_DOWN(eKeyCode::D))
 		{
+			mCollider->SetOffset(Vector2(30.0f, 0.0f));
+
 			mAnimator->Play(L"Move", true);
 			mDir = Direction::RIGHT;
 			mDest = GetPos();
@@ -208,9 +192,7 @@ namespace ya
 			mState = State::MOVE;
 		}
 	}
-	void Player::Attack()
-	{
-	}
+
 	void Player::Move(Direction dir)
 	{
 		Vector2 pos = GetPos();
@@ -219,55 +201,79 @@ namespace ya
 
 		switch (mDir)
 		{
-		case ya::Player::Direction::LEFT:
+		case Direction::LEFT:
 		{
 			if (abs(pos.x - mDest.x) < 3.0f)
 			{
 				SetPos(mDest);
 				mState = State::IDLE;
 				mAnimator->Play(L"Idle", true);
+				mCollider->SetOffset(Vector2(0.0f, 0.0f));
 			}
 		}
 			break;
-		case ya::Player::Direction::RIGHT:
+		case Direction::RIGHT:
 		{
 			if (abs(pos.x - mDest.x) < 3.0f)
 			{
 				SetPos(mDest);
 				mState = State::IDLE;
 				mAnimator->Play(L"Idle", true);
+				mCollider->SetOffset(Vector2(0.0f, 0.0f));
 			}
 		}
 			break;
-		case ya::Player::Direction::UP:
+		case Direction::UP:
 		{
 			if (abs(pos.y - mDest.y) < 3.0f)
 			{
 				SetPos(mDest);
 				mState = State::IDLE;
 				mAnimator->Play(L"Idle", true);
+				mCollider->SetOffset(Vector2(0.0f, 0.0f));
 			}
 		}
 			break;
-		case ya::Player::Direction::DOWN:
+		case Direction::DOWN:
 		{
 			if (abs(pos.y - mDest.y) < 3.0f)
 			{
 				SetPos(mDest);
 				mState = State::IDLE;
 				mAnimator->Play(L"Idle", true);
+				mCollider->SetOffset(Vector2(0.0f, 0.0f));
 			}
 		}
 			break;
-		case ya::Player::Direction::NONE:
-			break;
-		default:
+		case Direction::NONE:
 			break;
 		}
 	}
+
+	void Player::Attack()
+	{	
+		/*if (KEY_DOWN(eKeyCode::W))
+		{	
+			mAnimator->Play(L"Attack", true);
+		}
+		if (KEY_DOWN(eKeyCode::A))
+		{
+			mAnimator->Play(L"Attack", true);
+		}
+		if (KEY_DOWN(eKeyCode::S))
+		{
+			mAnimator->Play(L"Attack", true);
+		}
+		if (KEY_DOWN(eKeyCode::D))
+		{
+			mAnimator->Play(L"Attack", true);
+		}*/
+	}
+
 	void Player::Victory()
 	{
 	}
+
 	void Player::Dead()
 	{
 	}

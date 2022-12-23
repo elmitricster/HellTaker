@@ -15,13 +15,6 @@ namespace ya
 			ATTACK,
 			VICTORY,
 			DEAD,
-		};
-		enum class Direction
-		{
-			LEFT,
-			RIGHT,
-			UP,
-			DOWN,
 			NONE,
 		};
 
@@ -44,6 +37,8 @@ namespace ya
 		void Victory();
 		void Dead();
 
+		Direction GetDir() { return mDir; }
+
 	private:
 		State mState;
 		Direction mDir;
@@ -54,11 +49,8 @@ namespace ya
 		Image* mImage;
 		Animator* mAnimator;
 
-		Collider* mColliderLeft;
-		Collider* mColliderRight;
-		Collider* mColliderUp;
-		Collider* mColliderDown;
-
+		Collider* mCollider;
+		Collider* mCollider2;
 	};
 
 }

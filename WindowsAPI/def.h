@@ -94,6 +94,14 @@ union ColliderID
 };
 typedef ColliderID TileID;
 
+enum class Direction
+{
+	LEFT,
+	RIGHT,
+	UP,
+	DOWN,
+	NONE,
+};
 
 
 #define TILE_SIZE 32

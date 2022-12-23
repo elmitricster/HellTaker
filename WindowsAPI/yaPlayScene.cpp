@@ -5,6 +5,7 @@
 #include "yaBgImageObject.h"
 #include "yaRock.h"
 #include "yaObject.h"
+#include "yaCollisionManager.h"
 
 namespace ya
 {
@@ -77,7 +78,7 @@ namespace ya
 
 	void PlayScene::Enter()
 	{
-
+		CollisionManager::SetLayer(eColliderLayer::Monster, eColliderLayer::Player, true);
 	}
 
 	void PlayScene::Exit()

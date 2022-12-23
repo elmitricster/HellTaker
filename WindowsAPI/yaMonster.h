@@ -7,7 +7,15 @@ namespace ya
 	class Monster : public GameObject
 	{
 	public:
-		Monster();
+		enum class State
+		{
+			IDLE,
+			MOVE,
+			DAMAGED,
+			DEAD,
+		};
+
+		//Monster();
 		Monster(Vector2 position);
 		~Monster();
 
@@ -20,9 +28,17 @@ namespace ya
 
 		void WalkComplete();
 
-		//void Dead();
+		void Idle();
+		void Move(Direction dir);
+		void Damaged();
+		void Dead();
 
 	private:
+		State mState;
+		Direction mDir;
+		Vector2 mDest;
+		Collider* mCollider;
+
 		Animator* mAnimator;
 		Image* mImage;
 	};
