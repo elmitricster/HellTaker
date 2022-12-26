@@ -4,9 +4,6 @@
 
 namespace ya
 {
-
-
-
     Tile::Tile(Vector2 pos)
         : GameObject(pos)
         , mAtlas(nullptr)

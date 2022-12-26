@@ -21,16 +21,17 @@ namespace ya
 		virtual void OnCollisionStay(Collider* other);
 		virtual void OnCollisionExit(Collider* other);
 
-		void SetPos(Vector2 pos) 
-		{ 
-			mPos = pos; 
-		}
+		void SetPos(Vector2 pos) { mPos = pos; }
 		Vector2 GetPos() { return mPos; }
 		void SetScale(Vector2 scale) { mScale = scale; }
 		Vector2 GetScale () { return mScale; }
+		void SetObjType(eGameObjectType obj) { mGameObjType = obj; }
+		eGameObjectType GetObjType() { return mGameObjType; }
+
 		void Death() { mDead = true; }
 		bool IsDeath() { return mDead; }
-		void SetDeathTime(float time);
+		//void SetDeathTime(float time);
+		//void DeathLoop();
 
 		void AddComponent(Component* component);
 		template <typename T>
@@ -57,7 +58,6 @@ namespace ya
 			return nullptr;
 		}
 
-		void DeathLoop();
 
 	private:
 		std::vector<Component*> mComponents;
@@ -67,5 +67,6 @@ namespace ya
 		bool mIsCulling;
 		float mDeathTime;
 		bool mDeathTimeOn;
+		eGameObjectType mGameObjType;
 	};
 }

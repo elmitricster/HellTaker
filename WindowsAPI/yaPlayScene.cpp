@@ -6,6 +6,7 @@
 #include "yaRock.h"
 #include "yaObject.h"
 #include "yaCollisionManager.h"
+#include "yaTileMap.h"
 
 namespace ya
 {
@@ -28,7 +29,7 @@ namespace ya
 		AddGameObject(bg, eColliderLayer::BackGround);
 
 		mPlayer = ya::object::Instantiate<Player>(eColliderLayer::Player);
-		bg->mPlayer = mPlayer;
+		//bg->mPlayer = mPlayer;
 
 		mons[0] = ya::object::Instantiate<Monster>(Vector2{ 880, 400 }, eColliderLayer::Monster);
 		mons[1] = ya::object::Instantiate<Monster>(Vector2{ 800, 320 }, eColliderLayer::Monster);
@@ -46,6 +47,18 @@ namespace ya
 
 		flameBases[0] = ya::object::Instantiate<FlameBase>(Vector2{ 556, 260 }, eColliderLayer::FlameBase);
 		flameBases[1] = ya::object::Instantiate<FlameBase>(Vector2{ 1056, 465 }, eColliderLayer::FlameBase);
+
+		TileMap* tile = new TileMap();
+		tile->SetTileMap(mPlayer, 1, 7);
+		tile->SetTileMap(dynamic_cast<GameObject*>(mons[0]), 2, 4);
+		tile->SetTileMap(dynamic_cast<GameObject*>(mons[1]), 3, 3);
+		tile->SetTileMap(dynamic_cast<GameObject*>(mons[2]), 3, 5);
+		tile->SetTileMap(dynamic_cast<GameObject*>(rocks[0]), 5, 2);
+		tile->SetTileMap(dynamic_cast<GameObject*>(rocks[1]), 5, 5);
+		tile->SetTileMap(dynamic_cast<GameObject*>(rocks[2]), 6, 2);
+		tile->SetTileMap(dynamic_cast<GameObject*>(rocks[3]), 6, 4);
+		tile->SetTileMap(dynamic_cast<GameObject*>(mNPC), 6, 7);
+
 	}
 
 	void PlayScene::Tick()

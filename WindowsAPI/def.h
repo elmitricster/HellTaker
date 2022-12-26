@@ -25,7 +25,7 @@ enum class ePenColor
 enum class eBrushColor
 {
 	Transparent, //≈ı∏Ì
-	Blakc,
+	Black,
 	Gray, //167 0 67
 	White,
 	End,
@@ -96,11 +96,27 @@ typedef ColliderID TileID;
 
 enum class Direction
 {
+	NONE,
 	LEFT,
 	RIGHT,
 	UP,
 	DOWN,
-	NONE,
+};
+
+enum class eGameObjectType
+{	
+	BackGround,
+	Player,
+	Monster,
+	Rock,
+	Key,
+	Box,
+	NPC,
+	Static_Spike,
+	Dynamic_Spike,
+	FlameBase,
+	Tile,
+	None,
 };
 
 

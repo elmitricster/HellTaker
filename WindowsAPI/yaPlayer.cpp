@@ -12,6 +12,7 @@
 #include "yaBackPack.h"
 #include "yaRigidbody.h"
 #include "yaUIManager.h"
+#include "yaTileMap.h"
 
 namespace ya
 {
@@ -21,7 +22,7 @@ namespace ya
 		SetName(L"Player");
 		SetPos({ 960.0f, 240.0f });
 		SetScale({ 0.8333f, 0.8333f });
-
+		
 
 		if (mImage == nullptr)
 		{
@@ -62,9 +63,9 @@ namespace ya
 
 		AddComponent(mAnimator);
 
-		mCollider = new Collider();
-		AddComponent(mCollider);
-		mCollider->SetScale(Vector2(50.0f, 50.0f));
+		//mCollider = new Collider();
+		//AddComponent(mCollider);
+		//mCollider->SetScale(Vector2(50.0f, 50.0f));
 
 	}
 
@@ -140,8 +141,8 @@ namespace ya
 
 	void Player::OnCollisionExit(Collider* other)
 	{
-		mCollider->SetOffset(Vector2(0.0f, 0.0f));
-		mState = State::IDLE;
+		//mCollider->SetOffset(Vector2(0.0f, 0.0f));
+		//mState = State::IDLE;
 	}
 
 	void Player::WalkComplete()
@@ -153,17 +154,20 @@ namespace ya
 	{
 		if (KEY_DOWN(eKeyCode::W))
 		{	
-			mCollider->SetOffset(Vector2(0.0f, -30.0f));
-
+			//mCollider->SetOffset(Vector2(0.0f, -30.0f));
 			mAnimator->Play(L"Move", true);
 			mDir = Direction::UP;
 			mDest = GetPos();
 			mDest.y -= 80.0f;
 			mState = State::MOVE;
+
+			/*TileMap* tile = new TileMap();
+			tile->ChangeTileMap(this, -1, 0);*/
+			
 		}
 		if (KEY_DOWN(eKeyCode::S))
 		{
-			mCollider->SetOffset(Vector2(0.0f, 30.0f));
+			//mCollider->SetOffset(Vector2(0.0f, 30.0f));
 
 			mAnimator->Play(L"Move", true);
 			mDir = Direction::DOWN;
@@ -173,7 +177,7 @@ namespace ya
 		}
 		if (KEY_DOWN(eKeyCode::A))
 		{	
-			mCollider->SetOffset(Vector2(-30.0f, 0.0f));
+			//mCollider->SetOffset(Vector2(-30.0f, 0.0f));
 
 			mAnimator->Play(L"Move", true);
 			mDir = Direction::LEFT;
@@ -183,7 +187,7 @@ namespace ya
 		}
 		if (KEY_DOWN(eKeyCode::D))
 		{
-			mCollider->SetOffset(Vector2(30.0f, 0.0f));
+			//mCollider->SetOffset(Vector2(30.0f, 0.0f));
 
 			mAnimator->Play(L"Move", true);
 			mDir = Direction::RIGHT;
@@ -208,7 +212,7 @@ namespace ya
 				SetPos(mDest);
 				mState = State::IDLE;
 				mAnimator->Play(L"Idle", true);
-				mCollider->SetOffset(Vector2(0.0f, 0.0f));
+				//mCollider->SetOffset(Vector2(0.0f, 0.0f));
 			}
 		}
 			break;
@@ -219,7 +223,7 @@ namespace ya
 				SetPos(mDest);
 				mState = State::IDLE;
 				mAnimator->Play(L"Idle", true);
-				mCollider->SetOffset(Vector2(0.0f, 0.0f));
+				//mCollider->SetOffset(Vector2(0.0f, 0.0f));
 			}
 		}
 			break;
@@ -230,7 +234,7 @@ namespace ya
 				SetPos(mDest);
 				mState = State::IDLE;
 				mAnimator->Play(L"Idle", true);
-				mCollider->SetOffset(Vector2(0.0f, 0.0f));
+				//mCollider->SetOffset(Vector2(0.0f, 0.0f));
 			}
 		}
 			break;
@@ -241,7 +245,7 @@ namespace ya
 				SetPos(mDest);
 				mState = State::IDLE;
 				mAnimator->Play(L"Idle", true);
-				mCollider->SetOffset(Vector2(0.0f, 0.0f));
+				//mCollider->SetOffset(Vector2(0.0f, 0.0f));
 			}
 		}
 			break;
@@ -252,22 +256,8 @@ namespace ya
 
 	void Player::Attack()
 	{	
-		/*if (KEY_DOWN(eKeyCode::W))
-		{	
-			mAnimator->Play(L"Attack", true);
-		}
-		if (KEY_DOWN(eKeyCode::A))
-		{
-			mAnimator->Play(L"Attack", true);
-		}
-		if (KEY_DOWN(eKeyCode::S))
-		{
-			mAnimator->Play(L"Attack", true);
-		}
-		if (KEY_DOWN(eKeyCode::D))
-		{
-			mAnimator->Play(L"Attack", true);
-		}*/
+		mAnimator->Play(L"Attack", true);
+		//mState = State::IDLE;
 	}
 
 	void Player::Victory()

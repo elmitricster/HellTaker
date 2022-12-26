@@ -43,7 +43,7 @@ namespace ya
 
 	void GameObject::Tick()
 	{
-		DeathLoop();
+		//DeathLoop();
 		
 		// 모든 컴포넌트를 Tick 호출
 		for ( Component* component : mComponents)
@@ -76,14 +76,14 @@ namespace ya
 	{
 	}
 
-	void GameObject::SetDeathTime(float time)
+	/*void GameObject::SetDeathTime(float time)
 	{ 
 		if (mDeathTime <= 0.0f)
 		{
 			mDeathTime = time;
 			mDeathTimeOn = true;
 		}
-	}
+	}*/
 
 	void GameObject::AddComponent(Component* component)
 	{
@@ -94,7 +94,7 @@ namespace ya
 		component->mOwner = this;
 	}
 
-	void GameObject::DeathLoop()
+	/*void GameObject::DeathLoop()
 	{
 		if (mDeathTimeOn == true)
 		{
@@ -102,5 +102,7 @@ namespace ya
 			if (mDeathTime <= 0.0f)
 				Death();
 		}
-	}
+	}*/
+
+
 }

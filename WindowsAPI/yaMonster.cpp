@@ -71,9 +71,9 @@ namespace ya
 		mAnimator->FindEvents(L"Damaged")->mCompleteEvent = std::bind(&Monster::WalkComplete, this);
 		mAnimator->GetCompleteEvent(L"Damaged") = std::bind(&Monster::WalkComplete, this);
 
-		mCollider = new Collider();
-		AddComponent(mCollider);
-		mCollider->SetScale(Vector2(50.0f, 50.0f));
+		//mCollider = new Collider();
+		//AddComponent(mCollider);
+		//mCollider->SetScale(Vector2(50.0f, 50.0f));
 
 	}
 

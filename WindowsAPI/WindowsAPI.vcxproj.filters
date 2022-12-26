@@ -205,6 +205,9 @@
     <ClInclude Include="yaFlameBase.h">
       <Filter>Engine\GameObject\Game</Filter>
     </ClInclude>
+    <ClInclude Include="yaTileMap.h">
+      <Filter>Engine\GameObject\Tile</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WindowsAPI.rc">
@@ -345,6 +348,9 @@
     </ClCompile>
     <ClCompile Include="yaFlameBase.cpp">
       <Filter>Engine\GameObject\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="yaTileMap.cpp">
+      <Filter>Engine\GameObject\Tile</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

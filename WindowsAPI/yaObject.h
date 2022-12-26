@@ -17,8 +17,17 @@ namespace ya
 			return gameObject;
 		}
 
+		/*static __forceinline T* Instantiate(eGameObjectType type)
+		{
+			T* gameObject = new T();
+			Scene* scene = SceneManager::GetPlayScene();
+			scene->AddGameObject(dynamic_cast<GameObject*>(gameObject), type);
+
+			return gameObject;
+		}*/
+
 		template <typename T>
-		static __forceinline T* Instantiate(Vector2 position ,eColliderLayer type)
+		static __forceinline T* Instantiate(Vector2 position , eColliderLayer type)
 		{
 			T* gameObject = new T(position);
 			Scene* scene = SceneManager::GetPlayScene();
@@ -33,10 +42,10 @@ namespace ya
 		}
 
 		// 시간 측정해서 지우기
-		static __forceinline void Destroy(GameObject* gameObj, float deathTime)
+		/*static __forceinline void Destroy(GameObject* gameObj, float deathTime)
 		{
 			gameObj->SetDeathTime(deathTime);
-		}
+		}*/
 
 		static __forceinline void Release()
 		{

@@ -78,14 +78,5 @@ namespace ya
 
 		GameObject::Render(hdc);
 	}
-	void NPC::OnCollisionEnter(Collider* other)
-	{
-	}
-	void NPC::OnCollisionStay(Collider* other)
-	{
-	}
-	void NPC::OnCollisionExit(Collider* other)
-	{
-	}
 
 }
