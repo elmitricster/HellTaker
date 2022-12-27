@@ -9,6 +9,7 @@
 #include "yaCollider.h"
 #include "yaCamera.h"
 #include "yaPlayer.h"
+#include "yaTileMap.h"
 
 namespace ya
 {
@@ -44,7 +45,8 @@ namespace ya
 	//}
 
 	Monster::Monster(Vector2 position)
-	{
+	{	
+		mGameObjType = eGameObjectType::Monster;
 		SetName(L"Monster");
 		SetPos(position);
 		SetScale({ 0.8333f, 0.8333f });
@@ -95,16 +97,12 @@ namespace ya
 			Move(mDir);
 			break;
 		case ya::Monster::State::DAMAGED:
-			Damaged();
+			Damaged(mDir);
 			break;
 		case ya::Monster::State::DEAD:
 			Dead();
 			break;
 		}
-
-		/*Vector2 pos = GetPos();
-
-		SetPos(pos);*/
 	}
 
 	void Monster::Render(HDC hdc)
@@ -113,33 +111,6 @@ namespace ya
 	}
 	void Monster::OnCollisionEnter(Collider* other)
 	{
-		mAnimator->Play(L"Damaged", true);
-		
-		//mDir = other->GetOwner().
-
-		Player* player = dynamic_cast<Player*>(other->GetOwner());
-		mDir = player->GetDir();
-
-		mDest = GetPos();
-		
-		if (mDir == Direction::LEFT)
-		{
-			mDest.x -= 80.0f;
-		}
-		else if (mDir == Direction::RIGHT)
-		{
-			mDest.x += 80.0f;
-		}
-		else if (mDir == Direction::UP)
-		{
-			mDest.y -= 80.0f;
-		}
-		else if (mDir == Direction::DOWN)
-		{
-			mDest.y += 80.0f;
-		}
-		
-		mState = State::MOVE;
 		
 	}
 
@@ -163,7 +134,7 @@ namespace ya
 		
 	}
 
-	void Monster::Move(Direction dir)
+	void Monster::Move(Direction mDir)
 	{	
 		Vector2 pos = GetPos();
 		pos = math::lerp(pos, mDest, 0.05f);
@@ -172,51 +143,80 @@ namespace ya
 		switch (mDir)
 		{
 		case Direction::LEFT:
-		{
-			if (abs(pos.x - mDest.x) < 3.0f)
+		{	
+			if (abs(mDest.x- pos.x) < 5.0f)
 			{
 				SetPos(mDest);
+				mIndex.x--;
+				TileMap::MoveGameObject(mIndex, this);
 				mState = State::IDLE;
-				mAnimator->Play(L"Idle", true);
 			}
 		}
 		break;
 		case Direction::RIGHT:
-		{
-			if (abs(pos.x - mDest.x) < 3.0f)
+		{	
+			if (abs(pos.x - mDest.x) < 5.0f)
 			{
 				SetPos(mDest);
+				mIndex.x++;
+				TileMap::MoveGameObject(mIndex, this);
 				mState = State::IDLE;
-				mAnimator->Play(L"Idle", true);
 			}
 		}
 		break;
 		case Direction::UP:
-		{
-			if (abs(pos.y - mDest.y) < 3.0f)
+		{	
+			if (abs(pos.y - mDest.y) < 5.0f)
 			{
 				SetPos(mDest);
+				mIndex.y--;
+				TileMap::MoveGameObject(mIndex, this);
 				mState = State::IDLE;
-				mAnimator->Play(L"Idle", true);
 			}
 		}
 		break;
 		case Direction::DOWN:
-		{
-			if (abs(pos.y - mDest.y) < 3.0f)
+		{	
+			if (abs(pos.y - mDest.y) < 5.0f)
 			{
 				SetPos(mDest);
+				mIndex.y++;
+				TileMap::MoveGameObject(mIndex, this);
 				mState = State::IDLE;
-				mAnimator->Play(L"Idle", true);
 			}
 		}
 		break;
 		}
 	}
 
-	void Monster::Damaged()
+	void Monster::Damaged(Direction dir)
 	{
-		
+		mAnimator->Play(L"Damaged", true);
+
+		mDest = GetPos();
+
+		if (dir == Direction::LEFT)
+		{
+			mDir = Direction::LEFT;
+			mDest.x -= 80.0f;
+		}
+		else if (dir == Direction::RIGHT)
+		{
+			mDir = Direction::RIGHT;
+			mDest.x += 80.0f;
+		}
+		else if (dir == Direction::UP)
+		{
+			mDir = Direction::UP;
+			mDest.y -= 80.0f;
+		}
+		else if (dir == Direction::DOWN)
+		{
+			mDir = Direction::DOWN;
+			mDest.y += 80.0f;
+		}
+
+		mState = State::MOVE;
 	}
 
 	void Monster::Dead()

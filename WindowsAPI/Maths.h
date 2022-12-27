@@ -6,7 +6,13 @@
 #include <algorithm>
 
 namespace ya
-{
+{   
+    struct Index
+    {
+        int x;
+        int y;
+    };
+
     struct Vector2
     {
         static Vector2 Zero;

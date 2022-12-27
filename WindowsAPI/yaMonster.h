@@ -30,7 +30,7 @@ namespace ya
 
 		void Idle();
 		void Move(Direction dir);
-		void Damaged();
+		void Damaged(Direction dir);
 		void Dead();
 
 	private:

@@ -8,6 +8,7 @@
 #include "yaAnimator.h"
 #include "yaCollider.h"
 #include "yaCamera.h"
+#include "yaTileMap.h"
 
 namespace ya
 {
@@ -18,9 +19,11 @@ namespace ya
 
 	Rock::Rock(Vector2 position)
 	{
+		mGameObjType = eGameObjectType::Rock;
 		SetName(L"Rock");
 		SetPos(position);
 		SetScale({ 0.8333f, 0.8333f });
+		mDir = Direction::NONE;
 
 		if (mImage == nullptr)
 		{
@@ -28,8 +31,6 @@ namespace ya
 		}
 
 		//AddComponent(new Collider());
-		
-
 	}
 
 	Rock::~Rock()
@@ -40,6 +41,22 @@ namespace ya
 	void Rock::Tick()
 	{
 		GameObject::Tick();
+
+		switch (mState)
+		{
+		case ya::Rock::State::IDLE:
+			Idle();
+			break;
+		case ya::Rock::State::MOVE:
+			Move(mDir);
+			break;
+		case ya::Rock::State::DAMAGED:
+			Damaged(mDir);
+			break;
+		case ya::Rock::State::DEAD:
+			Dead();
+			break;
+		}
 	}
 
 	void Rock::Render(HDC hdc)
@@ -62,6 +79,98 @@ namespace ya
 			, RGB(255, 0, 255));
 		
 		GameObject::Render(hdc);
+	}
+
+	void Rock::Idle()
+	{
+		
+	}
+
+	void Rock::Move(Direction mDir)
+	{
+		Vector2 pos = GetPos();
+		pos = math::lerp(pos, mDest, 0.05f);
+		SetPos(pos);
+
+		switch (mDir)
+		{
+		case Direction::LEFT:
+		{
+			if (abs(mDest.x - pos.x) < 5.0f)
+			{
+				SetPos(mDest);
+				mIndex.x--;
+				TileMap::MoveGameObject(mIndex, this);
+				mState = State::IDLE;
+			}
+		}
+		break;
+		case Direction::RIGHT:
+		{
+			if (abs(pos.x - mDest.x) < 5.0f)
+			{
+				SetPos(mDest);
+				mIndex.x++;
+				TileMap::MoveGameObject(mIndex, this);
+				mState = State::IDLE;
+			}
+		}
+		break;
+		case Direction::UP:
+		{
+			if (abs(pos.y - mDest.y) < 5.0f)
+			{
+				SetPos(mDest);
+				mIndex.y--;
+				TileMap::MoveGameObject(mIndex, this);
+				mState = State::IDLE;
+			}
+		}
+		break;
+		case Direction::DOWN:
+		{
+			if (abs(pos.y - mDest.y) < 5.0f)
+			{
+				SetPos(mDest);
+				mIndex.y++;
+				TileMap::MoveGameObject(mIndex, this);
+				mState = State::IDLE;
+			}
+		}
+		break;
+		}
+	}
+
+	void Rock::Damaged(Direction dir)
+	{
+		mDest = GetPos();
+
+		if (dir == Direction::LEFT)
+		{
+			mDir = Direction::LEFT;
+			mDest.x -= 80.0f;
+		}
+		else if (dir == Direction::RIGHT)
+		{
+			mDir = Direction::RIGHT;
+			mDest.x += 80.0f;
+		}
+		else if (dir == Direction::UP)
+		{
+			mDir = Direction::UP;
+			mDest.y -= 80.0f;
+		}
+		else if (dir == Direction::DOWN)
+		{
+			mDir = Direction::DOWN;
+			mDest.y += 80.0f;
+		}
+
+		mState = State::MOVE;
+	}
+
+	void Rock::Dead()
+	{
 	}
 
 	void Rock::SetImage(const std::wstring& key, const std::wstring& fileName)

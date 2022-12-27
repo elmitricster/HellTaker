@@ -29,7 +29,8 @@ namespace ya
 		virtual void OnCollisionStay(Collider* other) override;
 		virtual void OnCollisionExit(Collider* other) override;
 
-		void WalkComplete();
+		void AttackComplete();
+		void SetState(State state) { mState = state; }
 
 		void Idle();
 		void Attack();

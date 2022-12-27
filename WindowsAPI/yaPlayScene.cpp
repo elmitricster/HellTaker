@@ -20,7 +20,7 @@ namespace ya
 
 	void PlayScene::Initialize()
 	{
-		//AddGameObject(new Player(), eColliderLayer::Player);
+		TileMap::Initiailize();
 
 		BgImageObject* bg = new BgImageObject();
 		bg->SetImage(L"chapterBG01", L"chapterBG0001.bmp");
@@ -29,11 +29,15 @@ namespace ya
 		AddGameObject(bg, eColliderLayer::BackGround);
 
 		mPlayer = ya::object::Instantiate<Player>(eColliderLayer::Player);
-		//bg->mPlayer = mPlayer;
+		TileMap::PushGameObject(Index(6, 1), mPlayer);
 
-		mons[0] = ya::object::Instantiate<Monster>(Vector2{ 880, 400 }, eColliderLayer::Monster);
-		mons[1] = ya::object::Instantiate<Monster>(Vector2{ 800, 320 }, eColliderLayer::Monster);
-		mons[2] = ya::object::Instantiate<Monster>(Vector2{ 720, 400 }, eColliderLayer::Monster);
+		mons[0] = ya::object::Instantiate<Monster>(Vector2{ 800, 320 }, eColliderLayer::Monster);
+		mons[1] = ya::object::Instantiate<Monster>(Vector2{ 720, 400 }, eColliderLayer::Monster);
+		mons[2] = ya::object::Instantiate<Monster>(Vector2{ 880, 400 }, eColliderLayer::Monster);
+		TileMap::PushGameObject(Index(4, 2), (GameObject*)mons[0]);
+		TileMap::PushGameObject(Index(3, 3), (GameObject*)mons[1]);
+		TileMap::PushGameObject(Index(5, 3), (GameObject*)mons[2]);
+
 
 		rocks[0] = ya::object::Instantiate<Rock>(Vector2{ 880, 560 }, eColliderLayer::Rock);
 		rocks[1] = ya::object::Instantiate<Rock>(Vector2{ 640, 560 }, eColliderLayer::Rock);
@@ -43,21 +47,19 @@ namespace ya
 		rocks[3] = ya::object::Instantiate<Rock>(Vector2{ 800, 640 }, eColliderLayer::Rock);
 		rocks[3]->SetImage(L"rock04", L"Rock04.bmp");
 
+		TileMap::PushGameObject(Index(2, 5), rocks[1]);
+		TileMap::PushGameObject(Index(5, 5), rocks[0]);
+		TileMap::PushGameObject(Index(2, 6), rocks[2]);
+		TileMap::PushGameObject(Index(4, 6), rocks[3]);
+
 		mNPC = ya::object::Instantiate<NPC>(eColliderLayer::NPC);
+		TileMap::PushGameObject(Index(6, 6), (GameObject*)mNPC);
 
 		flameBases[0] = ya::object::Instantiate<FlameBase>(Vector2{ 556, 260 }, eColliderLayer::FlameBase);
 		flameBases[1] = ya::object::Instantiate<FlameBase>(Vector2{ 1056, 465 }, eColliderLayer::FlameBase);
 
-		TileMap* tile = new TileMap();
-		tile->SetTileMap(mPlayer, 1, 7);
-		tile->SetTileMap(dynamic_cast<GameObject*>(mons[0]), 2, 4);
-		tile->SetTileMap(dynamic_cast<GameObject*>(mons[1]), 3, 3);
-		tile->SetTileMap(dynamic_cast<GameObject*>(mons[2]), 3, 5);
-		tile->SetTileMap(dynamic_cast<GameObject*>(rocks[0]), 5, 2);
-		tile->SetTileMap(dynamic_cast<GameObject*>(rocks[1]), 5, 5);
-		tile->SetTileMap(dynamic_cast<GameObject*>(rocks[2]), 6, 2);
-		tile->SetTileMap(dynamic_cast<GameObject*>(rocks[3]), 6, 4);
-		tile->SetTileMap(dynamic_cast<GameObject*>(mNPC), 6, 7);
+		
+		
 
 	}
 
@@ -71,6 +73,8 @@ namespace ya
 		{
 			SceneManager::ChangeScene(eSceneType::End);
 		}
+
+		TileMap::CheckSuccess(mPlayer);
 
 	}
 
@@ -91,7 +95,7 @@ namespace ya
 
 	void PlayScene::Enter()
 	{
-		CollisionManager::SetLayer(eColliderLayer::Monster, eColliderLayer::Player, true);
+		//CollisionManager::SetLayer(eColliderLayer::Monster, eColliderLayer::Player, true);
 	}
 
 	void PlayScene::Exit()

@@ -44,6 +44,13 @@ namespace ya
 
 				mPlayAnimaion->Reset();
 			}
+			else if (mPlayAnimaion->isComplete())
+			{
+				Animator::Events* events
+					= FindEvents(mPlayAnimaion->GetName());
+				if (events != nullptr)
+					events->mCompleteEvent();
+			}
 		}
 	}
 

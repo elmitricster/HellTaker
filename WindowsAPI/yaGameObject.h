@@ -27,6 +27,7 @@ namespace ya
 		Vector2 GetScale () { return mScale; }
 		void SetObjType(eGameObjectType obj) { mGameObjType = obj; }
 		eGameObjectType GetObjType() { return mGameObjType; }
+		void SetIndex(Index idx) { mIndex = idx; }
 
 		void Death() { mDead = true; }
 		bool IsDeath() { return mDead; }
@@ -43,7 +44,6 @@ namespace ya
 			return comp;
 		}
 
-
 		template <typename T>
 		__forceinline T* GetComponent()
 		{
@@ -58,6 +58,9 @@ namespace ya
 			return nullptr;
 		}
 
+	protected:
+		eGameObjectType mGameObjType;
+		Index mIndex;
 
 	private:
 		std::vector<Component*> mComponents;
@@ -67,6 +70,5 @@ namespace ya
 		bool mIsCulling;
 		float mDeathTime;
 		bool mDeathTimeOn;
-		eGameObjectType mGameObjType;
 	};
 }

@@ -13,17 +13,19 @@
 #include "yaRigidbody.h"
 #include "yaUIManager.h"
 #include "yaTileMap.h"
+#include "yaMonster.h"
+#include "yaRock.h"
 
 namespace ya
 {
 	Player::Player()
 		: mSpeed(1.0f)
 	{
+		mGameObjType = eGameObjectType::Player;
 		SetName(L"Player");
 		SetPos({ 960.0f, 240.0f });
 		SetScale({ 0.8333f, 0.8333f });
 		
-
 		if (mImage == nullptr)
 		{
 			mImage = Resources::Load<Image>(L"Player", L"..\\Resources\\Image\\Hero.bmp");
@@ -45,21 +47,21 @@ namespace ya
 			, Vector2(0.0f, 220.0f), Vector2(100.0f, 130.0f)
 			, Vector2(10.0f, -20.0f), 13, 0.12f);
 
-		mAnimator->CreateAnimation(L"Win", mImage
+		mAnimator->CreateAnimation(L"Success", mImage
 			, Vector2(0.0f, 440.0f), Vector2(100.0f, 130.0f)
 			, Vector2(10.0f, -20.0f), 25, 0.12f);
 
 
 		mAnimator->Play(L"Idle", true);
 
-		mAnimator->FindEvents(L"Move")->mCompleteEvent = std::bind(&Player::WalkComplete, this);
-		mAnimator->GetCompleteEvent(L"Move") = std::bind(&Player::WalkComplete, this);
+		//mAnimator->FindEvents(L"Move")->mCompleteEvent = std::bind(&Player::AttackComplete, this);
+		//mAnimator->GetCompleteEvent(L"Move") = std::bind(&Player::AttackComplete, this);
 
-		mAnimator->FindEvents(L"Attack")->mCompleteEvent = std::bind(&Player::WalkComplete, this);
-		mAnimator->GetCompleteEvent(L"Attack") = std::bind(&Player::WalkComplete, this);
+		mAnimator->FindEvents(L"Attack")->mCompleteEvent = std::bind(&Player::AttackComplete, this);
+		mAnimator->GetCompleteEvent(L"Attack") = std::bind(&Player::AttackComplete, this);
 
-		mAnimator->FindEvents(L"Win")->mCompleteEvent = std::bind(&Player::WalkComplete, this);
-		mAnimator->GetCompleteEvent(L"Win") = std::bind(&Player::WalkComplete, this);
+		//mAnimator->FindEvents(L"Win")->mCompleteEvent = std::bind(&Player::AttackComplete, this);
+		//mAnimator->GetCompleteEvent(L"Win") = std::bind(&Player::AttackComplete, this);
 
 		AddComponent(mAnimator);
 
@@ -96,31 +98,6 @@ namespace ya
 			Dead();
 			break;
 		}
-
-		//Vector2 pos = GetPos();
-
-		//if (KEY_PREESE(eKeyCode::W))
-		//{
-		//	pos.y -= 120.0f * Time::DeltaTime();
-		//}
-		//if (KEY_PREESE(eKeyCode::S))
-		//{
-		//	pos.y += 120.0f * Time::DeltaTime();
-		//}
-		//if (KEY_PREESE(eKeyCode::A))
-		//{
-		//	pos.x -= 120.0f * Time::DeltaTime();
-
-		//	//Vector2 pos = GetPos();
-		//	//pos = math::lerp(pos, dest, 0.003f);
-		//	//SetPos(pos);
-		//}
-		//if (KEY_PREESE(eKeyCode::D))
-		//{
-		//	pos.x += 120.0f * Time::DeltaTime();
-		//}
-		//SetPos(pos);
-
 	}
 
 	void Player::Render(HDC hdc)
@@ -130,8 +107,7 @@ namespace ya
 
 	void Player::OnCollisionEnter(Collider* other)
 	{	
-		mAnimator->Play(L"Attack", true);
-		mState = State::IDLE;
+
 	}
 
 	void Player::OnCollisionStay(Collider* other)
@@ -141,60 +117,155 @@ namespace ya
 
 	void Player::OnCollisionExit(Collider* other)
 	{
-		//mCollider->SetOffset(Vector2(0.0f, 0.0f));
-		//mState = State::IDLE;
+
 	}
 
-	void Player::WalkComplete()
+	void Player::AttackComplete()
 	{
 		mAnimator->Play(L"Idle", true);
+		mState = State::IDLE;
 	}
 
 	void Player::Idle()
 	{
 		if (KEY_DOWN(eKeyCode::W))
-		{	
-			//mCollider->SetOffset(Vector2(0.0f, -30.0f));
-			mAnimator->Play(L"Move", true);
-			mDir = Direction::UP;
-			mDest = GetPos();
-			mDest.y -= 80.0f;
-			mState = State::MOVE;
+		{
+			Index nextIndex = mIndex;
+			nextIndex.y--;
 
-			/*TileMap* tile = new TileMap();
-			tile->ChangeTileMap(this, -1, 0);*/
-			
+			GameObject* nextObj = TileMap::GetGameObject(nextIndex);
+
+			if (nextObj)
+			{	
+				if (nextObj->GetObjType() == eGameObjectType::Monster)
+				{
+					Monster* monster = dynamic_cast<Monster*>(nextObj);
+					monster->Damaged(Direction::UP);
+					mAnimator->Play(L"Attack", false);
+					mState = State::ATTACK;
+				}
+				else if (nextObj->GetObjType() == eGameObjectType::Rock)
+				{
+					Rock* rock = dynamic_cast<Rock*>(nextObj);
+					rock->Damaged(Direction::UP);
+					mAnimator->Play(L"Attack", false);
+					mState = State::ATTACK;
+				}
+			}
+			else
+			{
+				mAnimator->Play(L"Move", true);
+				mDir = Direction::UP;
+				mDest = GetPos();
+				mDest.y -= 80.0f;
+				mState = State::MOVE;
+				mIndex.y--;
+			}
 		}
 		if (KEY_DOWN(eKeyCode::S))
 		{
-			//mCollider->SetOffset(Vector2(0.0f, 30.0f));
+			Index nextIndex = mIndex;
+			nextIndex.y++;
 
-			mAnimator->Play(L"Move", true);
-			mDir = Direction::DOWN;
-			mDest = GetPos();
-			mDest.y += 80.0f;
-			mState = State::MOVE;
+			GameObject* nextObj = TileMap::GetGameObject(nextIndex);
+
+			if (nextObj)
+			{
+				if (nextObj->GetObjType() == eGameObjectType::Monster)
+				{
+					Monster* monster = dynamic_cast<Monster*>(nextObj);
+					monster->Damaged(Direction::DOWN);
+					mAnimator->Play(L"Attack", false);
+					mState = State::ATTACK;
+				} 
+				else if (nextObj->GetObjType() == eGameObjectType::Rock)
+				{
+					Rock* rock = dynamic_cast<Rock*>(nextObj);
+					rock->Damaged(Direction::DOWN);
+					mAnimator->Play(L"Attack", false);
+					mState = State::ATTACK;
+				}
+			}
+			else
+			{
+				mAnimator->Play(L"Move", true);
+				mDir = Direction::DOWN;
+				mDest = GetPos();
+				mDest.y += 80.0f;
+				mState = State::MOVE;
+				mIndex.y++;
+			}
 		}
 		if (KEY_DOWN(eKeyCode::A))
-		{	
-			//mCollider->SetOffset(Vector2(-30.0f, 0.0f));
+		{
+			
+			Index nextIndex = mIndex;
+			nextIndex.x--;
 
-			mAnimator->Play(L"Move", true);
-			mDir = Direction::LEFT;
-			mDest = GetPos();
-			mDest.x -= 80.0f;
-			mState = State::MOVE;
+			GameObject* nextObj = TileMap::GetGameObject(nextIndex);
+
+			if (nextObj)
+			{
+				if (nextObj->GetObjType() == eGameObjectType::Monster)
+				{
+					Monster* monster = dynamic_cast<Monster*>(nextObj);
+					monster->Damaged(Direction::LEFT);
+					mAnimator->Play(L"Attack", false);
+					mState = State::ATTACK;
+				}
+				else if (nextObj->GetObjType() == eGameObjectType::Rock)
+				{
+					Rock* rock = dynamic_cast<Rock*>(nextObj);
+					rock->Damaged(Direction::LEFT);
+					mAnimator->Play(L"Attack", false);
+					mState = State::ATTACK;
+				}
+			}
+			else
+			{
+				mAnimator->Play(L"Move", true);
+				mDir = Direction::LEFT;
+				mDest = GetPos();
+				mDest.x -= 80.0f;
+				mState = State::MOVE;
+				mIndex.x--;
+			}
 		}
 		if (KEY_DOWN(eKeyCode::D))
 		{
-			//mCollider->SetOffset(Vector2(30.0f, 0.0f));
+			Index nextIndex = mIndex;
+			nextIndex.x++;
 
-			mAnimator->Play(L"Move", true);
-			mDir = Direction::RIGHT;
-			mDest = GetPos();
-			mDest.x += 80.0f;
-			mState = State::MOVE;
+			GameObject* nextObj = TileMap::GetGameObject(nextIndex);
+
+			if (nextObj)
+			{
+				if (nextObj->GetObjType() == eGameObjectType::Monster)
+				{
+					Monster* monster = dynamic_cast<Monster*>(nextObj);
+					monster->Damaged(Direction::RIGHT);
+					mAnimator->Play(L"Attack", false);
+					mState = State::ATTACK;
+				}
+				else if (nextObj->GetObjType() == eGameObjectType::Rock)
+				{
+					Rock* rock = dynamic_cast<Rock*>(nextObj);
+					rock->Damaged(Direction::RIGHT);
+					mAnimator->Play(L"Attack", false);
+					mState = State::ATTACK;
+				}
+			}
+			else {
+				mAnimator->Play(L"Move", true);
+				mDir = Direction::RIGHT;
+				mDest = GetPos();
+				mDest.x += 80.0f;
+				mState = State::MOVE;
+				mIndex.x++;
+			}
 		}
+
+		TileMap::MoveGameObject(mIndex, this);
 	}
 
 	void Player::Move(Direction dir)
@@ -212,7 +283,6 @@ namespace ya
 				SetPos(mDest);
 				mState = State::IDLE;
 				mAnimator->Play(L"Idle", true);
-				//mCollider->SetOffset(Vector2(0.0f, 0.0f));
 			}
 		}
 			break;
@@ -223,7 +293,6 @@ namespace ya
 				SetPos(mDest);
 				mState = State::IDLE;
 				mAnimator->Play(L"Idle", true);
-				//mCollider->SetOffset(Vector2(0.0f, 0.0f));
 			}
 		}
 			break;
@@ -234,7 +303,6 @@ namespace ya
 				SetPos(mDest);
 				mState = State::IDLE;
 				mAnimator->Play(L"Idle", true);
-				//mCollider->SetOffset(Vector2(0.0f, 0.0f));
 			}
 		}
 			break;
@@ -245,7 +313,6 @@ namespace ya
 				SetPos(mDest);
 				mState = State::IDLE;
 				mAnimator->Play(L"Idle", true);
-				//mCollider->SetOffset(Vector2(0.0f, 0.0f));
 			}
 		}
 			break;
@@ -256,12 +323,13 @@ namespace ya
 
 	void Player::Attack()
 	{	
-		mAnimator->Play(L"Attack", true);
+		//mAnimator->Play(L"Attack", true);
 		//mState = State::IDLE;
 	}
 
 	void Player::Victory()
 	{
+		mAnimator->Play(L"Success", false);
 	}
 
 	void Player::Dead()

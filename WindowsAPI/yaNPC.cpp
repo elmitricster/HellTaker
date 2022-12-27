@@ -8,11 +8,13 @@
 #include "yaAnimator.h"
 #include "yaCollider.h"
 #include "yaCamera.h"
+#include "yaTileMap.h"
 
 namespace ya
 {
 	NPC::NPC()
 	{
+		mGameObjType = eGameObjectType::NPC;
 		SetName(L"NPC");
 		SetPos({ 1050, 660 });
 		SetScale({ 0.8333f, 0.8333f });
@@ -30,34 +32,33 @@ namespace ya
 
 		mAnimator->Play(L"Idle", true);
 
-		//AddComponent(new Animator());
 		//AddComponent(new Collider());
 		AddComponent(mAnimator);
 	}
 
-	NPC::NPC(Vector2 position)
-	{
-		SetName(L"NPC");
-		SetPos(position);
-		SetScale({ 1.0f, 1.0f });
+	//NPC::NPC(Vector2 position)
+	//{
+	//	SetName(L"NPC");
+	//	SetPos(position);
+	//	SetScale({ 1.0f, 1.0f });
 
-		if (mImage == nullptr)
-		{
-			mImage = Resources::Load<Image>(L"NPC", L"..\\Resources\\Image\\NPC.bmp");
-		}
+	//	if (mImage == nullptr)
+	//	{
+	//		mImage = Resources::Load<Image>(L"NPC", L"..\\Resources\\Image\\NPC.bmp");
+	//	}
 
-		mAnimator = new Animator();
+	//	mAnimator = new Animator();
 
-		mAnimator->CreateAnimation(L"Idle", mImage
-			, Vector2(0.0f, 0.0f), Vector2(100.0f, 130.0f)
-			, Vector2(0.0f, 0.0f), 12, 0.12f);
+	//	mAnimator->CreateAnimation(L"Idle", mImage
+	//		, Vector2(0.0f, 0.0f), Vector2(100.0f, 130.0f)
+	//		, Vector2(0.0f, 0.0f), 12, 0.12f);
 
-		mAnimator->Play(L"Idle", true);
+	//	mAnimator->Play(L"Idle", true);
 
-		//AddComponent(new Animator());
-		//AddComponent(new Collider());
-		AddComponent(mAnimator);
-	}
+	//	//AddComponent(new Animator());
+	//	//AddComponent(new Collider());
+	//	AddComponent(mAnimator);
+	//}
 
 	NPC::~NPC()
 	{
@@ -68,9 +69,9 @@ namespace ya
 	{
 		GameObject::Tick();
 
-		Vector2 pos = GetPos();
+		/*Vector2 pos = GetPos();
 
-		SetPos(pos);
+		SetPos(pos);*/
 	}
 
 	void NPC::Render(HDC hdc)

@@ -7,6 +7,13 @@ namespace ya
 	class NPC : public GameObject
 	{
 	public:
+		enum class State
+		{
+			IDLE,
+			SUCCESS,
+			DEAD,
+		};
+
 		NPC();
 		NPC(Vector2 position);
 		~NPC();
@@ -14,9 +21,9 @@ namespace ya
 		virtual void Tick() override;
 		virtual void Render(HDC hdc) override;
 
-		//void Dead();
-
 	private:
+		State mState;
+
 		Animator* mAnimator;
 		Image* mImage;
 	};
