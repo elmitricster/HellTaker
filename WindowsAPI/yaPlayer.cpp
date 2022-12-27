@@ -15,6 +15,8 @@
 #include "yaTileMap.h"
 #include "yaMonster.h"
 #include "yaRock.h"
+#include "yaAttackEffect.h"
+#include "yaObject.h"
 
 namespace ya
 {
@@ -33,7 +35,6 @@ namespace ya
 		
 		mAnimator = new Animator();
 		//mAnimator->CreateAnimations(L"..\\Resources\\Animations\\Player\\Idle", L"HeroIdle");
-
 
 		mAnimator->CreateAnimation(L"Idle", mImage
 			, Vector2(0.0f, 0.0f), Vector2(100.0f, 130.0f)
@@ -142,6 +143,7 @@ namespace ya
 					Monster* monster = dynamic_cast<Monster*>(nextObj);
 					monster->Damaged(Direction::UP);
 					mAnimator->Play(L"Attack", false);
+					AttackEffect* atk = ya::object::Instantiate<AttackEffect>(nextObj->GetPos(), eColliderLayer::Effect);
 					mState = State::ATTACK;
 				}
 				else if (nextObj->GetObjType() == eGameObjectType::Rock)
@@ -149,6 +151,7 @@ namespace ya
 					Rock* rock = dynamic_cast<Rock*>(nextObj);
 					rock->Damaged(Direction::UP);
 					mAnimator->Play(L"Attack", false);
+					AttackEffect* atk = ya::object::Instantiate<AttackEffect>(nextObj->GetPos(), eColliderLayer::Effect);
 					mState = State::ATTACK;
 				}
 			}
@@ -176,6 +179,7 @@ namespace ya
 					Monster* monster = dynamic_cast<Monster*>(nextObj);
 					monster->Damaged(Direction::DOWN);
 					mAnimator->Play(L"Attack", false);
+					AttackEffect* atk = ya::object::Instantiate<AttackEffect>(nextObj->GetPos(), eColliderLayer::Effect);
 					mState = State::ATTACK;
 				} 
 				else if (nextObj->GetObjType() == eGameObjectType::Rock)
@@ -183,6 +187,7 @@ namespace ya
 					Rock* rock = dynamic_cast<Rock*>(nextObj);
 					rock->Damaged(Direction::DOWN);
 					mAnimator->Play(L"Attack", false);
+					AttackEffect* atk = ya::object::Instantiate<AttackEffect>(nextObj->GetPos(), eColliderLayer::Effect);
 					mState = State::ATTACK;
 				}
 			}
@@ -211,6 +216,7 @@ namespace ya
 					Monster* monster = dynamic_cast<Monster*>(nextObj);
 					monster->Damaged(Direction::LEFT);
 					mAnimator->Play(L"Attack", false);
+					AttackEffect* atk = ya::object::Instantiate<AttackEffect>(nextObj->GetPos(), eColliderLayer::Effect);
 					mState = State::ATTACK;
 				}
 				else if (nextObj->GetObjType() == eGameObjectType::Rock)
@@ -218,6 +224,7 @@ namespace ya
 					Rock* rock = dynamic_cast<Rock*>(nextObj);
 					rock->Damaged(Direction::LEFT);
 					mAnimator->Play(L"Attack", false);
+					AttackEffect* atk = ya::object::Instantiate<AttackEffect>(nextObj->GetPos(), eColliderLayer::Effect);
 					mState = State::ATTACK;
 				}
 			}
@@ -245,6 +252,7 @@ namespace ya
 					Monster* monster = dynamic_cast<Monster*>(nextObj);
 					monster->Damaged(Direction::RIGHT);
 					mAnimator->Play(L"Attack", false);
+					AttackEffect* atk = ya::object::Instantiate<AttackEffect>(nextObj->GetPos(), eColliderLayer::Effect);
 					mState = State::ATTACK;
 				}
 				else if (nextObj->GetObjType() == eGameObjectType::Rock)
@@ -252,6 +260,7 @@ namespace ya
 					Rock* rock = dynamic_cast<Rock*>(nextObj);
 					rock->Damaged(Direction::RIGHT);
 					mAnimator->Play(L"Attack", false);
+					AttackEffect* atk = ya::object::Instantiate<AttackEffect>(nextObj->GetPos(), eColliderLayer::Effect);
 					mState = State::ATTACK;
 				}
 			}

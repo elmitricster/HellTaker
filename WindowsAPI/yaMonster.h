@@ -15,7 +15,7 @@ namespace ya
 			DEAD,
 		};
 
-		//Monster();
+		Monster();
 		Monster(Vector2 position);
 		~Monster();
 

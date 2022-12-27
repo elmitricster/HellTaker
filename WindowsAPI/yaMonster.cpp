@@ -13,8 +13,8 @@
 
 namespace ya
 {
-	//Monster::Monster()
-	//{
+	Monster::Monster()
+	{
 	//	SetName(L"Monster");
 	//	SetPos({ 870, 380 });
 	//	SetScale({ 0.8333f, 0.8333f });
@@ -42,7 +42,7 @@ namespace ya
 	//	//AddComponent(new Animator());
 	//	//AddComponent(new Collider());
 	//	AddComponent(mAnimator);
-	//}
+	}
 
 	Monster::Monster(Vector2 position)
 	{	

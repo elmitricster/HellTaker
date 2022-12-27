@@ -57,6 +57,7 @@ enum class eColliderLayer
 	FlameBase,
 	Ground,
 	Wall,
+	Effect,
 
 	//UI
 	BackPack,
@@ -118,6 +119,7 @@ enum class eGameObjectType
 	FlameBase,
 	Tile,
 	Wall,
+	Effect,
 	None,
 };
 

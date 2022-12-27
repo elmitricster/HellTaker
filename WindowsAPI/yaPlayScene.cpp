@@ -8,6 +8,10 @@
 #include "yaCollisionManager.h"
 #include "yaTileMap.h"
 #include "yaWall.h"
+#include "yaAttackEffect.h"
+#include "yaFlameBase.h"
+#include "yaNPC.h"
+#include "yaMonster.h"
 
 namespace ya
 {
@@ -58,8 +62,10 @@ namespace ya
 		flameBases[0] = ya::object::Instantiate<FlameBase>(Vector2{ 556, 260 }, eColliderLayer::FlameBase);
 		flameBases[1] = ya::object::Instantiate<FlameBase>(Vector2{ 1056, 465 }, eColliderLayer::FlameBase);
 		flameBases[2] = ya::object::Instantiate<FlameBase>(Vector2{ 467, 504 }, eColliderLayer::FlameBase);
+		flameBases[2]->SetImage(L"flame02", L"FLAMEbase02.bmp");
 		flameBases[3] = ya::object::Instantiate<FlameBase>(Vector2{ 799, 170 }, eColliderLayer::FlameBase);
-		//flameBases[2]->SetImage();
+		flameBases[3]->SetImage(L"flame02", L"FLAMEbase02.bmp");
+		
 
 		// Wall
 		// °¡·Îº®
@@ -111,6 +117,8 @@ namespace ya
 		TileMap::PushGameObject(Index(7, 4), wall);
 		TileMap::PushGameObject(Index(2, 3), wall);
 		TileMap::PushGameObject(Index(2, 4), wall);
+
+		
 
 	}
 

@@ -211,6 +211,9 @@
     <ClInclude Include="yaWall.h">
       <Filter>Engine\GameObject\Game</Filter>
     </ClInclude>
+    <ClInclude Include="yaAttackEffect.h">
+      <Filter>Engine\GameObject\Game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WindowsAPI.rc">
@@ -356,6 +359,9 @@
       <Filter>Engine\GameObject\Tile</Filter>
     </ClCompile>
     <ClCompile Include="yaWall.cpp">
+      <Filter>Engine\GameObject\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="yaAttackEffect.cpp">
       <Filter>Engine\GameObject\Game</Filter>
     </ClCompile>
   </ItemGroup>
