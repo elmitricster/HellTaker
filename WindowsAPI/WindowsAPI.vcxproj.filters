@@ -208,6 +208,9 @@
     <ClInclude Include="yaTileMap.h">
       <Filter>Engine\GameObject\Tile</Filter>
     </ClInclude>
+    <ClInclude Include="yaWall.h">
+      <Filter>Engine\GameObject\Game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WindowsAPI.rc">
@@ -351,6 +354,9 @@
     </ClCompile>
     <ClCompile Include="yaTileMap.cpp">
       <Filter>Engine\GameObject\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="yaWall.cpp">
+      <Filter>Engine\GameObject\Game</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

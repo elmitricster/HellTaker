@@ -181,6 +181,7 @@
     <ClInclude Include="yaToolScene.h" />
     <ClInclude Include="yaUiBase.h" />
     <ClInclude Include="yaUIManager.h" />
+    <ClInclude Include="yaWall.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Maths.cpp" />
@@ -226,6 +227,7 @@
     <ClCompile Include="yaToolScene.cpp" />
     <ClCompile Include="yaUiBase.cpp" />
     <ClCompile Include="yaUIManager.cpp" />
+    <ClCompile Include="yaWall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WindowsAPI.rc" />

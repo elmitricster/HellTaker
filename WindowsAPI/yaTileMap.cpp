@@ -9,9 +9,9 @@ namespace ya
 	void TileMap::Initiailize()
 	{	
 		//stage1
-		mMap.resize(7);
-		for (size_t i = 0; i < 7; i++)
-			mMap[i].resize(9);
+		mMap.resize(9);
+		for (size_t i = 0; i < 9; i++)
+			mMap[i].resize(11);
 	}
 
 	void TileMap::Tick()
@@ -23,14 +23,15 @@ namespace ya
 	{
 		mMap[idx.y][idx.x] = obj;
 
-		obj->SetIndex(idx);
+		if (obj != nullptr)
+			obj->SetIndex(idx);
 	}
 
 	void TileMap::MoveGameObject(const Index idx, GameObject* obj)
 	{
-		for (size_t y = 0; y < 7; y++)
+		for (size_t y = 0; y < 9; y++)
 		{
-			for (size_t x = 0; x < 9; x++)
+			for (size_t x = 0; x < 11; x++)
 			{
 				if (mMap[y][x] == obj)
 				{
@@ -49,11 +50,11 @@ namespace ya
 
 	void TileMap::CheckSuccess(GameObject* obj)
 	{
-		if (mMap[6][6] == nullptr)
+		if (mMap[7][7] == nullptr)
 		{
 			return;
 		}
-		else if (mMap[6][6]->GetObjType() == eGameObjectType::Player)
+		else if (mMap[7][7]->GetObjType() == eGameObjectType::Player)
 		{
 			int a = 0;
 		}

@@ -144,33 +144,56 @@ namespace ya
 	void Rock::Damaged(Direction dir)
 	{
 		mDest = GetPos();
+		Index index = mIndex;
 
 		if (dir == Direction::LEFT)
 		{
 			mDir = Direction::LEFT;
 			mDest.x -= 80.0f;
+			index.x--;
 		}
 		else if (dir == Direction::RIGHT)
 		{
 			mDir = Direction::RIGHT;
 			mDest.x += 80.0f;
+			index.x++;
 		}
 		else if (dir == Direction::UP)
 		{
 			mDir = Direction::UP;
 			mDest.y -= 80.0f;
+			index.y--;
 		}
 		else if (dir == Direction::DOWN)
 		{
 			mDir = Direction::DOWN;
 			mDest.y += 80.0f;
+			index.y++;
 		}
 
-		mState = State::MOVE;
+		GameObject* other = TileMap::GetGameObject(index);
+		if (other != nullptr)
+		{
+			if (other->GetObjType() == eGameObjectType::Wall)
+			{
+
+			}
+			else if (other->GetObjType() == eGameObjectType::Rock)
+			{
+
+			}
+		}
+		else
+		{
+			TileMap::PushGameObject(mIndex, nullptr);
+			mState = State::MOVE;
+		}
+		
 	}
 
 	void Rock::Dead()
 	{
+
 	}
 
 	void Rock::SetImage(const std::wstring& key, const std::wstring& fileName)

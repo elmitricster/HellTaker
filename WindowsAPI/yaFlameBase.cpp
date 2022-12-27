@@ -18,6 +18,7 @@ namespace ya
 
 	FlameBase::FlameBase(Vector2 position)
 	{
+		mGameObjType = eGameObjectType::FlameBase;
 		SetName(L"FlameBase");
 		SetPos(position);
 		SetScale({ 0.8333f, 0.8333f });
@@ -62,6 +63,13 @@ namespace ya
 		GameObject::Render(hdc);
 	}
 
+	void FlameBase::SetImage(const std::wstring& key, const std::wstring& fileName)
+	{
+		std::wstring path = L"..\\Resources\\Image\\";
+		path += fileName;
+
+		mImage = Resources::Load<Image>(key, path);
+	}
 
 
 }

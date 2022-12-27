@@ -56,6 +56,7 @@ enum class eColliderLayer
 	Rock,
 	FlameBase,
 	Ground,
+	Wall,
 
 	//UI
 	BackPack,
@@ -116,6 +117,7 @@ enum class eGameObjectType
 	Dynamic_Spike,
 	FlameBase,
 	Tile,
+	Wall,
 	None,
 };
 

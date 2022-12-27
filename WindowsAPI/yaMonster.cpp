@@ -192,28 +192,40 @@ namespace ya
 	void Monster::Damaged(Direction dir)
 	{
 		mAnimator->Play(L"Damaged", true);
-
 		mDest = GetPos();
+
+		Index index = mIndex;
 
 		if (dir == Direction::LEFT)
 		{
 			mDir = Direction::LEFT;
 			mDest.x -= 80.0f;
+			index.x--;
 		}
 		else if (dir == Direction::RIGHT)
 		{
 			mDir = Direction::RIGHT;
 			mDest.x += 80.0f;
+			index.x++;
 		}
 		else if (dir == Direction::UP)
 		{
 			mDir = Direction::UP;
 			mDest.y -= 80.0f;
+			index.y--;
 		}
 		else if (dir == Direction::DOWN)
 		{
 			mDir = Direction::DOWN;
 			mDest.y += 80.0f;
+			index.y++;
+		}
+
+		GameObject* other = TileMap::GetGameObject(index);
+		if (other != nullptr)
+		{
+			this->Death();
+			TileMap::PushGameObject(mIndex, nullptr);
 		}
 
 		mState = State::MOVE;
