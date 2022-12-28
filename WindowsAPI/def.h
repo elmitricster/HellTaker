@@ -79,7 +79,8 @@ enum class eUIType
 	SHOP,
 	INVENTORY,
 	OPTION,
-
+	INFO,
+	BG,
 
 	END,
 };

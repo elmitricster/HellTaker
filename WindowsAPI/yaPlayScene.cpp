@@ -12,6 +12,8 @@
 #include "yaFlameBase.h"
 #include "yaNPC.h"
 #include "yaMonster.h"
+#include "yaUIManager.h"
+#include "yaHUD.h"
 
 namespace ya
 {
@@ -65,7 +67,15 @@ namespace ya
 		flameBases[2]->SetImage(L"flame02", L"FLAMEbase02.bmp");
 		flameBases[3] = ya::object::Instantiate<FlameBase>(Vector2{ 799, 170 }, eColliderLayer::FlameBase);
 		flameBases[3]->SetImage(L"flame02", L"FLAMEbase02.bmp");
-		
+
+		// UI
+		UIManager::Push(eUIType::INFO);
+		HUD* hud = UIManager::GetUiInstant<HUD>(eUIType::INFO);
+		UIManager::Push(eUIType::INFO);
+		HUD* hud2 = UIManager::GetUiInstant<HUD>(eUIType::INFO);
+		hud->SetTarget(mPlayer);
+		hud2->SetTarget(mPlayer);
+
 
 		// Wall
 		// °¡·Îº®
