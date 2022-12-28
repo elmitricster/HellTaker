@@ -29,6 +29,7 @@ namespace ya
 		rightHud->SetPos(Vector2(500.0f, 325.0f));
 		rightHud->ImageLoad(L"mainUI2", L"..\\Resources\\Image\\mainUI02.bmp");
 
+
 		//Panel* panel = new Panel(eUIType::INVENTORY);
 		//mUIs.insert(std::make_pair(eUIType::INVENTORY, panel));
 		////newUI->SetIsFullScreen(true);
