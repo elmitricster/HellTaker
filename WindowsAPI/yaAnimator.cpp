@@ -6,12 +6,13 @@
 
 namespace ya
 {
-	Animator::Animator()
+	Animator::Animator(Mode mode)
 		: Component(eComponentType::Aimator)
+		, mMode(mode)
 		, mPlayAnimaion(nullptr)
 		, mbLoop(false)
 	{
-		//mImage = Resources::Load<Image>(L"Player", L"..\\Resources\\Image\\Player.bmp");
+		
 	}
 
 	Animator::~Animator()

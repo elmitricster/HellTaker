@@ -46,7 +46,6 @@ namespace ya
 		// 현재 내 게임오브젝트들이 화면 바깥에 있는지 없는지 확인
 
 
-
 		//현재 씬들을 update Tick
 		mPlayScene->Tick();
 	}

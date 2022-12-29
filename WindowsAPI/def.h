@@ -1,5 +1,16 @@
 #pragma once
 
+//#define SINGLE(type)	public:							\
+//							static type* GetInst()		\
+//							{							\
+//								static type mgr;		\
+//								return &mgr;			\
+//							}							\
+//						private:						\
+//							type();						\
+//							~type();					
+
+
 #define KEY_PREESE(KEY) ya::Input::GetKeyState(KEY) == ya::eKeyState::PRESSED
 #define KEY_DOWN(KEY) ya::Input::GetKeyState(KEY) == ya::eKeyState::DOWN
 #define KEY_UP(KEY) ya::Input::GetKeyState(KEY) == ya::eKeyState::UP
@@ -40,7 +51,7 @@ enum class eComponentType
 	End,
 };
 
-#define _COLLIDER_LAYER 16
+#define _COLLIDER_LAYER 32
 enum class eColliderLayer
 {
 	Default,
@@ -48,12 +59,12 @@ enum class eColliderLayer
 	//GameObject
 	BackGround,
 	Tile,
+	Rock,
 	Player,
 	Player_Projecttile,
 	Monster,
 	Monster_Projecttile,
 	NPC,
-	Rock,
 	FlameBase,
 	Ground,
 	Wall,
@@ -61,7 +72,12 @@ enum class eColliderLayer
 
 	//UI
 	BackPack,
-	UI = _COLLIDER_LAYER -1,
+	UI,
+	Counter,
+	
+	//Transition
+	Transition,
+
 	End = _COLLIDER_LAYER,
 };
 
@@ -74,13 +90,12 @@ enum class eCameraEffect
 
 enum class eUIType
 {
-	HP,
-	MP,
-	SHOP,
-	INVENTORY,
-	OPTION,
-	INFO,
-	BG,
+	TPANEL,
+	STEP,
+	ROUND,
+	LEFTBG,
+	RIGHTBG,
+	COUNTER,
 
 	END,
 };
@@ -121,6 +136,8 @@ enum class eGameObjectType
 	Tile,
 	Wall,
 	Effect,
+	Counter,
+	Transition,
 	None,
 };
 

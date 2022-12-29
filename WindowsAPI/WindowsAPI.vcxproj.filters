@@ -214,6 +214,12 @@
     <ClInclude Include="yaAttackEffect.h">
       <Filter>Engine\GameObject\Game</Filter>
     </ClInclude>
+    <ClInclude Include="yaTransition.h">
+      <Filter>Engine\GameObject\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="yaFontManager.h">
+      <Filter>Engine\Manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WindowsAPI.rc">
@@ -363,6 +369,12 @@
     </ClCompile>
     <ClCompile Include="yaAttackEffect.cpp">
       <Filter>Engine\GameObject\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="yaTransition.cpp">
+      <Filter>Engine\GameObject\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="yaFontManager.cpp">
+      <Filter>Engine\Manager</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -147,6 +147,7 @@
     <ClInclude Include="yaComponent.h" />
     <ClInclude Include="yaEndScene.h" />
     <ClInclude Include="yaFlameBase.h" />
+    <ClInclude Include="yaFontManager.h" />
     <ClInclude Include="yaGameObject.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
@@ -180,6 +181,7 @@
     <ClInclude Include="yaTime.h" />
     <ClInclude Include="yaTitleScene.h" />
     <ClInclude Include="yaToolScene.h" />
+    <ClInclude Include="yaTransition.h" />
     <ClInclude Include="yaUiBase.h" />
     <ClInclude Include="yaUIManager.h" />
     <ClInclude Include="yaWall.h" />
@@ -198,6 +200,7 @@
     <ClCompile Include="yaComponent.cpp" />
     <ClCompile Include="yaEndScene.cpp" />
     <ClCompile Include="yaFlameBase.cpp" />
+    <ClCompile Include="yaFontManager.cpp" />
     <ClCompile Include="yaGameObject.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="yaApplication.cpp" />
@@ -227,6 +230,7 @@
     <ClCompile Include="yaTime.cpp" />
     <ClCompile Include="yaTitleScene.cpp" />
     <ClCompile Include="yaToolScene.cpp" />
+    <ClCompile Include="yaTransition.cpp" />
     <ClCompile Include="yaUiBase.cpp" />
     <ClCompile Include="yaUIManager.cpp" />
     <ClCompile Include="yaWall.cpp" />

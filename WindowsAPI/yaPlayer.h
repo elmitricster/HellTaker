@@ -1,5 +1,6 @@
 #pragma once
 #include "yaGameObject.h"
+#include "yaPlayScene.h"
 
 namespace ya
 {
@@ -30,6 +31,7 @@ namespace ya
 		virtual void OnCollisionExit(Collider* other) override;
 
 		void AttackComplete();
+		void DeathComplete();
 		void SetState(State state) { mState = state; }
 
 		void Idle();
@@ -37,6 +39,9 @@ namespace ya
 		void Move(Direction dir);
 		void Victory();
 		void Dead();
+		void GetDamaged(int damage);
+
+		void SetScene(PlayScene* scene) { mpScene = scene; }
 
 		Direction GetDir() { return mDir; }
 
@@ -52,6 +57,11 @@ namespace ya
 
 		Collider* mCollider;
 		Collider* mCollider2;
+	
+		PlayScene* mpScene;
+
+	private:
+		void CountDown(int mNum = 1);
 	};
 
 }

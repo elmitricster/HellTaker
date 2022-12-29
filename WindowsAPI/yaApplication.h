@@ -26,6 +26,7 @@ namespace ya
 		HBRUSH GetBrush(eBrushColor color) { return mBrushes[(UINT)color]; }
 		eSceneType GetPlaySceneType();
 
+		//void RevertDC() { SelectObject(mWindowData.backBuffer, mWindowData.backTexture); }
 
 	private:
 		Application();

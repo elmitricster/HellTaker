@@ -3,6 +3,7 @@
 
 namespace ya
 {
+	class GameObject;
 	class Image;
 	class UiBase : public Entity
 	{
@@ -53,6 +54,7 @@ namespace ya
 
 		void ImageLoad(const std::wstring& key, const std::wstring& path);
 		void AddChild(UiBase* uiBase);
+		void AddGameObject(GameObject* gameObj);
 
 		eUIType GetType() { return mType; }
 		bool GetIsFullScreen() { return mbFullScreen; }
@@ -62,12 +64,15 @@ namespace ya
 		Vector2 GetPos() { return mPos; }
 		void SetSize(Vector2 size) { mSize = size; }
 		Vector2 GetSize() { return mSize; }
+		void SetScale(Vector2 scale) { mScale = scale; }
+		Vector2 GetScale() { return mScale; }
 
 	protected:
 		UiBase* mParent;
 		Image* mImage;
 		Vector2 mPos;
 		Vector2 mSize;
+		Vector2 mScale;
 		Vector2 mScreenPos;
 
 	private:
@@ -80,6 +85,7 @@ namespace ya
 
 	private:
 		std::vector<UiBase*> mChilds;
+		std::vector<GameObject*> mGameObjects;
 		
 		eUIType mType;
 		bool mbFullScreen;

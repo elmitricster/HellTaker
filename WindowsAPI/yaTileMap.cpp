@@ -1,6 +1,8 @@
 #include "yaTileMap.h"
 #include "Common.h"
 #include "yaGameObject.h"
+#include "yaSceneManager.h"
+#include "yaUIManager.h"
 
 namespace ya
 {
@@ -56,7 +58,9 @@ namespace ya
 		}
 		else if (mMap[7][7]->GetObjType() == eGameObjectType::Player)
 		{
-			int a = 0;
+			/*SceneManager::ChangeScene(eSceneType::End);
+			UIManager::Pop(eUIType::STEP);
+			UIManager::Pop(eUIType::ROUND);*/
 		}
 	}
 

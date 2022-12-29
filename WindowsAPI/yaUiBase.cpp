@@ -1,6 +1,7 @@
 #include "yaUiBase.h"
 #include "yaResources.h"
 #include "yaImage.h"
+#include "yaGameObject.h"
 
 namespace ya
 {
@@ -12,6 +13,7 @@ namespace ya
 		, mParent(nullptr)
 		, mPos(Vector2::Zero)
 		, mSize(Vector2::Zero)
+		, mScale(Vector2::One)
 	{
 	}
 
@@ -69,6 +71,11 @@ namespace ya
 			if (child->mbEnable)
 				child->Tick();
 		}
+
+		for (GameObject* gameObj : mGameObjects)
+		{
+			gameObj->Tick();
+		}
 	}
 
 	void UiBase::Render(HDC hdc)
@@ -81,6 +88,11 @@ namespace ya
 		{
 			if (child->mbEnable)
 				child->Render(hdc);
+		}
+
+		for (GameObject* gameObj : mGameObjects)
+		{
+			gameObj->Render(hdc);
 		}
 	}
 
@@ -104,5 +116,13 @@ namespace ya
 	{
 		mChilds.push_back(uiBase);
 		uiBase->mParent = this;
+	}
+
+	void UiBase::AddGameObject(GameObject* gameObj)
+	{
+		if (gameObj == nullptr)
+			return;
+
+		mGameObjects.push_back(gameObj);
 	}
 }

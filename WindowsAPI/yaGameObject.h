@@ -28,6 +28,9 @@ namespace ya
 		void SetObjType(eGameObjectType obj) { mGameObjType = obj; }
 		eGameObjectType GetObjType() { return mGameObjType; }
 		void SetIndex(Index idx) { mIndex = idx; }
+		
+		void SetFlip(bool check) { mFlip = check; }
+		bool GetFlip() { return mFlip; }
 
 		void Death() { mDead = true; }
 		bool IsDeath() { return mDead; }
@@ -70,5 +73,6 @@ namespace ya
 		bool mIsCulling;
 		float mDeathTime;
 		bool mDeathTimeOn;
+		bool mFlip;
 	};
 }

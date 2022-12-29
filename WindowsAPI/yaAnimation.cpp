@@ -38,20 +38,21 @@ namespace ya
 		Vector2 pos = gameObj->GetPos();
 		Vector2 scale = gameObj->GetScale();
 
-		if (mAffectedCamera)
+		if (mAffectedCamera
+			&& mAnimator->GetMode() != Animator::Mode::UIGameObject)
 			pos = Camera::CalculatePos(pos);
 			
-
-		BLENDFUNCTION func = {};
-		func.BlendOp = AC_SRC_OVER;
-		func.BlendFlags = 0;
-		func.AlphaFormat = AC_SRC_ALPHA;
-		func.SourceConstantAlpha = 255; // 0 - 225
-
 		pos += mSpriteSheet[mSpriteIndex].offset;
 
+		//BLENDFUNCTION func = {};
+		//func.BlendOp = AC_SRC_OVER;
+		//func.BlendFlags = 0;
+		//func.AlphaFormat = AC_SRC_ALPHA;
+		//func.SourceConstantAlpha = 255; // 0 - 225
+
+
 		//Draw
-		AlphaBlend(hdc
+		/*AlphaBlend(hdc
 			, int(pos.x - mSpriteSheet[mSpriteIndex].size.x / 2.0f)
 			, int(pos.y - mSpriteSheet[mSpriteIndex].size.y / 2.0f)
 			, int(mSpriteSheet[mSpriteIndex].size.x * scale.x)
@@ -61,7 +62,58 @@ namespace ya
 			, int(mSpriteSheet[mSpriteIndex].leftTop.y)
 			, int(mSpriteSheet[mSpriteIndex].size.x)
 			, int(mSpriteSheet[mSpriteIndex].size.y)
-			, func);
+			, func);*/
+
+		
+		//if (true)
+		//{
+		//	HDC reverseDC = CreateCompatibleDC(hdc);
+		//	HBITMAP buffer = CreateCompatibleBitmap(mImage->GetDC(), (int)mSpriteSheet[mSpriteIndex].size.x, mSpriteSheet[mSpriteIndex].size.y);
+		//	HGDIOBJ oldObj = SelectObject(reverseDC, buffer);
+
+		//	StretchBlt(reverseDC
+		//		, int(mSpriteSheet[mSpriteIndex].size.x)
+		//		, 0
+		//		, int(-(mSpriteSheet[mSpriteIndex].size.x + 1))
+		//		, int(mSpriteSheet[mSpriteIndex].size.y)
+		//		, mImage->GetDC()
+		//		, int(mSpriteSheet[mSpriteIndex].leftTop.x)
+		//		, int(mSpriteSheet[mSpriteIndex].leftTop.y)
+		//		, int(mSpriteSheet[mSpriteIndex].size.x)
+		//		, int(mSpriteSheet[mSpriteIndex].size.y)
+		//		, SRCCOPY
+		//	);
+
+		//	TransparentBlt(hdc
+		//		, int(pos.x - mSpriteSheet[mSpriteIndex].size.x / 2.0f)
+		//		, int(pos.y - mSpriteSheet[mSpriteIndex].size.y / 2.0f)
+		//		, int(mSpriteSheet[mSpriteIndex].size.x * scale.x)
+		//		, int(mSpriteSheet[mSpriteIndex].size.y * scale.y)
+		//		, reverseDC
+		//		, int(mSpriteSheet[mSpriteIndex].leftTop.x)
+		//		, int(mSpriteSheet[mSpriteIndex].leftTop.y)
+		//		, int(mSpriteSheet[mSpriteIndex].size.x)
+		//		, int(mSpriteSheet[mSpriteIndex].size.y)
+		//		, RGB(255, 0, 255)
+		//	);
+
+		//	DeleteObject(reverseDC);
+		//	DeleteObject(buffer);
+		//	DeleteObject(oldObj);
+		//}
+
+
+		TransparentBlt(hdc
+			, int(pos.x - mSpriteSheet[mSpriteIndex].size.x / 2.0f)
+			, int(pos.y - mSpriteSheet[mSpriteIndex].size.y / 2.0f)
+			, int(mSpriteSheet[mSpriteIndex].size.x * scale.x)
+			, int(mSpriteSheet[mSpriteIndex].size.y * scale.y)
+			, mImage->GetDC()
+			, int(mSpriteSheet[mSpriteIndex].leftTop.x)
+			, int(mSpriteSheet[mSpriteIndex].leftTop.y)
+			, int(mSpriteSheet[mSpriteIndex].size.x)
+			, int(mSpriteSheet[mSpriteIndex].size.y)
+			, RGB(255, 0, 255));
 
 	}
 

@@ -1,6 +1,7 @@
 #pragma once
 #include "yaScene.h"
 #include "yaPlayer.h"
+//#include "yaCounter.h"
 
 namespace ya
 {
@@ -21,6 +22,13 @@ namespace ya
 		virtual void Enter();
 		virtual void Exit();
 
+		void SetInitMoveCnt(int move) { InitMoveCnt = move; }
+		int GetInitMoveCnt() { return InitMoveCnt; }
+		void SetCurMoveCnt(int move) { CurMoveCnt = move; }
+		int GetCurMoveCnt() { return CurMoveCnt; }
+		
+		int GetChapterNum() { return ChapterNum; }
+
 	private:
 		Player* mPlayer;
 		Vector2 mPlayerPos;
@@ -28,6 +36,11 @@ namespace ya
 		Rock* rocks[4];
 		NPC* mNPC;
 		FlameBase* flameBases[4];
+		//Counter* counter;
+
+		int InitMoveCnt;
+		int CurMoveCnt;
+		int ChapterNum = 0;
 	};
 
 }

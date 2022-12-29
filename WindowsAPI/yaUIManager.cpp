@@ -2,6 +2,9 @@
 #include "yaHUD.h"
 #include "yaButton.h"
 #include "yaPanel.h"
+#include "yaPlayer.h"
+#include "yaTransition.h"
+#include "yaPlayScene.h"
 
 namespace ya
 {
@@ -19,25 +22,42 @@ namespace ya
 		////newUI->SetSize(Vector2(500.0f, 100.0f));
 		//button->ImageLoad(L"HPBAR", L"..\\Resources\\Image\\HPBAR.bmp");
 		
-		HUD* leftHud = new HUD(eUIType::INFO);
-		mUIs.insert(std::make_pair(eUIType::INFO, leftHud));
+		HUD* leftHud = new HUD(eUIType::STEP);
+		mUIs.insert(std::make_pair(eUIType::STEP, leftHud));
 		leftHud->SetPos(Vector2(0.0f, 325.0f));
-		leftHud->ImageLoad(L"mainUI", L"..\\Resources\\Image\\mainUI.bmp");
+		leftHud->ImageLoad(L"mainUI", L"..\\Resources\\Image\\mainUI01.bmp");
 
-		HUD* rightHud = new HUD(eUIType::INFO);
-		mUIs.insert(std::make_pair(eUIType::INFO, rightHud));
-		rightHud->SetPos(Vector2(500.0f, 325.0f));
+		HUD* rightHud = new HUD(eUIType::ROUND);
+		mUIs.insert(std::make_pair(eUIType::ROUND, rightHud));
+		rightHud->SetPos(Vector2(1200.0f, 325.0f));
 		rightHud->ImageLoad(L"mainUI2", L"..\\Resources\\Image\\mainUI02.bmp");
 
+		HUD* leftHud2 = new HUD(eUIType::LEFTBG);
+		mUIs.insert(std::make_pair(eUIType::LEFTBG, leftHud2));
+		leftHud2->SetPos(Vector2(0.0f, 0.0f));
+		leftHud2->ImageLoad(L"mainUI3", L"..\\Resources\\Image\\mainUI03.bmp");
 
-		//Panel* panel = new Panel(eUIType::INVENTORY);
-		//mUIs.insert(std::make_pair(eUIType::INVENTORY, panel));
-		////newUI->SetIsFullScreen(true);
-		//panel->ImageLoad(L"BackPack", L"..\\Resources\\Image\\BackPack.bmp");
-		//panel->SetPos(Vector2(200.0f, 100.0f));
+		HUD* rightHud2 = new HUD(eUIType::RIGHTBG);
+		mUIs.insert(std::make_pair(eUIType::RIGHTBG, rightHud2));
+		rightHud2->SetPos(Vector2(1335.0f, 0.0f));
+		rightHud2->ImageLoad(L"mainUI4", L"..\\Resources\\Image\\mainUI04.bmp");
+
+		Panel* panel = new Panel(eUIType::TPANEL);
+		mUIs.insert(std::make_pair(eUIType::TPANEL, panel));
+		//panel->ImageLoad(L"TransParent", L"..\\Resources\\Image\\BackPack.bmp");
+		panel->SetPos(Vector2(-1.0f, -1.0f));
+
+		Transition* trans = new Transition();
+		panel->AddGameObject(trans);
+
+	/*	Counter* counter = new Counter();
+		counter->SetScene(GetScene());
+		leftHud->AddGameObject(counter);*/
+
+
 		//panel->AddChild(button);
 		//panel->AddChild(hud);
-
+		
 	}
 
 	void UIManager::OnLoad(eUIType type)

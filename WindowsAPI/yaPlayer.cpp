@@ -1,5 +1,6 @@
 #include "yaPlayer.h"
 #include "yaTime.h"
+#include "Common.h"
 #include "yaSceneManager.h"
 #include "yaInput.h"
 #include "yaMissile.h"
@@ -17,6 +18,8 @@
 #include "yaRock.h"
 #include "yaAttackEffect.h"
 #include "yaObject.h"
+#include "yaTransition.h"
+#include "yaPlayScene.h"
 
 namespace ya
 {
@@ -127,8 +130,22 @@ namespace ya
 		mState = State::IDLE;
 	}
 
+	void Player::DeathComplete()
+	{
+		// Transition 추가
+
+		// 스테이지 초기화 작업 추가
+
+		mState = State::IDLE;
+	}
+
 	void Player::Idle()
 	{
+		if (mpScene->GetCurMoveCnt() < 0)
+		{
+			mState = State::DEAD;
+		}
+
 		if (KEY_DOWN(eKeyCode::W))
 		{
 			Index nextIndex = mIndex;
@@ -163,6 +180,7 @@ namespace ya
 				mDest.y -= 80.0f;
 				mState = State::MOVE;
 				mIndex.y--;
+				CountDown();
 			}
 		}
 		if (KEY_DOWN(eKeyCode::S))
@@ -199,6 +217,7 @@ namespace ya
 				mDest.y += 80.0f;
 				mState = State::MOVE;
 				mIndex.y++;
+				CountDown();
 			}
 		}
 		if (KEY_DOWN(eKeyCode::A))
@@ -236,6 +255,7 @@ namespace ya
 				mDest.x -= 80.0f;
 				mState = State::MOVE;
 				mIndex.x--;
+				CountDown();
 			}
 		}
 		if (KEY_DOWN(eKeyCode::D))
@@ -271,6 +291,7 @@ namespace ya
 				mDest.x += 80.0f;
 				mState = State::MOVE;
 				mIndex.x++;
+				CountDown();
 			}
 		}
 
@@ -343,5 +364,20 @@ namespace ya
 
 	void Player::Dead()
 	{
+		int a = 0;
 	}
+
+	void Player::CountDown(int mNum)
+	{
+		mpScene->SetCurMoveCnt(mpScene->GetCurMoveCnt() - mNum);
+	}
+
+	void Player::GetDamaged(int damage)
+	{
+		CountDown(damage);
+
+		// 데미지 이펙트 넣기
+
+	}
+
 }

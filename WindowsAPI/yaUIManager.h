@@ -1,7 +1,7 @@
 #pragma once
 #include "Common.h"
 #include "yaUiBase.h"
-
+#include "yaPlayScene.h"
 
 namespace ya
 {
@@ -34,6 +34,8 @@ namespace ya
 			return dynamic_cast<T*>(mUIs[type]);
 		}
 
+		void SetScene(PlayScene* scene) { mpScene = scene; }
+		PlayScene* GetScene() { return mpScene; }
 
 
 	private:
@@ -41,5 +43,7 @@ namespace ya
 		static std::queue<eUIType> mRequestUIQueue;
 		static std::stack<UiBase*> mUIBases;
 		static UiBase* mCurrentData;
+
+		PlayScene* mpScene;
 	};
 }

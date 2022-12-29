@@ -14,11 +14,14 @@
 #include "yaMonster.h"
 #include "yaUIManager.h"
 #include "yaHUD.h"
+#include "yaPanel.h"
+#include "yaTransition.h"
 
 namespace ya
 {
-	PlayScene::PlayScene()
+	PlayScene::PlayScene()	
 	{
+
 	}
 
 	PlayScene::~PlayScene()
@@ -27,6 +30,9 @@ namespace ya
 
 	void PlayScene::Initialize()
 	{
+		SetInitMoveCnt(23);
+		SetCurMoveCnt(23);
+
 		TileMap::Initiailize();
 
 		BgImageObject* bg = new BgImageObject();
@@ -37,7 +43,8 @@ namespace ya
 
 		mPlayer = ya::object::Instantiate<Player>(eColliderLayer::Player);
 		TileMap::PushGameObject(Index(7, 2), mPlayer);
-
+		mPlayer->SetScene(this);
+		
 		mons[0] = ya::object::Instantiate<Monster>(Vector2{ 800, 320 }, eColliderLayer::Monster);
 		mons[1] = ya::object::Instantiate<Monster>(Vector2{ 720, 400 }, eColliderLayer::Monster);
 		mons[2] = ya::object::Instantiate<Monster>(Vector2{ 880, 400 }, eColliderLayer::Monster);
@@ -69,12 +76,26 @@ namespace ya
 		flameBases[3]->SetImage(L"flame02", L"FLAMEbase02.bmp");
 
 		// UI
-		UIManager::Push(eUIType::INFO);
-		HUD* hud = UIManager::GetUiInstant<HUD>(eUIType::INFO);
-		UIManager::Push(eUIType::INFO);
-		HUD* hud2 = UIManager::GetUiInstant<HUD>(eUIType::INFO);
+		UIManager::Push(eUIType::LEFTBG);
+		HUD* hud3 = UIManager::GetUiInstant<HUD>(eUIType::LEFTBG);
+		hud3->SetTarget(mPlayer);
+		hud3->SetScene(this);
+
+		UIManager::Push(eUIType::RIGHTBG);
+		HUD* hud4 = UIManager::GetUiInstant<HUD>(eUIType::RIGHTBG);
+		hud4->SetTarget(mPlayer);
+		hud4->SetScene(this);
+
+		UIManager::Push(eUIType::STEP);
+		HUD* hud = UIManager::GetUiInstant<HUD>(eUIType::STEP);
 		hud->SetTarget(mPlayer);
+		hud->SetScene(this);
+
+		UIManager::Push(eUIType::ROUND);
+		HUD* hud2 = UIManager::GetUiInstant<HUD>(eUIType::ROUND);
 		hud2->SetTarget(mPlayer);
+		hud2->SetScene(this);
+
 
 
 		// Wall
@@ -145,6 +166,12 @@ namespace ya
 
 		TileMap::CheckSuccess(mPlayer);
 
+		if (KEY_DOWN(eKeyCode::R))
+		{
+			UIManager::Push(eUIType::TPANEL);
+			//Panel* panel = UIManager::GetUiInstant<Panel>(eUIType::TPANEL);
+		}
+
 	}
 
 	void PlayScene::Render(HDC hdc)
@@ -153,12 +180,12 @@ namespace ya
 		wchar_t szFloat[50] = {};
 		swprintf_s(szFloat, 50, L"Play Scene");
 		int strLen = wcsnlen_s(szFloat, 50);
-		TextOut(hdc, 10, 30, szFloat, strLen);
+		TextOut(hdc, 500, 30, szFloat, strLen);
 
 		std::wstring pos = L"x : " + std::to_wstring(mPlayerPos.x)
 			+ L" y : " + std::to_wstring(mPlayerPos.y);
 
-		TextOut(hdc, 10, 60, pos.c_str(), pos.length());
+		TextOut(hdc, 500, 60, pos.c_str(), pos.length());
 
 	}
 

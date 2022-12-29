@@ -1,5 +1,7 @@
 #pragma once
 #include "yaUiBase.h"
+#include "yaPlayScene.h"
+//#include "Common.h"
 
 namespace ya
 {
@@ -19,8 +21,25 @@ namespace ya
 
 		void SetTarget(GameObject* target) { mTarget = target; }
 
+		void SetScene(PlayScene* scene) { mpScene = scene; }
+
+		void LoadFont();
+
+		void WriteCounterText(HDC hdc, int posX, int posY, std::wstring _szMessage);
+		void WriteNameText(HDC hdc, int posX, int posY, int width, int height, std::wstring _szMessage);
+		void WriteScriptText(HDC hdc, int posX, int posY, int width, int height, std::wstring _szMessage);
+
+		void Exit();
+
 	private:
 		GameObject* mTarget;
+		PlayScene* mpScene;
+
+		std::wstring mStageName[9] = { L"グ", L"ケ", L"ゲ", L"コ", L"ゴ", L"サ", L"ザ", L"シ", L"ジ" };
+
+		HFONT mCounterFont;
+		HFONT mNameFont;
+		HFONT mScriptFont;
 	};
 
 }
