@@ -10,13 +10,15 @@ namespace ya
 	public:
 		struct Sprite
 		{
+			Image* img;
 			Vector2 leftTop; // 좌측상단 시작좌표
 			Vector2 size; // 좌측상단으로부터 잘라낼 가로 세로 길이
 			Vector2 offset;
 			float duration; //해당 프레임 유지 시간
 
 			Sprite() 
-				: leftTop(0.0f, 0.0f)
+				: img(nullptr)
+				, leftTop(0.0f, 0.0f)
 				, size(0.0f, 0.0f)
 				, offset(0.0f, 0.0f)
 				, duration(0.0f)

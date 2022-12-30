@@ -9,17 +9,6 @@ namespace ya
 	class Player : public GameObject
 	{
 	public:
-		enum class State
-		{
-			IDLE,
-			MOVE,
-			ATTACK,
-			VICTORY,
-			DEAD,
-			NONE,
-		};
-
-
 		Player();
 		~Player();
 
@@ -32,12 +21,14 @@ namespace ya
 
 		void AttackComplete();
 		void DeathComplete();
-		void SetState(State state) { mState = state; }
+		void SetState(PlayerState state) { mState = state; }
+		PlayerState GetState() { return mState; }
 
 		void Idle();
 		void Attack();
 		void Move(Direction dir);
 		void Victory();
+		void DeadStart();
 		void Dead();
 		void GetDamaged(int damage);
 
@@ -46,9 +37,10 @@ namespace ya
 		Direction GetDir() { return mDir; }
 
 	private:
-		State mState;
+		PlayerState mState;
 		Direction mDir;
 		Vector2 mDest;
+		float mSumTime = 0.0f;
 
 		float mCoff;
 		float mSpeed;

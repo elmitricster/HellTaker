@@ -16,11 +16,10 @@ namespace ya
 	void UIManager::Initialize()
 	{
 		// 여기에서 ui 메모리에 할당하면 된다.
-		//Button* button = new Button(eUIType::HP);
-		//mUIs.insert(std::make_pair(eUIType::HP, button));
-		//button->SetPos(Vector2(0.0f, 0.0f));
-		////newUI->SetSize(Vector2(500.0f, 100.0f));
-		//button->ImageLoad(L"HPBAR", L"..\\Resources\\Image\\HPBAR.bmp");
+		Button* button = new Button(eUIType::FUNC);
+		mUIs.insert(std::make_pair(eUIType::FUNC, button));
+		button->SetPos(Vector2(480.0f, 810.0f));
+		button->ImageLoad(L"FuncUI", L"..\\Resources\\Image\\Func.bmp");
 		
 		HUD* leftHud = new HUD(eUIType::STEP);
 		mUIs.insert(std::make_pair(eUIType::STEP, leftHud));

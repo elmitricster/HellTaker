@@ -233,5 +233,6 @@ namespace ya
 
 	void Monster::Dead()
 	{
+
 	}
 }

@@ -46,5 +46,7 @@ namespace ya
 	void Transition::TransitionComplete()
 	{
 		UIManager::Pop(eUIType::TPANEL);
+
+		mAnimator->Play(L"Transition", false);
 	}
 }

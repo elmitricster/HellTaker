@@ -60,15 +60,16 @@ enum class eColliderLayer
 	BackGround,
 	Tile,
 	Rock,
-	Player,
+	FlameBase,
 	Player_Projecttile,
 	Monster,
 	Monster_Projecttile,
 	NPC,
-	FlameBase,
+	LoveSign,
 	Ground,
 	Wall,
 	Effect,
+	Player,
 
 	//UI
 	BackPack,
@@ -90,6 +91,7 @@ enum class eCameraEffect
 
 enum class eUIType
 {
+	FUNC,
 	TPANEL,
 	STEP,
 	ROUND,
@@ -133,12 +135,24 @@ enum class eGameObjectType
 	Static_Spike,
 	Dynamic_Spike,
 	FlameBase,
+	LoveSign,
 	Tile,
 	Wall,
 	Effect,
 	Counter,
 	Transition,
 	None,
+};
+
+enum class PlayerState
+{
+	IDLE,
+	MOVE,
+	ATTACK,
+	VICTORY,
+	DEADSTART,
+	DEAD,
+	NONE,
 };
 
 

@@ -193,7 +193,6 @@ namespace ya
 		RECT rt = { posX, posY, posX + width, posY + height };
 		DrawText(hdc, _szMessage.c_str(), -1, &rt, DT_LEFT | DT_NOCLIP);
 
-
 		// restore text color and font
 		SetTextColor(hdc, oldTextColor);
 		SelectObject(hdc, oldFont);

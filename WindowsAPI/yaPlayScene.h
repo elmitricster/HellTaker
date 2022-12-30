@@ -26,8 +26,9 @@ namespace ya
 		int GetInitMoveCnt() { return InitMoveCnt; }
 		void SetCurMoveCnt(int move) { CurMoveCnt = move; }
 		int GetCurMoveCnt() { return CurMoveCnt; }
-		
 		int GetChapterNum() { return ChapterNum; }
+
+		void Restart();
 
 	private:
 		Player* mPlayer;
@@ -41,6 +42,7 @@ namespace ya
 		int InitMoveCnt;
 		int CurMoveCnt;
 		int ChapterNum = 0;
+		int mSumTime = 0.0f;
 	};
 
 }

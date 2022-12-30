@@ -16,6 +16,8 @@
 #include "yaHUD.h"
 #include "yaPanel.h"
 #include "yaTransition.h"
+#include "yaLoveSign.h"
+#include "yaTime.h"
 
 namespace ya
 {
@@ -75,6 +77,9 @@ namespace ya
 		flameBases[3] = ya::object::Instantiate<FlameBase>(Vector2{ 799, 170 }, eColliderLayer::FlameBase);
 		flameBases[3]->SetImage(L"flame02", L"FLAMEbase02.bmp");
 
+		LoveSign* lovesing = ya::object::Instantiate<LoveSign>(Vector2{ 1005, 620 }, eColliderLayer::LoveSign);
+
+
 		// UI
 		UIManager::Push(eUIType::LEFTBG);
 		HUD* hud3 = UIManager::GetUiInstant<HUD>(eUIType::LEFTBG);
@@ -95,6 +100,9 @@ namespace ya
 		HUD* hud2 = UIManager::GetUiInstant<HUD>(eUIType::ROUND);
 		hud2->SetTarget(mPlayer);
 		hud2->SetScene(this);
+
+		UIManager::Push(eUIType::FUNC);
+
 
 
 
@@ -149,8 +157,6 @@ namespace ya
 		TileMap::PushGameObject(Index(2, 3), wall);
 		TileMap::PushGameObject(Index(2, 4), wall);
 
-		
-
 	}
 
 	void PlayScene::Tick()
@@ -169,7 +175,10 @@ namespace ya
 		if (KEY_DOWN(eKeyCode::R))
 		{
 			UIManager::Push(eUIType::TPANEL);
-			//Panel* panel = UIManager::GetUiInstant<Panel>(eUIType::TPANEL);
+
+			mPlayer->SetState(PlayerState::DEAD);
+
+			//Restart(); // 여기서 하면 버그는 없는데 초기화 시점이 어긋남
 		}
 
 	}
@@ -198,4 +207,54 @@ namespace ya
 	{
 
 	}
+
+	void PlayScene::Restart()
+	{
+		if (mons[0]->IsDeath())
+		{
+			mons[0] = ya::object::Instantiate<Monster>(Vector2{ 800, 320 }, eColliderLayer::Monster);
+			TileMap::PushGameObject(Index(5, 3), (GameObject*)mons[0]);
+		}
+		else
+		{
+			TileMap::MoveGameObject(Index(5, 3), (GameObject*)mons[0]);
+			mons[0]->SetPos(Vector2{ 800, 320 });
+		}
+
+		if (mons[1]->IsDeath())
+		{
+			mons[1] = ya::object::Instantiate<Monster>(Vector2{ 720, 400 }, eColliderLayer::Monster);
+			TileMap::PushGameObject(Index(4, 4), (GameObject*)mons[1]);
+		}
+		else
+		{
+			TileMap::MoveGameObject(Index(4, 4), (GameObject*)mons[1]);
+			mons[1]->SetPos(Vector2{ 720, 400 });
+		}
+
+		if (mons[2]->IsDeath())
+		{
+			mons[2] = ya::object::Instantiate<Monster>(Vector2{ 880, 400 }, eColliderLayer::Monster);
+			TileMap::PushGameObject(Index(6, 4), (GameObject*)mons[2]);
+		}
+		else
+		{
+			TileMap::MoveGameObject(Index(6, 4), (GameObject*)mons[2]);
+			mons[2]->SetPos(Vector2{ 880, 400 });
+		}
+
+		TileMap::MoveGameObject(Index(3, 6), rocks[1]);
+		TileMap::MoveGameObject(Index(6, 6), rocks[0]);
+		TileMap::MoveGameObject(Index(3, 7), rocks[2]);
+		TileMap::MoveGameObject(Index(5, 7), rocks[3]);
+
+		rocks[0]->SetPos(Vector2{ 880, 560 });
+		rocks[1]->SetPos(Vector2{ 640, 560 });
+		rocks[2]->SetPos(Vector2{ 640, 640 });
+		rocks[3]->SetPos(Vector2{ 800, 640 });
+
+	}
+
+
+	
 }

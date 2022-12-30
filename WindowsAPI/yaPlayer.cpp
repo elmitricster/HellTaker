@@ -20,6 +20,7 @@
 #include "yaObject.h"
 #include "yaTransition.h"
 #include "yaPlayScene.h"
+#include "def.h"
 
 namespace ya
 {
@@ -37,7 +38,6 @@ namespace ya
 		}
 		
 		mAnimator = new Animator();
-		//mAnimator->CreateAnimations(L"..\\Resources\\Animations\\Player\\Idle", L"HeroIdle");
 
 		mAnimator->CreateAnimation(L"Idle", mImage
 			, Vector2(0.0f, 0.0f), Vector2(100.0f, 130.0f)
@@ -55,6 +55,7 @@ namespace ya
 			, Vector2(0.0f, 440.0f), Vector2(100.0f, 130.0f)
 			, Vector2(10.0f, -20.0f), 25, 0.12f);
 
+		mAnimator->CreateAnimations(L"..\\Resources\\Animations\\Player\\Death", L"Death", Vector2(50, -150));
 
 		mAnimator->Play(L"Idle", true);
 
@@ -63,6 +64,9 @@ namespace ya
 
 		mAnimator->FindEvents(L"Attack")->mCompleteEvent = std::bind(&Player::AttackComplete, this);
 		mAnimator->GetCompleteEvent(L"Attack") = std::bind(&Player::AttackComplete, this);
+
+		//mAnimator->FindEvents(L"Death")->mEndEvent = std::bind(&Player::DeathComplete, this);
+		//mAnimator->GetEndEvent(L"Death") = std::bind(&Player::DeathComplete, this);
 
 		//mAnimator->FindEvents(L"Win")->mCompleteEvent = std::bind(&Player::AttackComplete, this);
 		//mAnimator->GetCompleteEvent(L"Win") = std::bind(&Player::AttackComplete, this);
@@ -83,24 +87,51 @@ namespace ya
 	void Player::Tick()
 	{
 		GameObject::Tick();
-		
+
 		switch (mState)
 		{
-		case ya::Player::State::IDLE:
+		case PlayerState::IDLE:
 			Idle();
 			break;
-		case ya::Player::State::MOVE:
+		case PlayerState::MOVE:
 			Move(mDir);
 			break;
-		case ya::Player::State::ATTACK:
+		case PlayerState::ATTACK:
 			Attack();
 			break;
-		case ya::Player::State::VICTORY:
+		case PlayerState::VICTORY:
 			Victory();
 			break;
-		case ya::Player::State::DEAD:
+		case PlayerState::DEADSTART:
+			DeadStart();
+			break;
+		case PlayerState::DEAD:
 			Dead();
 			break;
+		}
+
+		if (mpScene->GetCurMoveCnt() < 0)
+		{
+			if (KEY_DOWN(eKeyCode::W))
+			{
+				mAnimator->Play(L"Death", false);
+				mState = PlayerState::DEADSTART;
+			}
+			else if (KEY_DOWN(eKeyCode::A))
+			{
+				mAnimator->Play(L"Death", false);
+				mState = PlayerState::DEADSTART;
+			}
+			else if (KEY_DOWN(eKeyCode::S))
+			{
+				mAnimator->Play(L"Death", false);
+				mState = PlayerState::DEADSTART;
+			}
+			if (KEY_DOWN(eKeyCode::D))
+			{
+				mAnimator->Play(L"Death", false);
+				mState = PlayerState::DEADSTART;
+			}
 		}
 	}
 
@@ -127,24 +158,20 @@ namespace ya
 	void Player::AttackComplete()
 	{
 		mAnimator->Play(L"Idle", true);
-		mState = State::IDLE;
+		mState = PlayerState::IDLE;
 	}
 
 	void Player::DeathComplete()
 	{
-		// Transition 추가
-
-		// 스테이지 초기화 작업 추가
-
-		mState = State::IDLE;
+		//mAnimator->Play(L"Transition", false);
+		//UIManager::Push(eUIType::TPANEL);
+		//mAnimator->Play(L"Idle", true);
+		//mState = PlayerState::DEAD;
 	}
 
 	void Player::Idle()
 	{
-		if (mpScene->GetCurMoveCnt() < 0)
-		{
-			mState = State::DEAD;
-		}
+		
 
 		if (KEY_DOWN(eKeyCode::W))
 		{
@@ -161,7 +188,8 @@ namespace ya
 					monster->Damaged(Direction::UP);
 					mAnimator->Play(L"Attack", false);
 					AttackEffect* atk = ya::object::Instantiate<AttackEffect>(nextObj->GetPos(), eColliderLayer::Effect);
-					mState = State::ATTACK;
+					mState = PlayerState::ATTACK;
+					CountDown();
 				}
 				else if (nextObj->GetObjType() == eGameObjectType::Rock)
 				{
@@ -169,7 +197,8 @@ namespace ya
 					rock->Damaged(Direction::UP);
 					mAnimator->Play(L"Attack", false);
 					AttackEffect* atk = ya::object::Instantiate<AttackEffect>(nextObj->GetPos(), eColliderLayer::Effect);
-					mState = State::ATTACK;
+					mState = PlayerState::ATTACK;
+					CountDown();
 				}
 			}
 			else
@@ -178,7 +207,7 @@ namespace ya
 				mDir = Direction::UP;
 				mDest = GetPos();
 				mDest.y -= 80.0f;
-				mState = State::MOVE;
+				mState = PlayerState::MOVE;
 				mIndex.y--;
 				CountDown();
 			}
@@ -198,7 +227,8 @@ namespace ya
 					monster->Damaged(Direction::DOWN);
 					mAnimator->Play(L"Attack", false);
 					AttackEffect* atk = ya::object::Instantiate<AttackEffect>(nextObj->GetPos(), eColliderLayer::Effect);
-					mState = State::ATTACK;
+					mState = PlayerState::ATTACK;
+					CountDown();
 				} 
 				else if (nextObj->GetObjType() == eGameObjectType::Rock)
 				{
@@ -206,7 +236,8 @@ namespace ya
 					rock->Damaged(Direction::DOWN);
 					mAnimator->Play(L"Attack", false);
 					AttackEffect* atk = ya::object::Instantiate<AttackEffect>(nextObj->GetPos(), eColliderLayer::Effect);
-					mState = State::ATTACK;
+					mState = PlayerState::ATTACK;
+					CountDown();
 				}
 			}
 			else
@@ -215,14 +246,13 @@ namespace ya
 				mDir = Direction::DOWN;
 				mDest = GetPos();
 				mDest.y += 80.0f;
-				mState = State::MOVE;
+				mState = PlayerState::MOVE;
 				mIndex.y++;
 				CountDown();
 			}
 		}
 		if (KEY_DOWN(eKeyCode::A))
 		{
-			
 			Index nextIndex = mIndex;
 			nextIndex.x--;
 
@@ -236,7 +266,8 @@ namespace ya
 					monster->Damaged(Direction::LEFT);
 					mAnimator->Play(L"Attack", false);
 					AttackEffect* atk = ya::object::Instantiate<AttackEffect>(nextObj->GetPos(), eColliderLayer::Effect);
-					mState = State::ATTACK;
+					mState = PlayerState::ATTACK;
+					CountDown();
 				}
 				else if (nextObj->GetObjType() == eGameObjectType::Rock)
 				{
@@ -244,7 +275,8 @@ namespace ya
 					rock->Damaged(Direction::LEFT);
 					mAnimator->Play(L"Attack", false);
 					AttackEffect* atk = ya::object::Instantiate<AttackEffect>(nextObj->GetPos(), eColliderLayer::Effect);
-					mState = State::ATTACK;
+					mState = PlayerState::ATTACK;
+					CountDown();
 				}
 			}
 			else
@@ -253,7 +285,7 @@ namespace ya
 				mDir = Direction::LEFT;
 				mDest = GetPos();
 				mDest.x -= 80.0f;
-				mState = State::MOVE;
+				mState = PlayerState::MOVE;
 				mIndex.x--;
 				CountDown();
 			}
@@ -273,7 +305,8 @@ namespace ya
 					monster->Damaged(Direction::RIGHT);
 					mAnimator->Play(L"Attack", false);
 					AttackEffect* atk = ya::object::Instantiate<AttackEffect>(nextObj->GetPos(), eColliderLayer::Effect);
-					mState = State::ATTACK;
+					mState = PlayerState::ATTACK;
+					CountDown();
 				}
 				else if (nextObj->GetObjType() == eGameObjectType::Rock)
 				{
@@ -281,7 +314,8 @@ namespace ya
 					rock->Damaged(Direction::RIGHT);
 					mAnimator->Play(L"Attack", false);
 					AttackEffect* atk = ya::object::Instantiate<AttackEffect>(nextObj->GetPos(), eColliderLayer::Effect);
-					mState = State::ATTACK;
+					mState = PlayerState::ATTACK;
+					CountDown();
 				}
 			}
 			else {
@@ -289,7 +323,7 @@ namespace ya
 				mDir = Direction::RIGHT;
 				mDest = GetPos();
 				mDest.x += 80.0f;
-				mState = State::MOVE;
+				mState = PlayerState::MOVE;
 				mIndex.x++;
 				CountDown();
 			}
@@ -311,7 +345,7 @@ namespace ya
 			if (abs(pos.x - mDest.x) < 3.0f)
 			{
 				SetPos(mDest);
-				mState = State::IDLE;
+				mState = PlayerState::IDLE;
 				mAnimator->Play(L"Idle", true);
 			}
 		}
@@ -321,7 +355,7 @@ namespace ya
 			if (abs(pos.x - mDest.x) < 3.0f)
 			{
 				SetPos(mDest);
-				mState = State::IDLE;
+				mState = PlayerState::IDLE;
 				mAnimator->Play(L"Idle", true);
 			}
 		}
@@ -331,7 +365,7 @@ namespace ya
 			if (abs(pos.y - mDest.y) < 3.0f)
 			{
 				SetPos(mDest);
-				mState = State::IDLE;
+				mState = PlayerState::IDLE;
 				mAnimator->Play(L"Idle", true);
 			}
 		}
@@ -341,7 +375,7 @@ namespace ya
 			if (abs(pos.y - mDest.y) < 3.0f)
 			{
 				SetPos(mDest);
-				mState = State::IDLE;
+				mState = PlayerState::IDLE;
 				mAnimator->Play(L"Idle", true);
 			}
 		}
@@ -362,9 +396,37 @@ namespace ya
 		mAnimator->Play(L"Success", false);
 	}
 
+	void Player::DeadStart()
+	{
+		mSumTime += Time::DeltaTime();
+
+		if (mSumTime > 1.5f)
+		{
+			UIManager::Push(eUIType::TPANEL);
+			mState = PlayerState::DEAD;
+
+			mSumTime = 0;
+		}
+	}
+
 	void Player::Dead()
 	{
-		int a = 0;
+		mSumTime += Time::DeltaTime();
+
+		TileMap::MoveGameObject(Index(7, 2), this);
+		
+		//SetPos({ -100.0f, -100.0f });
+	
+		if (mSumTime > 1.5f)
+		{
+			SetPos({ 960.0f, 240.0f });
+			mAnimator->Play(L"Idle", true);
+			SetState(PlayerState::IDLE);
+			mpScene->SetCurMoveCnt(mpScene->GetInitMoveCnt());
+			mpScene->Restart(); // 여기서하면 초기화 시점은 맞는데 버그가 일어남
+
+			mSumTime = 0;
+		}
 	}
 
 	void Player::CountDown(int mNum)
