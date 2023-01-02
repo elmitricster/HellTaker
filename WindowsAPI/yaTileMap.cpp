@@ -2,11 +2,13 @@
 #include "Common.h"
 #include "yaGameObject.h"
 #include "yaSceneManager.h"
-#include "yaUIManager.h"
+#include "yaTime.h"
 
 namespace ya
 {
 	std::vector<std::vector<GameObject*>> TileMap::mMap;
+	bool TileMap::mCheckClear = true;;
+	float TileMap::mSumTime = 0.0f;
 
 	void TileMap::Initiailize()
 	{	
@@ -14,6 +16,8 @@ namespace ya
 		mMap.resize(9);
 		for (size_t i = 0; i < 9; i++)
 			mMap[i].resize(11);
+
+		SetCheckClear(true);
 	}
 
 	void TileMap::Tick()
@@ -56,11 +60,16 @@ namespace ya
 		{
 			return;
 		}
-		else if (mMap[7][7]->GetObjType() == eGameObjectType::Player)
+		else if (mMap[7][7]->GetObjType() == eGameObjectType::Player && GetCheckClear())
 		{
-			/*SceneManager::ChangeScene(eSceneType::End);
-			UIManager::Pop(eUIType::STEP);
-			UIManager::Pop(eUIType::ROUND);*/
+			mSumTime += Time::DeltaTime();
+
+			if (mSumTime > 1.0f)
+			{
+				SceneManager::ChangeScene(eSceneType::End);
+
+				SetCheckClear(false);
+			}
 		}
 	}
 

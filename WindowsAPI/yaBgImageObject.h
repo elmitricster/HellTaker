@@ -10,6 +10,7 @@ namespace ya
 	{
 	public:
 		BgImageObject();
+		BgImageObject(Vector2 position);
 		~BgImageObject();
 
 		virtual void Initialize() override;

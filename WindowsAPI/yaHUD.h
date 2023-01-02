@@ -1,7 +1,7 @@
 #pragma once
 #include "yaUiBase.h"
-#include "yaPlayScene.h"
-//#include "Common.h"
+//#include "yaPlayScene.h"
+//#include "yaEndScene.h"
 
 namespace ya
 {
@@ -21,7 +21,7 @@ namespace ya
 
 		void SetTarget(GameObject* target) { mTarget = target; }
 
-		void SetScene(PlayScene* scene) { mpScene = scene; }
+		void SetPlayScene(PlayScene* scene) { mpScene = scene; }
 
 		void LoadFont();
 

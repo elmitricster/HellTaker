@@ -223,6 +223,9 @@
     <ClInclude Include="yaLoveSign.h">
       <Filter>Engine\GameObject\Game</Filter>
     </ClInclude>
+    <ClInclude Include="yaDialogueNPC.h">
+      <Filter>Engine\GameObject\Game</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WindowsAPI.rc">
@@ -380,6 +383,9 @@
       <Filter>Engine\Manager</Filter>
     </ClCompile>
     <ClCompile Include="yaLoveSign.cpp">
+      <Filter>Engine\GameObject\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="yaDialogueNPC.cpp">
       <Filter>Engine\GameObject\Game</Filter>
     </ClCompile>
   </ItemGroup>

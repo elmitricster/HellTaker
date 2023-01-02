@@ -32,7 +32,7 @@ namespace ya
 		void Dead();
 		void GetDamaged(int damage);
 
-		void SetScene(PlayScene* scene) { mpScene = scene; }
+		void SetPlayScene(PlayScene* scene) { mpScene = scene; }
 
 		Direction GetDir() { return mDir; }
 

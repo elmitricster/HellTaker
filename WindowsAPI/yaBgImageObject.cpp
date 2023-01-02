@@ -13,6 +13,12 @@ namespace ya
 		SetScale(Vector2::One);
 	}
 
+	BgImageObject::BgImageObject(Vector2 position)
+		: mImage(nullptr)
+	{
+		SetPos(position);
+	}
+
 	BgImageObject::~BgImageObject()
 	{
 

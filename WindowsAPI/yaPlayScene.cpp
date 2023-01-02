@@ -45,7 +45,7 @@ namespace ya
 
 		mPlayer = ya::object::Instantiate<Player>(eColliderLayer::Player);
 		TileMap::PushGameObject(Index(7, 2), mPlayer);
-		mPlayer->SetScene(this);
+		mPlayer->SetPlayScene(this);
 		
 		mons[0] = ya::object::Instantiate<Monster>(Vector2{ 800, 320 }, eColliderLayer::Monster);
 		mons[1] = ya::object::Instantiate<Monster>(Vector2{ 720, 400 }, eColliderLayer::Monster);
@@ -77,33 +77,31 @@ namespace ya
 		flameBases[3] = ya::object::Instantiate<FlameBase>(Vector2{ 799, 170 }, eColliderLayer::FlameBase);
 		flameBases[3]->SetImage(L"flame02", L"FLAMEbase02.bmp");
 
-		LoveSign* lovesing = ya::object::Instantiate<LoveSign>(Vector2{ 1005, 620 }, eColliderLayer::LoveSign);
+		LoveSign* lovesign = ya::object::Instantiate<LoveSign>(Vector2{ 1005, 620 }, eColliderLayer::LoveSign);
 
 
 		// UI
 		UIManager::Push(eUIType::LEFTBG);
 		HUD* hud3 = UIManager::GetUiInstant<HUD>(eUIType::LEFTBG);
 		hud3->SetTarget(mPlayer);
-		hud3->SetScene(this);
+		hud3->SetPlayScene(this);
 
 		UIManager::Push(eUIType::RIGHTBG);
 		HUD* hud4 = UIManager::GetUiInstant<HUD>(eUIType::RIGHTBG);
 		hud4->SetTarget(mPlayer);
-		hud4->SetScene(this);
+		hud4->SetPlayScene(this);
 
 		UIManager::Push(eUIType::STEP);
 		HUD* hud = UIManager::GetUiInstant<HUD>(eUIType::STEP);
 		hud->SetTarget(mPlayer);
-		hud->SetScene(this);
+		hud->SetPlayScene(this);
 
 		UIManager::Push(eUIType::ROUND);
 		HUD* hud2 = UIManager::GetUiInstant<HUD>(eUIType::ROUND);
 		hud2->SetTarget(mPlayer);
-		hud2->SetScene(this);
+		hud2->SetPlayScene(this);
 
 		UIManager::Push(eUIType::FUNC);
-
-
 
 
 		// Wall
@@ -165,21 +163,22 @@ namespace ya
 
 		mPlayerPos = mPlayer->GetPos();
 
+		TileMap::CheckSuccess(mPlayer);
+
 		if (KEY_DOWN(eKeyCode::N))
 		{
-			SceneManager::ChangeScene(eSceneType::End);
+			TileMap::MoveGameObject(Index(6, 7), mPlayer);
+			mPlayer->SetPos(Vector2{ 880, 640 });
 		}
-
-		TileMap::CheckSuccess(mPlayer);
 
 		if (KEY_DOWN(eKeyCode::R))
 		{
 			UIManager::Push(eUIType::TPANEL);
 
 			mPlayer->SetState(PlayerState::DEAD);
-
-			//Restart(); // 여기서 하면 버그는 없는데 초기화 시점이 어긋남
 		}
+
+
 
 	}
 
@@ -210,6 +209,8 @@ namespace ya
 
 	void PlayScene::Restart()
 	{
+		//TileMap::SetCheckClear(true);
+
 		if (mons[0]->IsDeath())
 		{
 			mons[0] = ya::object::Instantiate<Monster>(Vector2{ 800, 320 }, eColliderLayer::Monster);

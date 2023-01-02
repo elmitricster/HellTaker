@@ -44,18 +44,10 @@ namespace ya
 		Panel* panel = new Panel(eUIType::TPANEL);
 		mUIs.insert(std::make_pair(eUIType::TPANEL, panel));
 		//panel->ImageLoad(L"TransParent", L"..\\Resources\\Image\\BackPack.bmp");
-		panel->SetPos(Vector2(-1.0f, -1.0f));
+		//panel->SetPos(Vector2(-1.0f, -1.0f));
 
 		Transition* trans = new Transition();
 		panel->AddGameObject(trans);
-
-	/*	Counter* counter = new Counter();
-		counter->SetScene(GetScene());
-		leftHud->AddGameObject(counter);*/
-
-
-		//panel->AddChild(button);
-		//panel->AddChild(hud);
 		
 	}
 

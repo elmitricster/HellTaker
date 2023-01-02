@@ -68,8 +68,8 @@ namespace ya
 		//mAnimator->FindEvents(L"Death")->mEndEvent = std::bind(&Player::DeathComplete, this);
 		//mAnimator->GetEndEvent(L"Death") = std::bind(&Player::DeathComplete, this);
 
-		//mAnimator->FindEvents(L"Win")->mCompleteEvent = std::bind(&Player::AttackComplete, this);
-		//mAnimator->GetCompleteEvent(L"Win") = std::bind(&Player::AttackComplete, this);
+		//mAnimator->FindEvents(L"Success")->mCompleteEvent = std::bind(&Player::AttackComplete, this);
+		//mAnimator->GetCompleteEvent(L"Success") = std::bind(&Player::AttackComplete, this);
 
 		AddComponent(mAnimator);
 
@@ -133,6 +133,8 @@ namespace ya
 				mState = PlayerState::DEADSTART;
 			}
 		}
+
+
 	}
 
 	void Player::Render(HDC hdc)
@@ -394,6 +396,8 @@ namespace ya
 	void Player::Victory()
 	{
 		mAnimator->Play(L"Success", false);
+
+
 	}
 
 	void Player::DeadStart()
@@ -423,7 +427,7 @@ namespace ya
 			mAnimator->Play(L"Idle", true);
 			SetState(PlayerState::IDLE);
 			mpScene->SetCurMoveCnt(mpScene->GetInitMoveCnt());
-			mpScene->Restart(); // 여기서하면 초기화 시점은 맞는데 버그가 일어남
+			mpScene->Restart();
 
 			mSumTime = 0;
 		}

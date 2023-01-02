@@ -68,6 +68,7 @@ enum class eColliderLayer
 	LoveSign,
 	Ground,
 	Wall,
+	CutScene,
 	Effect,
 	Player,
 
@@ -132,6 +133,7 @@ enum class eGameObjectType
 	Key,
 	Box,
 	NPC,
+	Dialogue_NPC,
 	Static_Spike,
 	Dynamic_Spike,
 	FlameBase,

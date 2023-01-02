@@ -34,7 +34,7 @@ namespace ya
 			return dynamic_cast<T*>(mUIs[type]);
 		}
 
-		void SetScene(PlayScene* scene) { mpScene = scene; }
+		void SetPlayScene(PlayScene* scene) { mpScene = scene; }
 		PlayScene* GetScene() { return mpScene; }
 
 

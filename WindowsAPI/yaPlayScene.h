@@ -37,7 +37,6 @@ namespace ya
 		Rock* rocks[4];
 		NPC* mNPC;
 		FlameBase* flameBases[4];
-		//Counter* counter;
 
 		int InitMoveCnt;
 		int CurMoveCnt;

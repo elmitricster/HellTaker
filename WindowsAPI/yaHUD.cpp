@@ -5,6 +5,7 @@
 #include "yaResources.h"
 #include "Common.h"
 #include "yaPlayScene.h"
+#include "yaEndScene.h"
 
 namespace ya
 {
@@ -72,7 +73,6 @@ namespace ya
 	{
 
 	}
-
 
 	void HUD::LoadFont()
 	{
@@ -197,8 +197,6 @@ namespace ya
 		SetTextColor(hdc, oldTextColor);
 		SelectObject(hdc, oldFont);
 	}
-
-
 
 	void HUD::Exit()
 	{
