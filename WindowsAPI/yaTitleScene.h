@@ -5,6 +5,7 @@ namespace ya
 {
 	class BeelNPC;
 	class DialogButton;
+	class SelectButton;
 	class TitleScene : public Scene
 	{
 	public:
@@ -28,6 +29,7 @@ namespace ya
 		BeelNPC* mDialogNPC;
 		DialogButton* mDialogBtn;
 		BgImageObject* mBgImage;
+		SelectButton* mSelectBtn[4];
 
 		HFONT mCounterFont;
 		HFONT mNameFont;

@@ -8,9 +8,7 @@
 #include "yaPanel.h"
 #include "yaTransition.h"
 #include "yaTime.h"
-#include "yaPlayer.h"
 #include "yaPlayScene.h"
-#include "yaDialogueNPC.h"
 #include "Common.h"
 #include "yaResources.h"
 #include "yaAnimator.h"
@@ -29,13 +27,12 @@ namespace ya
 
 	void EndScene::Initialize()
 	{
-		BgImageObject* bg = new BgImageObject(Vector2(0.0f, 150.0f));
-		bg->SetImage(L"dialogueBG01", L"dialogueBG01.bmp");
-		bg->Initialize();
+		mBgImage = new BgImageObject(Vector2(-500.0f, -500.0f));
+		mBgImage->SetImage(L"EndBG01", L"end_CutScene01.bmp");
+		mBgImage->Initialize();
 
-		AddGameObject(bg, eColliderLayer::BackGround);
+		AddGameObject(mBgImage, eColliderLayer::BackGround);
 
-		mDialogNPC = ya::object::Instantiate<DialogueNPC>(Vector2{ 790, 332 }, eColliderLayer::CutScene);
 		mDialogBtn = ya::object::Instantiate<DialogButton>(Vector2{ 800, 800 }, eColliderLayer::CutScene);
 	}
 
@@ -50,45 +47,87 @@ namespace ya
 
 		if (cutSceneNum == 1)
 		{
-			mDialogBtn->Death();
+			mBgImage->SetPos(Vector2{ 0.0f, 0.0f });
 		}
-			
+
 		if (cutSceneNum == 2)
 		{
-			mDialogNPC->SetImage(L"Pand_flust", L"Pand_flust.bmp");
-			mDialogNPC->SetPos(Vector2{ 790, 352 });
+			mBgImage->SetImage(L"EndBG02", L"end_CutScene02.bmp");
 		}
 
 		if (cutSceneNum == 3)
 		{
-			SceneManager::ChangeScene(eSceneType::Play);
+			mBgImage->SetImage(L"EndBG03", L"end_CutScene03.bmp");
 		}
+
+		if (cutSceneNum == 4)
+		{
+			mBgImage->Death();
+		}
+
+		if (cutSceneNum == 5)
+		{
+			ExitProcess(0);
+		}
+
+
 	}
+
 	void EndScene::Render(HDC hdc)
 	{
 		Scene::Render(hdc);
 
-		wchar_t szFloat[50] = {};
-		swprintf_s(szFloat, 50, L"End Scene");
-		int strLen = wcsnlen_s(szFloat, 50);
-		TextOut(hdc, 50, 30, szFloat, strLen);
+		std::wstring endDialog = L"그리하여 당신의 여정은 끝이 났다.";
+		std::wstring endDialog2 = L"악마들을 지옥에서 무사히 데려왔다.\n그리고 헬테이커라고 알려지게 됐지.";
+		std::wstring endDialog3 = L"하지만 쉽지 않은 삶일 터이다.\n분명 짧고, 또 고난으로 가득하리.";
+		std::wstring endDialog4 = L"하지만 어떻게 살아가든 삶이란 고달픈 법.\n그러니 그 순간만큼은 즐기는 게 낫겠지.";
+		std::wstring endDialog5 = L"플레이 해주셔서 감사합니다!";
 
+		std::wstring endName = L"게임 제작";
+		std::wstring endName2 = L"어소트락 44기 박주빈";
 		
-		std::wstring npcName = L"● 피곤한 악마 판데모니카 ●";
-		std::wstring npcDialog = L"지옥 고객센터의 판데모니카라고 합니다.\n무엇을 도와드릴까요?";
-		std::wstring npcDialog2 = L"참 달콤한 제안이에요. 커피를 마시고 싶네요.\n피곤해서 정신을 못 차리겠어요.";
 
-		if (cutSceneNum <= 1)
+
+		if (cutSceneNum == 0)
 		{
-			WriteNameText(hdc, 800, 620, 100, 100, npcName);
-			WriteScriptText(hdc, 800, 670, 100, 100, npcDialog);
+			WriteScriptText(hdc, 800, 670, 100, 100, endDialog);
 		}
-		else if (cutSceneNum > 1)
+		else if (cutSceneNum == 1)
 		{
-			WriteNameText(hdc, 800, 620, 100, 100, npcName);
-			WriteScriptText(hdc, 800, 670, 100, 100, npcDialog2);
+			WriteScriptText(hdc, 800, 670, 100, 100, endDialog2);
 		}
-		
+		else if (cutSceneNum == 2)
+		{
+			WriteScriptText(hdc, 800, 670, 100, 100, endDialog3);
+		}
+		else if (cutSceneNum == 3)
+		{
+			WriteScriptText(hdc, 800, 670, 100, 100, endDialog4);
+		}
+		else if (cutSceneNum == 4)
+		{
+			WriteNameText(hdc, 800, 150, 100, 100, endName);
+			WriteScriptText(hdc, 800, 250, 100, 100, endName2);
+			WriteCounterText(hdc, 800, 650, endDialog5);
+		}
+
+
+
+	}
+
+	void EndScene::Enter()
+	{
+		LoadFont();
+	}
+
+	void EndScene::Exit()
+	{
+		RemoveFontResource(L"HeirofLightRegular.ttf");
+		RemoveFontResource(L"HeirofLightBold.ttf");
+
+		DeleteObject(mCounterFont);
+		DeleteObject(mNameFont);
+		DeleteObject(mScriptFont);
 	}
 
 	void EndScene::LoadFont()
@@ -98,7 +137,7 @@ namespace ya
 		AddFontResource(path.c_str());
 
 		LOGFONT lf = LOGFONT{};
-		lf.lfHeight = 150;			// 폰트 크기
+		lf.lfHeight = 50;			// 폰트 크기
 		lf.lfWeight = 0;
 		lf.lfEscapement = 0;
 		lf.lfOrientation = 0;
@@ -120,7 +159,7 @@ namespace ya
 		AddFontResource(path.c_str());
 
 		lf = LOGFONT{};
-		lf.lfHeight = 40;			// 폰트 크기
+		lf.lfHeight = 80;			// 폰트 크기
 		lf.lfWeight = 0;
 		lf.lfEscapement = 0;
 		lf.lfOrientation = 0;
@@ -214,25 +253,5 @@ namespace ya
 		// restore text color and font
 		SetTextColor(hdc, oldTextColor);
 		SelectObject(hdc, oldFont);
-	}
-
-	void EndScene::Enter()
-	{
-		LoadFont();
-
-		/*UIManager::Push(eUIType::RIGHTBG);
-		UIManager::Push(eUIType::LEFTBG);
-		UIManager::Push(eUIType::STEP);
-		UIManager::Push(eUIType::ROUND);*/
-	}
-
-	void EndScene::Exit()
-	{
-		RemoveFontResource(L"HeirofLightRegular.ttf");
-		RemoveFontResource(L"HeirofLightBold.ttf");
-
-		DeleteObject(mCounterFont);
-		DeleteObject(mNameFont);
-		DeleteObject(mScriptFont);
 	}
 }

@@ -20,6 +20,7 @@ enum class eSceneType
 	Logo,
 	Title,
 	Play,
+	Dialog_pand,
 	End,
 	Tool,
 	Max,

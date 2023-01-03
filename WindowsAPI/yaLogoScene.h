@@ -19,6 +19,7 @@ namespace ya
 
 	private:
 		float mSumTime = 0.0f;
+		BgImageObject* mBgImage;
 	};
 
 }

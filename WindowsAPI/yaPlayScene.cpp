@@ -34,7 +34,7 @@ namespace ya
 		
 
 		SetInitMoveCnt(23);
-		SetCurMoveCnt(3);
+		SetCurMoveCnt(23);
 
 		TileMap::Initiailize();
 
@@ -162,15 +162,16 @@ namespace ya
 	void PlayScene::Render(HDC hdc)
 	{
 		Scene::Render(hdc);
-		wchar_t szFloat[50] = {};
+
+		/*wchar_t szFloat[50] = {};
 		swprintf_s(szFloat, 50, L"Play Scene");
 		int strLen = wcsnlen_s(szFloat, 50);
-		TextOut(hdc, 500, 30, szFloat, strLen);
+		TextOut(hdc, 500, 30, szFloat, strLen);*/
 
-		std::wstring pos = L"x : " + std::to_wstring(mPlayerPos.x)
+		/*std::wstring pos = L"x : " + std::to_wstring(mPlayerPos.x)
 			+ L" y : " + std::to_wstring(mPlayerPos.y);
 
-		TextOut(hdc, 500, 60, pos.c_str(), pos.length());
+		TextOut(hdc, 500, 60, pos.c_str(), pos.length());*/
 
 	}
 
@@ -200,12 +201,12 @@ namespace ya
 
 		UIManager::Push(eUIType::TPANEL);
 
-		eSceneType type = SceneManager::GetPlaySceneType();
+		/*eSceneType type = SceneManager::GetPlaySceneType();
 
 		if (type == eSceneType::End)
 		{
 			mPlayer->Victory();
-		}
+		}*/
 	}
 
 	void PlayScene::Exit()

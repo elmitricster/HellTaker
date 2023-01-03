@@ -5,7 +5,7 @@
 #include "yaResources.h"
 #include "Common.h"
 #include "yaPlayScene.h"
-#include "yaEndScene.h"
+#include "yaDialogScene_Pand.h"
 #include "yaUIManager.h"
 
 namespace ya

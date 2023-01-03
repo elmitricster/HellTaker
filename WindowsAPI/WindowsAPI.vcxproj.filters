@@ -121,7 +121,7 @@
     <ClInclude Include="yaAnimator.h">
       <Filter>Engine\Component</Filter>
     </ClInclude>
-    <ClInclude Include="yaEndScene.h">
+    <ClInclude Include="yaDialogScene_Pand.h">
       <Filter>Engine\Scene</Filter>
     </ClInclude>
     <ClInclude Include="yaPlayScene.h">
@@ -226,9 +226,17 @@
     <ClInclude Include="yaMoveEffect.h">
       <Filter>Engine\GameObject\Game</Filter>
     </ClInclude>
-    <ClInclude Include="yaSuccessEffect.h" />
     <ClInclude Include="yaBeelNPC.h">
       <Filter>Engine\GameObject\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="yaSuccessEffect.h">
+      <Filter>Engine\GameObject\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="yaSelectButton.h">
+      <Filter>Engine\GameObject\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="yaEndScene.h">
+      <Filter>Engine\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -293,7 +301,7 @@
     <ClCompile Include="yaCollider.cpp">
       <Filter>Engine\Component</Filter>
     </ClCompile>
-    <ClCompile Include="yaEndScene.cpp">
+    <ClCompile Include="yaDialogScene_Pand.cpp">
       <Filter>Engine\Scene</Filter>
     </ClCompile>
     <ClCompile Include="yaPlayScene.cpp">
@@ -392,9 +400,17 @@
     <ClCompile Include="yaMoveEffect.cpp">
       <Filter>Engine\GameObject\Game</Filter>
     </ClCompile>
-    <ClCompile Include="yaSuccessEffect.cpp" />
     <ClCompile Include="yaBeelNPC.cpp">
       <Filter>Engine\GameObject\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="yaSuccessEffect.cpp">
+      <Filter>Engine\GameObject\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="yaSelectButton.cpp">
+      <Filter>Engine\GameObject\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="yaEndScene.cpp">
+      <Filter>Engine\Scene</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

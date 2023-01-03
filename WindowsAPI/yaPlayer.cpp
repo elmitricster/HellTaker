@@ -169,9 +169,9 @@ namespace ya
 	{
 		mSumTime += Time::DeltaTime();
 		
-		if (mSumTime > 0.5f)
+		if (mSumTime > 0.7f)
 		{
-			SceneManager::ChangeScene(eSceneType::End);
+			SceneManager::ChangeScene(eSceneType::Dialog_pand);
 		}
 	}
 

@@ -25,13 +25,12 @@ namespace ya
 
 	void LogoScene::Initialize()
 	{
-		BgImageObject* bg = new BgImageObject();
-		bg->SetImage(L"LogoBG", L"LogoBG.bmp");
-		bg->Initialize();
+		mBgImage = new BgImageObject();
+		mBgImage->SetImage(L"LogoBG", L"LogoBG.bmp");
+		mBgImage->SetPos(Vector2{-10.0f, -10.0f});
+		mBgImage->Initialize();
 
-		AddGameObject(bg, eColliderLayer::BackGround);
-
-		
+		AddGameObject(mBgImage, eColliderLayer::BackGround);
 
 	}
 
@@ -40,12 +39,14 @@ namespace ya
 		// 오브젝트 tick 을 호출한다.
 		Scene::Tick();
 
-		/*mSumTime += Time::DeltaTime();
+		mBgImage->SetScale(mBgImage->GetScale() + Vector2(0.003f * Time::DeltaTime(), 0.003f * Time::DeltaTime()));
 
-		if (mSumTime > 7.0f)
+		mSumTime += Time::DeltaTime();
+
+		if (mSumTime > 10.0f)
 		{
 			SceneManager::ChangeScene(eSceneType::Title);
-		}*/
+		}
 
 		if (KEY_DOWN(eKeyCode::N))
 		{
@@ -58,10 +59,10 @@ namespace ya
 	{
 		Scene::Render(hdc);
 		
-		wchar_t szFloat[50] = {};
+		/*wchar_t szFloat[50] = {};
 		swprintf_s(szFloat, 50, L"Logo Scene.bmp");
 		int strLen = wcsnlen_s(szFloat, 50);
-		TextOut(hdc, 10, 30, szFloat, strLen);
+		TextOut(hdc, 10, 30, szFloat, strLen);*/
 	}
 
 	void LogoScene::Enter()

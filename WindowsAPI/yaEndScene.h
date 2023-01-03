@@ -3,8 +3,6 @@
 
 namespace ya
 {
-	class DialogueNPC;
-	class DialogButton;
 	class EndScene : public Scene
 	{
 	public:
@@ -24,8 +22,9 @@ namespace ya
 		void WriteNameText(HDC hdc, int posX, int posY, int width, int height, std::wstring _szMessage);
 		void WriteScriptText(HDC hdc, int posX, int posY, int width, int height, std::wstring _szMessage);
 
+
 	private:
-		DialogueNPC* mDialogNPC;
+		BgImageObject* mBgImage;
 		DialogButton* mDialogBtn;
 
 		HFONT mCounterFont;
@@ -33,6 +32,8 @@ namespace ya
 		HFONT mScriptFont;
 
 		int cutSceneNum = 0;
-	};
 
+	};
 }
+
+

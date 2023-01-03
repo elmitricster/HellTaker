@@ -15,6 +15,7 @@
 #include "yaImage.h"
 #include "yaDialogButton.h"
 #include "yaBeelNPC.h"
+#include "yaSelectButton.h"
 
 namespace ya
 {
@@ -36,6 +37,11 @@ namespace ya
 
 		mDialogNPC = ya::object::Instantiate<BeelNPC>(Vector2{ -500, -500 }, eColliderLayer::CutScene);
 		mDialogBtn = ya::object::Instantiate<DialogButton>(Vector2{ 800, 800 }, eColliderLayer::CutScene);
+		mSelectBtn[0] = ya::object::Instantiate<SelectButton>(Vector2{-500, -500}, eColliderLayer::CutScene);
+		mSelectBtn[1] = ya::object::Instantiate<SelectButton>(Vector2{ -500, -500 }, eColliderLayer::CutScene);
+		mSelectBtn[2] = ya::object::Instantiate<SelectButton>(Vector2{ -500, -500 }, eColliderLayer::CutScene);
+		mSelectBtn[3] = ya::object::Instantiate<SelectButton>(Vector2{ -500, -500 }, eColliderLayer::CutScene);
+		mSelectBtn[3]->SetImage(L"selectBtn", L"Button02.bmp");
 	}
 
 	void TitleScene::Tick()
@@ -61,11 +67,34 @@ namespace ya
 		if (cutSceneNum == 2)
 		{
 			mDialogBtn->SetPos(Vector2{ -500, -500 });
+			mSelectBtn[0]->SetPos(Vector2{ 800, 700 });
+			mSelectBtn[1]->SetPos(Vector2{ 800, 770 });
+			mSelectBtn[2]->SetPos(Vector2{ 800, 840 });
+
+			mSelectBtn[3]->SetPos(Vector2{ 800, 700 });
+			
+
+			if (KEY_DOWN(eKeyCode::S))
+			{
+				mSelectBtn[3]->SetPos(mSelectBtn[3]->GetPos() + Vector2{ 0.0f, 70.0f });
+			}
+
+			if (KEY_DOWN(eKeyCode::W))
+			{
+				mSelectBtn[3]->SetPos(mSelectBtn[3]->GetPos() + Vector2{ 0.0f, -70.0f });
+			}
+
 		}
 
 		if (cutSceneNum == 3)
 		{
 			mDialogBtn->SetPos(Vector2{ 800, 800 });
+
+			mSelectBtn[0]->Death();
+			mSelectBtn[1]->Death();
+			mSelectBtn[2]->Death();
+			mSelectBtn[3]->Death();
+
 		}
 
 		if (cutSceneNum == 4)
@@ -107,10 +136,11 @@ namespace ya
 	void TitleScene::Render(HDC hdc)
 	{
 		Scene::Render(hdc);
-		wchar_t szFloat[50] = {};
+
+		/*wchar_t szFloat[50] = {};
 		swprintf_s(szFloat, 50, L"Title Scene");
 		int strLen = wcsnlen_s(szFloat, 50);
-		TextOut(hdc, 10, 30, szFloat, strLen);
+		TextOut(hdc, 10, 30, szFloat, strLen);*/
 
 		std::wstring npcName = L"● 위대한 파리 베엘제붑 ●";
 		std::wstring titleDialog = L"당신은 공허에 휩싸인 것을 느꼈다.\n계속 하려면 [ENTER]키를 누르시오.";
@@ -122,27 +152,34 @@ namespace ya
 		std::wstring titleDialog7 = L"하지만 결코 이루기 쉽지 않은 꿈이지.\n어쩌면 네 목숨을 앗아갈지도 모르고.";
 		std::wstring titleDialog8 = L"\"악마 하렘이 달렸다면, 그 어떤 대가도 싸지.\"\n그리하여 당신은 지옥으로 모험을 떠났네.";
 
+		std::wstring titleBtn = L"새 게임";
+		std::wstring titleBtn2 = L"챕터 선택";
+		std::wstring titleBtn3 = L"나가기";
+
 		if (cutSceneNum == 0)
 		{
 			WriteScriptText(hdc, 800, 670, 100, 100, titleDialog);
 		}
 		else if (cutSceneNum == 1)
 		{
-			WriteNameText(hdc, 800, 620, 100, 100, npcName);
+			WriteNameText(hdc, 800, 610, 100, 100, npcName);
 			WriteScriptText(hdc, 800, 670, 100, 100, titleDialog2);
 		}
 		else if (cutSceneNum == 2)
 		{
-			
+			WriteNameText(hdc, 800, 610, 100, 100, npcName);
+			WriteScriptText(hdc, 800, 680, 100, 100, titleBtn);
+			WriteScriptText(hdc, 800, 750, 100, 100, titleBtn2);
+			WriteScriptText(hdc, 800, 820, 100, 100, titleBtn3);
 		}
 		else if (cutSceneNum == 3)
 		{
-			WriteNameText(hdc, 800, 620, 100, 100, npcName);
+			WriteNameText(hdc, 800, 610, 100, 100, npcName);
 			WriteScriptText(hdc, 800, 670, 100, 100, titleDialog3);
 		}
 		else if (cutSceneNum == 4)
 		{
-			WriteNameText(hdc, 800, 620, 100, 100, npcName);
+			WriteNameText(hdc, 800, 610, 100, 100, npcName);
 			WriteScriptText(hdc, 800, 670, 100, 100, titleDialog4);
 		}
 		else if (cutSceneNum == 5)
