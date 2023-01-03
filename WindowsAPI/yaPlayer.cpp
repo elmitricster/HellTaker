@@ -3,7 +3,6 @@
 #include "Common.h"
 #include "yaSceneManager.h"
 #include "yaInput.h"
-#include "yaMissile.h"
 #include "yaScene.h"
 #include "yaImage.h"
 #include "yaResources.h"
@@ -56,7 +55,7 @@ namespace ya
 			, Vector2(600.0f, 440.0f), Vector2(100.0f, 130.0f)
 			, Vector2(10.0f, -20.0f), 19, 0.15f);
 
-		mAnimator->CreateAnimations(L"..\\Resources\\Animations\\Player\\Death", L"Death", Vector2(50, -150));
+		mAnimator->CreateAnimations(L"..\\Resources\\Animations\\Player\\Death", L"Death", Vector2(270, -100));
 
 		mAnimator->Play(L"Idle", true);
 
@@ -100,9 +99,9 @@ namespace ya
 		case PlayerState::ATTACK:
 			Attack();
 			break;
-		/*case PlayerState::VICTORY:
+		case PlayerState::VICTORY:
 			Victory();
-			break;*/
+			break;
 		case PlayerState::DEADSTART:
 			DeadStart();
 			break;
@@ -134,6 +133,8 @@ namespace ya
 				mState = PlayerState::DEADSTART;
 			}
 		}
+
+		
 
 
 	}
@@ -167,15 +168,10 @@ namespace ya
 	void Player::StageComplete()
 	{
 		mSumTime += Time::DeltaTime();
-
-		//mAnimator->Play(L"Idle", true);
-
-		UIManager::Push(eUIType::TPANEL);
-		SceneManager::ChangeScene(eSceneType::Title);
 		
-		if (mSumTime > 1.0f)
+		if (mSumTime > 0.5f)
 		{
-
+			SceneManager::ChangeScene(eSceneType::End);
 		}
 	}
 
@@ -327,6 +323,10 @@ namespace ya
 					AttackEffect* atk = ya::object::Instantiate<AttackEffect>(nextObj->GetPos(), eColliderLayer::Effect);
 					mState = PlayerState::ATTACK;
 					CountDown();
+				}
+				else if (nextObj->GetObjType() == eGameObjectType::NPC)
+				{
+					mAnimator->Play(L"Success", false);
 				}
 			}
 			else {

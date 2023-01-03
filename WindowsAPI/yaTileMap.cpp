@@ -64,7 +64,7 @@ namespace ya
 
 			if (mSumTime > 1.0f)
 			{
-				SceneManager::ChangeScene(eSceneType::End);
+				//SceneManager::ChangeScene(eSceneType::End);
 
 				SetCheckClear(false);
 			}

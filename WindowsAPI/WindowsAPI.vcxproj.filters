@@ -157,9 +157,6 @@
     <ClInclude Include="yaBgImageObject.h">
       <Filter>Engine\GameObject\Game</Filter>
     </ClInclude>
-    <ClInclude Include="yaMissile.h">
-      <Filter>Engine\GameObject\Game</Filter>
-    </ClInclude>
     <ClInclude Include="yaMonster.h">
       <Filter>Engine\GameObject\Game</Filter>
     </ClInclude>
@@ -171,9 +168,6 @@
     </ClInclude>
     <ClInclude Include="Maths.h">
       <Filter>Engine\Common</Filter>
-    </ClInclude>
-    <ClInclude Include="yaGround.h">
-      <Filter>Engine\GameObject\Game</Filter>
     </ClInclude>
     <ClInclude Include="yaUIManager.h">
       <Filter>Engine\Manager</Filter>
@@ -230,6 +224,10 @@
       <Filter>Engine\GameObject\Game</Filter>
     </ClInclude>
     <ClInclude Include="yaMoveEffect.h">
+      <Filter>Engine\GameObject\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="yaSuccessEffect.h" />
+    <ClInclude Include="yaBeelNPC.h">
       <Filter>Engine\GameObject\Game</Filter>
     </ClInclude>
   </ItemGroup>
@@ -328,9 +326,6 @@
     <ClCompile Include="yaBgImageObject.cpp">
       <Filter>Engine\GameObject\Game</Filter>
     </ClCompile>
-    <ClCompile Include="yaMissile.cpp">
-      <Filter>Engine\GameObject\Game</Filter>
-    </ClCompile>
     <ClCompile Include="yaMonster.cpp">
       <Filter>Engine\GameObject\Game</Filter>
     </ClCompile>
@@ -339,9 +334,6 @@
     </ClCompile>
     <ClCompile Include="yaRigidbody.cpp">
       <Filter>Engine\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="yaGround.cpp">
-      <Filter>Engine\GameObject\Game</Filter>
     </ClCompile>
     <ClCompile Include="yaUIManager.cpp">
       <Filter>Engine\Manager</Filter>
@@ -398,6 +390,10 @@
       <Filter>Engine\GameObject\Game</Filter>
     </ClCompile>
     <ClCompile Include="yaMoveEffect.cpp">
+      <Filter>Engine\GameObject\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="yaSuccessEffect.cpp" />
+    <ClCompile Include="yaBeelNPC.cpp">
       <Filter>Engine\GameObject\Game</Filter>
     </ClCompile>
   </ItemGroup>

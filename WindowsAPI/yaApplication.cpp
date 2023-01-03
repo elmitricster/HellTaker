@@ -46,7 +46,7 @@ namespace ya
 		Camera::Tick();
 		// clear
 		//Brush brush(mWindowData.backBuffer, mBrushes[(UINT)eBrushColor::Gray]);
-		HBRUSH hPrevBrush = (HBRUSH)SelectObject(mWindowData.backBuffer, mBrushes[(UINT)eBrushColor::Black]);
+		HBRUSH hPrevBrush = (HBRUSH)SelectObject(mWindowData.backBuffer, mBrushes[(UINT)eBrushColor::Black2]);
 		Rectangle(mWindowData.backBuffer, 
 			-1, -1, mWindowData.width + 1, mWindowData.height + 1);
 		SelectObject(mWindowData.backBuffer, hPrevBrush);
@@ -143,6 +143,7 @@ namespace ya
 
 		mBrushes[(UINT)eBrushColor::Transparent] = (HBRUSH)GetStockObject(HOLLOW_BRUSH);
 		mBrushes[(UINT)eBrushColor::Black] = (HBRUSH)GetStockObject(BLACK_BRUSH);
+		mBrushes[(UINT)eBrushColor::Black2] = (HBRUSH)CreateSolidBrush(RGB(2, 3, 28));
 		mBrushes[(UINT)eBrushColor::Gray] = (HBRUSH)GetStockObject(GRAY_BRUSH);
 		mBrushes[(UINT)eBrushColor::White] = (HBRUSH)GetStockObject(WHITE_BRUSH);
 

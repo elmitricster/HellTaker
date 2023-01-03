@@ -37,6 +37,7 @@ enum class eBrushColor
 {
 	Transparent, //≈ı∏Ì
 	Black,
+	Black2,
 	Gray, //167 0 67
 	White,
 	End,

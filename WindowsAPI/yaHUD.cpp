@@ -6,6 +6,7 @@
 #include "Common.h"
 #include "yaPlayScene.h"
 #include "yaEndScene.h"
+#include "yaUIManager.h"
 
 namespace ya
 {

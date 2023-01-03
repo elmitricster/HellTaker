@@ -9,7 +9,6 @@
 #include "yaTransition.h"
 #include "yaTime.h"
 #include "yaPlayer.h"
-#include "yaHUD.h"
 #include "yaPlayScene.h"
 #include "yaDialogueNPC.h"
 #include "Common.h"
@@ -221,16 +220,14 @@ namespace ya
 	{
 		LoadFont();
 
-		UIManager::Push(eUIType::RIGHTBG);
+		/*UIManager::Push(eUIType::RIGHTBG);
 		UIManager::Push(eUIType::LEFTBG);
 		UIManager::Push(eUIType::STEP);
-		UIManager::Push(eUIType::ROUND);
+		UIManager::Push(eUIType::ROUND);*/
 	}
 
 	void EndScene::Exit()
 	{
-		
-
 		RemoveFontResource(L"HeirofLightRegular.ttf");
 		RemoveFontResource(L"HeirofLightBold.ttf");
 

@@ -8,10 +8,10 @@
 #include "yaObject.h"
 #include "yaApplication.h"
 #include "yaToolScene.h"
-#include "yaGround.h"
 #include "yaUIManager.h"
 #include "yaHUD.h"
 #include "yaButton.h"
+#include "yaTime.h"
 
 namespace ya
 {
@@ -25,28 +25,13 @@ namespace ya
 
 	void LogoScene::Initialize()
 	{
-		BgImageObject* bg = ya::object::Instantiate<BgImageObject>(eColliderLayer::BackGround);
-		bg->SetImage(L"PIXEL", L"Pixel.bmp");
-		Player* player = ya::object::Instantiate<Player>(eColliderLayer::Player);
-		bg->mPlayer = player;
+		BgImageObject* bg = new BgImageObject();
+		bg->SetImage(L"LogoBG", L"LogoBG.bmp");
+		bg->Initialize();
 
-		//Ground* ground = ya::object::Instantiate<Ground>(eColliderLayer::Ground);
-		//ground->SetPos(Vector2(700.0f, 700.0f));
+		AddGameObject(bg, eColliderLayer::BackGround);
 
-		//UIManager::Push(eUIType::HP);
-		//UIManager::Push(eUIType::MP);
-		//UIManager::Push(eUIType::INVENTORY);
-
-		//HUD* hud = UIManager::GetUiInstant<HUD>(eUIType::HP);
-		//HUD* hud = UIManager::GetUiInstant<HUD>(eUIType::MP);
-		//hud->SetTarget(player);
-
-		//mons[0] = ya::object::Instantiate<Monster>(eColliderLayer::Monster);
-		//mons[1] = ya::object::Instantiate<Monster>(Vector2{ 1600 / 2 + 130, 300 / 2 },eColliderLayer::Monster);
-
-		//ya::Scene* scene = ya::SceneManager::GetScene(eSceneType::Tool);
-		//ya::ToolScene* toolScene = dynamic_cast<ya::ToolScene*>(scene);
-		//toolScene->LoadTilePalette(L"..\\Resources\\TileSaveFiles\\Test");
+		
 
 	}
 
@@ -55,12 +40,18 @@ namespace ya
 		// 오브젝트 tick 을 호출한다.
 		Scene::Tick();
 
+		/*mSumTime += Time::DeltaTime();
+
+		if (mSumTime > 7.0f)
+		{
+			SceneManager::ChangeScene(eSceneType::Title);
+		}*/
+
 		if (KEY_DOWN(eKeyCode::N))
 		{
 			SceneManager::ChangeScene(eSceneType::Title);
 		}
 		
-		//ya::object::Destroy(mons[0], 3.0f);
 	}
 
 	void LogoScene::Render(HDC hdc)
@@ -75,9 +66,6 @@ namespace ya
 
 	void LogoScene::Enter()
 	{
-		CollisionManager::SetLayer(eColliderLayer::Monster, eColliderLayer::Player, true);
-		CollisionManager::SetLayer(eColliderLayer::Monster, eColliderLayer::Player_Projecttile, true);
-		CollisionManager::SetLayer(eColliderLayer::Ground, eColliderLayer::Player, true);
 	}
 
 	void LogoScene::Exit()

@@ -3,6 +3,7 @@
 
 namespace ya
 {
+	class GameObject;
 	class Panel : public UiBase
 	{
 	public:
@@ -16,5 +17,13 @@ namespace ya
 		virtual void OnRender(HDC hdc) override;
 		virtual void OnClear() override;
 
+		void SetTarget(GameObject* target) { mTarget = target; }
+
+		void SetPlayScene(PlayScene* scene) { mpScene = scene; }
+
+	private:
+		GameObject* mTarget;
+		PlayScene* mpScene;
 	};
+
 }

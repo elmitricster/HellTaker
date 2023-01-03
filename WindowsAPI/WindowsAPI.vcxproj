@@ -139,6 +139,7 @@
     <ClInclude Include="def.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="yaAnimator.h" />
+    <ClInclude Include="yaBeelNPC.h" />
     <ClInclude Include="yaBgImageObject.h" />
     <ClInclude Include="yaButton.h" />
     <ClInclude Include="yaCamera.h" />
@@ -156,14 +157,12 @@
     <ClInclude Include="WindowsAPI.h" />
     <ClInclude Include="yaApplication.h" />
     <ClInclude Include="yaEntity.h" />
-    <ClInclude Include="yaGround.h" />
     <ClInclude Include="yaHUD.h" />
     <ClInclude Include="yaImage.h" />
     <ClInclude Include="yaInput.h" />
     <ClInclude Include="yaLogoScene.h" />
     <ClInclude Include="Maths.h" />
     <ClInclude Include="yaLoveSign.h" />
-    <ClInclude Include="yaMissile.h" />
     <ClInclude Include="yaMonster.h" />
     <ClInclude Include="yaMoveEffect.h" />
     <ClInclude Include="yaNPC.h" />
@@ -179,6 +178,7 @@
     <ClInclude Include="yaSceneManager.h" />
     <ClInclude Include="yaSound.h" />
     <ClInclude Include="yaSoundManager.h" />
+    <ClInclude Include="yaSuccessEffect.h" />
     <ClInclude Include="yaTile.h" />
     <ClInclude Include="yaTileMap.h" />
     <ClInclude Include="yaTilePalette.h" />
@@ -196,6 +196,7 @@
     <ClCompile Include="yaAnimator.cpp" />
     <ClCompile Include="yaAttackEffect.cpp" />
     <ClCompile Include="yaBackPack.cpp" />
+    <ClCompile Include="yaBeelNPC.cpp" />
     <ClCompile Include="yaBgImageObject.cpp" />
     <ClCompile Include="yaButton.cpp" />
     <ClCompile Include="yaCamera.cpp" />
@@ -211,13 +212,11 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="yaApplication.cpp" />
     <ClCompile Include="yaEntity.cpp" />
-    <ClCompile Include="yaGround.cpp" />
     <ClCompile Include="yaHUD.cpp" />
     <ClCompile Include="yaImage.cpp" />
     <ClCompile Include="yaInput.cpp" />
     <ClCompile Include="yaLogoScene.cpp" />
     <ClCompile Include="yaLoveSign.cpp" />
-    <ClCompile Include="yaMissile.cpp" />
     <ClCompile Include="yaMonster.cpp" />
     <ClCompile Include="yaMoveEffect.cpp" />
     <ClCompile Include="yaNPC.cpp" />
@@ -232,6 +231,7 @@
     <ClCompile Include="yaSceneManager.cpp" />
     <ClCompile Include="yaSound.cpp" />
     <ClCompile Include="yaSoundManager.cpp" />
+    <ClCompile Include="yaSuccessEffect.cpp" />
     <ClCompile Include="yaTile.cpp" />
     <ClCompile Include="yaTileMap.cpp" />
     <ClCompile Include="yaTilePalette.cpp" />

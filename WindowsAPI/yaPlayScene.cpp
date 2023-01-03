@@ -31,8 +31,10 @@ namespace ya
 
 	void PlayScene::Initialize()
 	{
+		
+
 		SetInitMoveCnt(23);
-		SetCurMoveCnt(23);
+		SetCurMoveCnt(3);
 
 		TileMap::Initiailize();
 
@@ -67,7 +69,7 @@ namespace ya
 		TileMap::PushGameObject(Index(5, 7), rocks[3]);
 
 		mNPC = ya::object::Instantiate<NPC>(eColliderLayer::NPC);
-		//TileMap::PushGameObject(Index(7, 7), (GameObject*)mNPC);
+		TileMap::PushGameObject(Index(8, 7), (GameObject*)mNPC);
 
 		flameBases[0] = ya::object::Instantiate<FlameBase>(Vector2{ 556, 260 }, eColliderLayer::FlameBase);
 		flameBases[1] = ya::object::Instantiate<FlameBase>(Vector2{ 1056, 465 }, eColliderLayer::FlameBase);
@@ -79,27 +81,7 @@ namespace ya
 		LoveSign* lovesign = ya::object::Instantiate<LoveSign>(Vector2{ 1005, 620 }, eColliderLayer::LoveSign);
 
 		// UI
-		UIManager::Push(eUIType::LEFTBG);
-		HUD* hud3 = UIManager::GetUiInstant<HUD>(eUIType::LEFTBG);
-		hud3->SetTarget(mPlayer);
-		hud3->SetPlayScene(this);
-
-		UIManager::Push(eUIType::RIGHTBG);
-		HUD* hud4 = UIManager::GetUiInstant<HUD>(eUIType::RIGHTBG);
-		hud4->SetTarget(mPlayer);
-		hud4->SetPlayScene(this);
-
-		UIManager::Push(eUIType::STEP);
-		HUD* hud = UIManager::GetUiInstant<HUD>(eUIType::STEP);
-		hud->SetTarget(mPlayer);
-		hud->SetPlayScene(this);
-
-		UIManager::Push(eUIType::ROUND);
-		HUD* hud2 = UIManager::GetUiInstant<HUD>(eUIType::ROUND);
-		hud2->SetTarget(mPlayer);
-		hud2->SetPlayScene(this);
-
-		UIManager::Push(eUIType::FUNC);
+		
 
 
 		// Wall
@@ -194,6 +176,30 @@ namespace ya
 
 	void PlayScene::Enter()
 	{
+		UIManager::Push(eUIType::LEFTBG);
+		HUD* hud3 = UIManager::GetUiInstant<HUD>(eUIType::LEFTBG);
+		hud3->SetTarget(mPlayer);
+		hud3->SetPlayScene(this);
+
+		UIManager::Push(eUIType::RIGHTBG);
+		HUD* hud4 = UIManager::GetUiInstant<HUD>(eUIType::RIGHTBG);
+		hud4->SetTarget(mPlayer);
+		hud4->SetPlayScene(this);
+
+		UIManager::Push(eUIType::STEP);
+		HUD* hud = UIManager::GetUiInstant<HUD>(eUIType::STEP);
+		hud->SetTarget(mPlayer);
+		hud->SetPlayScene(this);
+
+		UIManager::Push(eUIType::ROUND);
+		HUD* hud2 = UIManager::GetUiInstant<HUD>(eUIType::ROUND);
+		hud2->SetTarget(mPlayer);
+		hud2->SetPlayScene(this);
+
+		UIManager::Push(eUIType::FUNC);
+
+		UIManager::Push(eUIType::TPANEL);
+
 		eSceneType type = SceneManager::GetPlaySceneType();
 
 		if (type == eSceneType::End)
@@ -209,8 +215,6 @@ namespace ya
 		UIManager::Pop(eUIType::LEFTBG);
 		UIManager::Pop(eUIType::RIGHTBG);
 		UIManager::Pop(eUIType::FUNC);
-
-
 	}
 
 	void PlayScene::Restart()
