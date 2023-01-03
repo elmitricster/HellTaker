@@ -15,6 +15,14 @@ namespace ya
 
 	void UIManager::Initialize()
 	{
+		Panel* panel = new Panel(eUIType::TPANEL);
+		mUIs.insert(std::make_pair(eUIType::TPANEL, panel));
+		//panel->ImageLoad(L"TransParent", L"..\\Resources\\Image\\BackPack.bmp");
+		//panel->SetPos(Vector2(-1.0f, -1.0f));
+
+		Transition* trans = new Transition();
+		panel->AddGameObject(trans);
+
 		// 여기에서 ui 메모리에 할당하면 된다.
 		Button* button = new Button(eUIType::FUNC);
 		mUIs.insert(std::make_pair(eUIType::FUNC, button));
@@ -41,13 +49,6 @@ namespace ya
 		rightHud2->SetPos(Vector2(1335.0f, 0.0f));
 		rightHud2->ImageLoad(L"mainUI4", L"..\\Resources\\Image\\mainUI04.bmp");
 
-		Panel* panel = new Panel(eUIType::TPANEL);
-		mUIs.insert(std::make_pair(eUIType::TPANEL, panel));
-		//panel->ImageLoad(L"TransParent", L"..\\Resources\\Image\\BackPack.bmp");
-		//panel->SetPos(Vector2(-1.0f, -1.0f));
-
-		Transition* trans = new Transition();
-		panel->AddGameObject(trans);
 		
 	}
 

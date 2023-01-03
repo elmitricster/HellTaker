@@ -90,6 +90,7 @@ namespace ya
 
 	void Scene::Enter()
 	{
+
 	}
 
 	void Scene::Exit()

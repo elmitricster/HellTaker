@@ -93,12 +93,12 @@ enum class eCameraEffect
 enum class eUIType
 {
 	FUNC,
-	TPANEL,
 	STEP,
 	ROUND,
 	LEFTBG,
 	RIGHTBG,
 	COUNTER,
+	TPANEL,
 
 	END,
 };
@@ -134,6 +134,7 @@ enum class eGameObjectType
 	Box,
 	NPC,
 	Dialogue_NPC,
+	Dialogue_BUTTON,
 	Static_Spike,
 	Dynamic_Spike,
 	FlameBase,

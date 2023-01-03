@@ -145,6 +145,7 @@
     <ClInclude Include="yaCollider.h" />
     <ClInclude Include="yaCollisionManager.h" />
     <ClInclude Include="yaComponent.h" />
+    <ClInclude Include="yaDialogButton.h" />
     <ClInclude Include="yaDialogueNPC.h" />
     <ClInclude Include="yaEndScene.h" />
     <ClInclude Include="yaFlameBase.h" />
@@ -164,6 +165,7 @@
     <ClInclude Include="yaLoveSign.h" />
     <ClInclude Include="yaMissile.h" />
     <ClInclude Include="yaMonster.h" />
+    <ClInclude Include="yaMoveEffect.h" />
     <ClInclude Include="yaNPC.h" />
     <ClInclude Include="yaObject.h" />
     <ClInclude Include="yaPanel.h" />
@@ -200,6 +202,7 @@
     <ClCompile Include="yaCollider.cpp" />
     <ClCompile Include="yaCollisionManager.cpp" />
     <ClCompile Include="yaComponent.cpp" />
+    <ClCompile Include="yaDialogButton.cpp" />
     <ClCompile Include="yaDialogueNPC.cpp" />
     <ClCompile Include="yaEndScene.cpp" />
     <ClCompile Include="yaFlameBase.cpp" />
@@ -216,6 +219,7 @@
     <ClCompile Include="yaLoveSign.cpp" />
     <ClCompile Include="yaMissile.cpp" />
     <ClCompile Include="yaMonster.cpp" />
+    <ClCompile Include="yaMoveEffect.cpp" />
     <ClCompile Include="yaNPC.cpp" />
     <ClCompile Include="yaPanel.cpp" />
     <ClCompile Include="yaPlayer.cpp" />

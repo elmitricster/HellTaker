@@ -16,6 +16,7 @@
 #include "yaResources.h"
 #include "yaAnimator.h"
 #include "yaImage.h"
+#include "yaDialogButton.h"
 
 namespace ya
 {
@@ -36,8 +37,7 @@ namespace ya
 		AddGameObject(bg, eColliderLayer::BackGround);
 
 		mDialogNPC = ya::object::Instantiate<DialogueNPC>(Vector2{ 790, 332 }, eColliderLayer::CutScene);
-
-		
+		mDialogBtn = ya::object::Instantiate<DialogButton>(Vector2{ 800, 800 }, eColliderLayer::CutScene);
 	}
 
 	void EndScene::Tick()
@@ -51,7 +51,7 @@ namespace ya
 
 		if (cutSceneNum == 1)
 		{
-			
+			mDialogBtn->Death();
 		}
 			
 		if (cutSceneNum == 2)
@@ -221,19 +221,15 @@ namespace ya
 	{
 		LoadFont();
 
-		UIManager::Pop(eUIType::STEP);
-		UIManager::Pop(eUIType::ROUND);
-		UIManager::Pop(eUIType::LEFTBG);
-		UIManager::Pop(eUIType::RIGHTBG);
-		UIManager::Pop(eUIType::FUNC);
-	}
-
-	void EndScene::Exit()
-	{
 		UIManager::Push(eUIType::RIGHTBG);
 		UIManager::Push(eUIType::LEFTBG);
 		UIManager::Push(eUIType::STEP);
 		UIManager::Push(eUIType::ROUND);
+	}
+
+	void EndScene::Exit()
+	{
+		
 
 		RemoveFontResource(L"HeirofLightRegular.ttf");
 		RemoveFontResource(L"HeirofLightBold.ttf");

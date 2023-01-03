@@ -17,6 +17,7 @@
 #include "yaMonster.h"
 #include "yaRock.h"
 #include "yaAttackEffect.h"
+#include "yaMoveEffect.h"
 #include "yaObject.h"
 #include "yaTransition.h"
 #include "yaPlayScene.h"
@@ -52,8 +53,8 @@ namespace ya
 			, Vector2(10.0f, -20.0f), 13, 0.12f);
 
 		mAnimator->CreateAnimation(L"Success", mImage
-			, Vector2(0.0f, 440.0f), Vector2(100.0f, 130.0f)
-			, Vector2(10.0f, -20.0f), 25, 0.12f);
+			, Vector2(600.0f, 440.0f), Vector2(100.0f, 130.0f)
+			, Vector2(10.0f, -20.0f), 19, 0.15f);
 
 		mAnimator->CreateAnimations(L"..\\Resources\\Animations\\Player\\Death", L"Death", Vector2(50, -150));
 
@@ -68,8 +69,8 @@ namespace ya
 		//mAnimator->FindEvents(L"Death")->mEndEvent = std::bind(&Player::DeathComplete, this);
 		//mAnimator->GetEndEvent(L"Death") = std::bind(&Player::DeathComplete, this);
 
-		//mAnimator->FindEvents(L"Success")->mCompleteEvent = std::bind(&Player::AttackComplete, this);
-		//mAnimator->GetCompleteEvent(L"Success") = std::bind(&Player::AttackComplete, this);
+		mAnimator->FindEvents(L"Success")->mCompleteEvent = std::bind(&Player::StageComplete, this);
+		mAnimator->GetCompleteEvent(L"Success") = std::bind(&Player::StageComplete, this);
 
 		AddComponent(mAnimator);
 
@@ -99,9 +100,9 @@ namespace ya
 		case PlayerState::ATTACK:
 			Attack();
 			break;
-		case PlayerState::VICTORY:
+		/*case PlayerState::VICTORY:
 			Victory();
-			break;
+			break;*/
 		case PlayerState::DEADSTART:
 			DeadStart();
 			break;
@@ -110,7 +111,7 @@ namespace ya
 			break;
 		}
 
-		if (mpScene->GetCurMoveCnt() < 0)
+		if (mpScene!=nullptr && mpScene->GetCurMoveCnt() < 0)
 		{
 			if (KEY_DOWN(eKeyCode::W))
 			{
@@ -163,18 +164,23 @@ namespace ya
 		mState = PlayerState::IDLE;
 	}
 
-	void Player::DeathComplete()
+	void Player::StageComplete()
 	{
-		//mAnimator->Play(L"Transition", false);
-		//UIManager::Push(eUIType::TPANEL);
+		mSumTime += Time::DeltaTime();
+
 		//mAnimator->Play(L"Idle", true);
-		//mState = PlayerState::DEAD;
+
+		UIManager::Push(eUIType::TPANEL);
+		SceneManager::ChangeScene(eSceneType::Title);
+		
+		if (mSumTime > 1.0f)
+		{
+
+		}
 	}
 
 	void Player::Idle()
 	{
-		
-
 		if (KEY_DOWN(eKeyCode::W))
 		{
 			Index nextIndex = mIndex;
@@ -209,6 +215,7 @@ namespace ya
 				mDir = Direction::UP;
 				mDest = GetPos();
 				mDest.y -= 80.0f;
+				MoveEffect* mv = ya::object::Instantiate<MoveEffect>(GetPos(), eColliderLayer::Effect);
 				mState = PlayerState::MOVE;
 				mIndex.y--;
 				CountDown();
@@ -248,6 +255,7 @@ namespace ya
 				mDir = Direction::DOWN;
 				mDest = GetPos();
 				mDest.y += 80.0f;
+				MoveEffect* mv = ya::object::Instantiate<MoveEffect>(GetPos(), eColliderLayer::Effect);
 				mState = PlayerState::MOVE;
 				mIndex.y++;
 				CountDown();
@@ -287,6 +295,7 @@ namespace ya
 				mDir = Direction::LEFT;
 				mDest = GetPos();
 				mDest.x -= 80.0f;
+				MoveEffect* mv = ya::object::Instantiate<MoveEffect>(GetPos(), eColliderLayer::Effect);
 				mState = PlayerState::MOVE;
 				mIndex.x--;
 				CountDown();
@@ -325,6 +334,7 @@ namespace ya
 				mDir = Direction::RIGHT;
 				mDest = GetPos();
 				mDest.x += 80.0f;
+				MoveEffect* mv = ya::object::Instantiate<MoveEffect>(GetPos(), eColliderLayer::Effect);
 				mState = PlayerState::MOVE;
 				mIndex.x++;
 				CountDown();
@@ -396,8 +406,6 @@ namespace ya
 	void Player::Victory()
 	{
 		mAnimator->Play(L"Success", false);
-
-
 	}
 
 	void Player::DeadStart()

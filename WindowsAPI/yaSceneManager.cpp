@@ -83,9 +83,8 @@ namespace ya
 
 		CollisionManager::Clear();
 		mPlayScene->Exit();
-		mPlayScene = mScenes[(UINT)type];
-		
 		mPlayScene->Enter();
+		mPlayScene = mScenes[(UINT)type];
 	}
 
 

@@ -4,6 +4,7 @@
 namespace ya
 {
 	class DialogueNPC;
+	class DialogButton;
 	class EndScene : public Scene
 	{
 	public:
@@ -25,6 +26,7 @@ namespace ya
 
 	private:
 		DialogueNPC* mDialogNPC;
+		DialogButton* mDialogBtn;
 
 		HFONT mCounterFont;
 		HFONT mNameFont;

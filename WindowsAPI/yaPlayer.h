@@ -20,7 +20,7 @@ namespace ya
 		virtual void OnCollisionExit(Collider* other) override;
 
 		void AttackComplete();
-		void DeathComplete();
+		void StageComplete();
 		void SetState(PlayerState state) { mState = state; }
 		PlayerState GetState() { return mState; }
 

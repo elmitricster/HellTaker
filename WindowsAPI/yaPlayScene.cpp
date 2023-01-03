@@ -23,7 +23,6 @@ namespace ya
 {
 	PlayScene::PlayScene()	
 	{
-
 	}
 
 	PlayScene::~PlayScene()
@@ -78,7 +77,6 @@ namespace ya
 		flameBases[3]->SetImage(L"flame02", L"FLAMEbase02.bmp");
 
 		LoveSign* lovesign = ya::object::Instantiate<LoveSign>(Vector2{ 1005, 620 }, eColliderLayer::LoveSign);
-
 
 		// UI
 		UIManager::Push(eUIType::LEFTBG);
@@ -177,9 +175,6 @@ namespace ya
 
 			mPlayer->SetState(PlayerState::DEAD);
 		}
-
-
-
 	}
 
 	void PlayScene::Render(HDC hdc)
@@ -199,17 +194,28 @@ namespace ya
 
 	void PlayScene::Enter()
 	{
-		//CollisionManager::SetLayer(eColliderLayer::Monster, eColliderLayer::Player, true);
+		eSceneType type = SceneManager::GetPlaySceneType();
+
+		if (type == eSceneType::End)
+		{
+			mPlayer->Victory();
+		}
 	}
 
 	void PlayScene::Exit()
 	{
+		UIManager::Pop(eUIType::STEP);
+		UIManager::Pop(eUIType::ROUND);
+		UIManager::Pop(eUIType::LEFTBG);
+		UIManager::Pop(eUIType::RIGHTBG);
+		UIManager::Pop(eUIType::FUNC);
+
 
 	}
 
 	void PlayScene::Restart()
 	{
-		//TileMap::SetCheckClear(true);
+		TileMap::SetCheckClear(true);
 
 		if (mons[0]->IsDeath())
 		{
