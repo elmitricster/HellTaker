@@ -18,6 +18,9 @@
 #include "yaTransition.h"
 #include "yaLoveSign.h"
 #include "yaTime.h"
+#include "yaSoundManager.h"
+#include "yaSound.h"
+#include "yaResources.h"
 
 namespace ya
 {
@@ -31,8 +34,6 @@ namespace ya
 
 	void PlayScene::Initialize()
 	{
-		
-
 		SetInitMoveCnt(23);
 		SetCurMoveCnt(23);
 
@@ -41,6 +42,9 @@ namespace ya
 		BgImageObject* bg = new BgImageObject();
 		bg->SetImage(L"chapterBG01", L"chapterBG0001.bmp");
 		bg->Initialize();
+
+		mBgSound = Resources::Load<Sound>(L"Vitality", L"..\\Resources\\Sound\\Vitality.wav");
+		mBgSound->Play(true);
 
 		AddGameObject(bg, eColliderLayer::BackGround);
 

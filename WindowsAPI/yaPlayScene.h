@@ -9,6 +9,7 @@ namespace ya
 	class Rock;
 	class NPC;
 	class FlameBase;
+	class Sound;
 	class PlayScene : public Scene
 	{
 	public:
@@ -37,6 +38,7 @@ namespace ya
 		Rock* rocks[4];
 		NPC* mNPC;
 		FlameBase* flameBases[4];
+		Sound* mBgSound;
 
 		int InitMoveCnt;
 		int CurMoveCnt;

@@ -238,6 +238,7 @@
     <ClInclude Include="yaEndScene.h">
       <Filter>Engine\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="yaDialogDeath.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WindowsAPI.rc">
@@ -412,5 +413,6 @@
     <ClCompile Include="yaEndScene.cpp">
       <Filter>Engine\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="yaDialogDeath.cpp" />
   </ItemGroup>
 </Project>

@@ -147,6 +147,7 @@
     <ClInclude Include="yaCollisionManager.h" />
     <ClInclude Include="yaComponent.h" />
     <ClInclude Include="yaDialogButton.h" />
+    <ClInclude Include="yaDialogDeath.h" />
     <ClInclude Include="yaDialogueNPC.h" />
     <ClInclude Include="yaDialogScene_Pand.h" />
     <ClInclude Include="yaEndScene.h" />
@@ -206,6 +207,7 @@
     <ClCompile Include="yaCollisionManager.cpp" />
     <ClCompile Include="yaComponent.cpp" />
     <ClCompile Include="yaDialogButton.cpp" />
+    <ClCompile Include="yaDialogDeath.cpp" />
     <ClCompile Include="yaDialogueNPC.cpp" />
     <ClCompile Include="yaDialogScene_Pand.cpp" />
     <ClCompile Include="yaEndScene.cpp" />

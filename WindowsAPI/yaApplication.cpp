@@ -1,7 +1,6 @@
 #include <Windows.h>
 #include "framework.h"
 #include "WindowsAPI.h"
-
 #include "yaApplication.h"
 #include "yaSceneManager.h"
 #include "yaTime.h"
@@ -19,12 +18,12 @@ namespace ya
 	{
 		initializeWindow(data);
 
+		SoundManager::Initialize();
 		Time::Initialize();
 		Input::Initialize();
 		UIManager::Initialize();
 		SceneManager::Initialize();
 		Camera::Initialize();
-		SoundManager::Initialize();
 
 		Time::SetTimeScale(2.0f);
 	}

@@ -18,6 +18,7 @@
 #include "yaDialogButton.h"
 #include "yaSelectButton.h"
 #include "yaSuccessEffect.h"
+#include "yaDialogDeath.h"
 
 namespace ya
 {
@@ -31,11 +32,11 @@ namespace ya
 
 	void DialogScene_Pand::Initialize()
 	{
-		BgImageObject* bg = new BgImageObject(Vector2(0.0f, 150.0f));
-		bg->SetImage(L"dialogueBG01", L"dialogueBG01.bmp");
-		bg->Initialize();
+		/*mBgImage = new BgImageObject(Vector2(0.0f, 150.0f));
+		mBgImage->SetImage(L"dialogueBG01", L"dialogueBG01.bmp");
+		mBgImage->Initialize();
 
-		AddGameObject(bg, eColliderLayer::BackGround);
+		AddGameObject(mBgImage, eColliderLayer::BackGround);
 
 		mDialogNPC = ya::object::Instantiate<DialogueNPC>(Vector2{ 790, 332 }, eColliderLayer::CutScene);
 		mDialogBtn = ya::object::Instantiate<DialogButton>(Vector2{ 800, 800 }, eColliderLayer::CutScene);
@@ -44,6 +45,8 @@ namespace ya
 		mSelectBtn[1] = ya::object::Instantiate<SelectButton>(Vector2{ -500, -500 }, eColliderLayer::CutScene);
 		mSelectBtn[2] = ya::object::Instantiate<SelectButton>(Vector2{ -500, -500 }, eColliderLayer::CutScene);
 		mSelectBtn[2]->SetImage(L"selectBtn", L"Button02.bmp");
+		mSelectBtn[3] = ya::object::Instantiate<SelectButton>(Vector2{ -500, -500 }, eColliderLayer::CutScene);
+		mSelectBtn[3]->SetImage(L"selectBtn", L"Button02.bmp");*/
 
 	}
 
@@ -63,12 +66,45 @@ namespace ya
 
 		if (cutSceneNum == 1)
 		{
-			mDialogBtn->Death();
+			mDialogBtn->SetPos(Vector2{ -500.0f, -500.0f });
 
 			mSelectBtn[0]->SetPos(Vector2{ 800, 770 });
 			mSelectBtn[1]->SetPos(Vector2{ 800, 850 });
 
-			mSelectBtn[2]->SetPos(Vector2{ 800, 770 });
+			if (KEY_DOWN(eKeyCode::S))
+			{
+				if (btnState < 2)
+					btnState += 1;
+			}
+
+			if (KEY_DOWN(eKeyCode::W))
+			{
+				if (btnState > 0)
+					btnState -= 1;
+			}
+
+			if (btnState == 0)
+			{
+				mSelectBtn[2]->SetPos(Vector2{ 800, 770 });
+				mSelectBtn[3]->SetPos(Vector2{ -500, -500 });
+
+				if (KEY_DOWN(eKeyCode::SPACE))
+				{
+					cutSceneNum = 5;
+					mSelectBtn[0]->SetPos(Vector2{ -500, -500 });
+					mSelectBtn[1]->SetPos(Vector2{ -500, -500 });
+					mSelectBtn[2]->SetPos(Vector2{ -500, -500 });
+					mSelectBtn[3]->SetPos(Vector2{ -500, -500 });
+
+					mDialogBtn->SetPos(Vector2{ 800.0f, 800.0f });
+
+				}
+			}
+			else if (btnState == 1)
+			{
+				mSelectBtn[2]->SetPos(Vector2{ -500, -500 });
+				mSelectBtn[3]->SetPos(Vector2{ 800, 850 });
+			}
 		}
 			
 		if (cutSceneNum == 2 && mCheck)
@@ -76,18 +112,36 @@ namespace ya
 			mDialogNPC->SetImage(L"Pand_flust", L"Pand_flust.bmp");
 			mDialogNPC->SetPos(Vector2{ 790, 352 });
 
-			mSelectBtn[0]->Death();
-			mSelectBtn[1]->Death();
-			mSelectBtn[2]->Death();
+			mSelectBtn[0]->SetPos(Vector2{ -500, -500 });
+			mSelectBtn[1]->SetPos(Vector2{ -500, -500 });
+			mSelectBtn[2]->SetPos(Vector2{ -500, -500 });
 
-			SuccessEffect* effect = ya::object::Instantiate<SuccessEffect>(Vector2{ 900, 820 }, eColliderLayer::Effect);
+			mSuccessEffect = ya::object::Instantiate<SuccessEffect>(Vector2{ 900, 820 }, eColliderLayer::Effect);
 			
 			mCheck = false;
 		}
 
 		if (cutSceneNum == 3)
 		{
+			mSuccessEffect->Death();
 			SceneManager::ChangeScene(eSceneType::End);
+		}
+
+		if (cutSceneNum == 6 && mCheck)
+		{
+			mDialogBtn->SetPos(Vector2{ -500, -500 });
+			mBgImage->SetPos(Vector2{ -500, -500 });
+			mDialogNPC->SetPos(Vector2{ -500, -500 });
+
+			mDeathEffect = ya::object::Instantiate<DialogDeath>(Vector2{ 900, 450 }, eColliderLayer::Effect);
+
+			mCheck = false;
+		}
+
+		if (cutSceneNum == 7)
+		{
+			mDeathEffect->Death();
+			SceneManager::ChangeScene(eSceneType::Play);
 		}
 	}
 	void DialogScene_Pand::Render(HDC hdc)
@@ -98,11 +152,12 @@ namespace ya
 		swprintf_s(szFloat, 50, L"End Scene");
 		int strLen = wcsnlen_s(szFloat, 50);
 		TextOut(hdc, 50, 30, szFloat, strLen);*/
-
 		
 		std::wstring npcName = L"● 피곤한 악마 판데모니카 ●";
 		std::wstring npcDialog = L"지옥 고객센터의 판데모니카라고 합니다.\n무엇을 도와드릴까요?";
 		std::wstring npcDialog2 = L"참 달콤한 제안이에요. 커피를 마시고 싶네요.\n피곤해서 정신을 못 차리겠어요.";
+		std::wstring npcDialog3 = L"지옥을 살아서 빠져나갈 수 있으리라 생각한 거야?.\n꿈도 크셔라.";
+		std::wstring npcDialog4 = L"판데모니카는 당신의 얼굴을 손아귀로 가져가더니\n전문가다운 부드러운 동작으로 목을 꺾어 버렸다.";
 
 		std::wstring dialogBtn = L"우리 집에 가면 알 수 있겠지.";
 		std::wstring dialogBtn2 = L"글쎄, 내가 널 도와줘야겠는데?";
@@ -125,7 +180,15 @@ namespace ya
 			WriteNameText(hdc, 800, 610, 100, 100, npcName);
 			WriteScriptText(hdc, 800, 650, 100, 100, npcDialog2);
 		}
-
+		else if (cutSceneNum == 5)
+		{
+			WriteNameText(hdc, 800, 610, 100, 100, npcName);
+			WriteScriptText(hdc, 800, 650, 100, 100, npcDialog3);
+		}
+		else if (cutSceneNum == 6)
+		{
+			WriteNameText(hdc, 800, 650, 100, 100, npcDialog4);
+		}
 		
 	}
 
@@ -257,6 +320,25 @@ namespace ya
 	void DialogScene_Pand::Enter()
 	{
 		LoadFont();
+
+		cutSceneNum = 0;
+		mCheck = true;
+
+		mBgImage = new BgImageObject(Vector2(0.0f, 150.0f));
+		mBgImage->SetImage(L"dialogueBG01", L"dialogueBG01.bmp");
+		mBgImage->Initialize();
+
+		AddGameObject(mBgImage, eColliderLayer::BackGround);
+
+		mDialogNPC = ya::object::Instantiate<DialogueNPC>(Vector2{ 790, 332 }, eColliderLayer::CutScene);
+		mDialogBtn = ya::object::Instantiate<DialogButton>(Vector2{ 800, 800 }, eColliderLayer::CutScene);
+
+		mSelectBtn[0] = ya::object::Instantiate<SelectButton>(Vector2{ -500, -500 }, eColliderLayer::CutScene);
+		mSelectBtn[1] = ya::object::Instantiate<SelectButton>(Vector2{ -500, -500 }, eColliderLayer::CutScene);
+		mSelectBtn[2] = ya::object::Instantiate<SelectButton>(Vector2{ -500, -500 }, eColliderLayer::CutScene);
+		mSelectBtn[2]->SetImage(L"selectBtn", L"Button02.bmp");
+		mSelectBtn[3] = ya::object::Instantiate<SelectButton>(Vector2{ -500, -500 }, eColliderLayer::CutScene);
+		mSelectBtn[3]->SetImage(L"selectBtn", L"Button02.bmp");
 	}
 
 	void DialogScene_Pand::Exit()
@@ -267,5 +349,13 @@ namespace ya
 		DeleteObject(mCounterFont);
 		DeleteObject(mNameFont);
 		DeleteObject(mScriptFont);
+
+		mDialogNPC->Death();
+		mDialogBtn->Death();
+		mSelectBtn[0]->Death();
+		mSelectBtn[1]->Death();
+		mSelectBtn[2]->Death();
+		mSelectBtn[3]->Death();
+		mBgImage->Death();
 	}
 }

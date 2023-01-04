@@ -6,6 +6,8 @@ namespace ya
 	class DialogueNPC;
 	class DialogButton;
 	class SelectButton;
+	class DialogDeath;
+	class SuccessEffect;
 	class DialogScene_Pand : public Scene
 	{
 	public:
@@ -28,13 +30,18 @@ namespace ya
 	private:
 		DialogueNPC* mDialogNPC;
 		DialogButton* mDialogBtn;
-		SelectButton* mSelectBtn[3];
+		SelectButton* mSelectBtn[4];
+		BgImageObject* mBgImage;
+		DialogDeath* mDeathEffect;
+		SuccessEffect* mSuccessEffect;
 
 		HFONT mCounterFont;
 		HFONT mNameFont;
 		HFONT mScriptFont;
 
 		int cutSceneNum = 0;
+		int cutSceneDeathNum = 0;
+		int btnState = 0;
 		bool mCheck = true;
 	};
 

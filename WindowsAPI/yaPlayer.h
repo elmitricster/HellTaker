@@ -6,6 +6,7 @@ namespace ya
 {
 	class Animator;
 	class Image;
+	class Sound;
 	class Player : public GameObject
 	{
 	public:
@@ -51,6 +52,8 @@ namespace ya
 		Collider* mCollider2;
 	
 		PlayScene* mpScene;
+
+		Sound* mSound;
 
 	private:
 		void CountDown(int mNum = 1);

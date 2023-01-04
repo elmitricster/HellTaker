@@ -16,6 +16,8 @@
 #include "yaDialogButton.h"
 #include "yaBeelNPC.h"
 #include "yaSelectButton.h"
+#include "yaSound.h"
+#include "yaSoundManager.h"
 
 namespace ya
 {
@@ -29,6 +31,9 @@ namespace ya
 
 	void TitleScene::Initialize()
 	{
+		//mBgSound = Resources::Load<Sound>(L"Apropos", L"..\\Resources\\Sound\\Apropos.wav");
+		//mBgSound->Play(true);
+
 		mBgImage = new BgImageObject(Vector2(0.0f, 150.0f));
 		mBgImage->SetImage(L"TitleBG01", L"TitleBG01.bmp");
 		mBgImage->Initialize();
@@ -42,6 +47,10 @@ namespace ya
 		mSelectBtn[2] = ya::object::Instantiate<SelectButton>(Vector2{ -500, -500 }, eColliderLayer::CutScene);
 		mSelectBtn[3] = ya::object::Instantiate<SelectButton>(Vector2{ -500, -500 }, eColliderLayer::CutScene);
 		mSelectBtn[3]->SetImage(L"selectBtn", L"Button02.bmp");
+		mSelectBtn[4] = ya::object::Instantiate<SelectButton>(Vector2{ -500, -500 }, eColliderLayer::CutScene);
+		mSelectBtn[4]->SetImage(L"selectBtn", L"Button02.bmp");
+		mSelectBtn[5] = ya::object::Instantiate<SelectButton>(Vector2{ -500, -500 }, eColliderLayer::CutScene);
+		mSelectBtn[5]->SetImage(L"selectBtn", L"Button02.bmp");
 	}
 
 	void TitleScene::Tick()
@@ -71,19 +80,42 @@ namespace ya
 			mSelectBtn[1]->SetPos(Vector2{ 800, 770 });
 			mSelectBtn[2]->SetPos(Vector2{ 800, 840 });
 
-			mSelectBtn[3]->SetPos(Vector2{ 800, 700 });
-			
 
 			if (KEY_DOWN(eKeyCode::S))
 			{
-				mSelectBtn[3]->SetPos(mSelectBtn[3]->GetPos() + Vector2{ 0.0f, 70.0f });
+				if (btnState < 3)
+					btnState += 1;
 			}
 
 			if (KEY_DOWN(eKeyCode::W))
 			{
-				mSelectBtn[3]->SetPos(mSelectBtn[3]->GetPos() + Vector2{ 0.0f, -70.0f });
+				if (btnState > 0)
+					btnState -= 1;
 			}
 
+			if (btnState == 0)
+			{
+				mSelectBtn[3]->SetPos(Vector2{ 800, 700 });
+				mSelectBtn[4]->SetPos(Vector2{ -500, -500 });
+				mSelectBtn[5]->SetPos(Vector2{ -500, -500 });
+			}
+			else if (btnState == 1)
+			{
+				mSelectBtn[4]->SetPos(Vector2{ 800, 770 });
+				mSelectBtn[3]->SetPos(Vector2{ -500, -500 });
+				mSelectBtn[5]->SetPos(Vector2{ -500, -500 });
+			}
+			else if (btnState == 2)
+			{
+				mSelectBtn[5]->SetPos(Vector2{ 800, 840 });
+				mSelectBtn[3]->SetPos(Vector2{ -500, -500 });
+				mSelectBtn[4]->SetPos(Vector2{ -500, -500 });
+
+				if (KEY_DOWN(eKeyCode::SPACE))
+				{
+					ExitProcess(0);
+				}
+			}
 		}
 
 		if (cutSceneNum == 3)

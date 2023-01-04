@@ -1,8 +1,6 @@
 #include "yaSoundManager.h"
 #include "yaApplication.h"
 
-
-
 namespace ya
 {
 	LPDIRECTSOUND8 SoundManager::mSoundDevice;

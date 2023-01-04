@@ -21,6 +21,7 @@
 #include "yaTransition.h"
 #include "yaPlayScene.h"
 #include "def.h"
+#include "yaSound.h"
 
 namespace ya
 {
@@ -36,6 +37,12 @@ namespace ya
 		{
 			mImage = Resources::Load<Image>(L"Player", L"..\\Resources\\Image\\Hero.bmp");
 		}
+
+		/*if (mSound == nullptr)
+		{
+			mSound = Resources::Load<Sound>(L"sound01", L"..");
+			
+		}*/
 		
 		mAnimator = new Animator();
 
