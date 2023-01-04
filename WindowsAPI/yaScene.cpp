@@ -4,15 +4,18 @@
 #include "yaCollisionManager.h"
 #include "yaApplication.h"
 #include "yaCamera.h"
+#include "yaResources.h"
+#include "yaSound.h"
+#include "yaSoundManager.h"
 
 namespace ya
 {
-
 	Scene::Scene()
 	{
 		SceneManager::SetPlayScene(this);
 		mObjects.resize(_COLLIDER_LAYER);
 		mWindowInfo = Application::GetInstance().GetWindowData();
+		mBGMSound = Resources::Load<Sound>(L"Vitality", L"..\\Resources\\Sound\\Vitality.wav");
 	}
 
 	Scene::~Scene()
@@ -29,8 +32,6 @@ namespace ya
 
 	void Scene::Initialize()
 	{
-		
-
 		for (size_t y = 0; y < _COLLIDER_LAYER; y++)
 		{
 			for (size_t x = 0; x < mObjects[y].size(); x++)
@@ -43,7 +44,6 @@ namespace ya
 				mObjects[y][x]->Initialize();
 			}
 		}
-
 	}
 
 	void Scene::Tick()

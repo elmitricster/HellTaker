@@ -9,6 +9,7 @@
 #include "yaCollider.h"
 #include "yaCamera.h"
 #include "yaTileMap.h"
+#include "yaSound.h"
 
 namespace ya
 {
@@ -29,6 +30,8 @@ namespace ya
 		{
 			mImage = Resources::Load<Image>(L"Rock", L"..\\Resources\\Image\\Rock01.bmp");
 		}
+
+		mMoveSound = Resources::Load<Sound>(L"stone_move", L"..\\Resources\\Sound\\stone_move_01.wav");
 
 		//AddComponent(new Collider());
 	}
@@ -185,6 +188,7 @@ namespace ya
 		}
 		else
 		{
+			mMoveSound->Play(false);
 			TileMap::PushGameObject(mIndex, nullptr);
 			mState = State::MOVE;
 		}

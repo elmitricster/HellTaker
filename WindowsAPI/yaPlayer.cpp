@@ -38,11 +38,12 @@ namespace ya
 			mImage = Resources::Load<Image>(L"Player", L"..\\Resources\\Image\\Hero.bmp");
 		}
 
-		/*if (mSound == nullptr)
-		{
-			mSound = Resources::Load<Sound>(L"sound01", L"..");
-			
-		}*/
+		mMoveSound = Resources::Load<Sound>(L"character_move", L"..\\Resources\\Sound\\character_move_01.wav");
+		mMonsterAttackSound = Resources::Load<Sound>(L"enemy_kick", L"..\\Resources\\Sound\\enemy_kick_01.wav");
+		mStoneAttackSound = Resources::Load<Sound>(L"stone_kick", L"..\\Resources\\Sound\\stone_kick_01.wav");
+		mDeathSound = Resources::Load<Sound>(L"player_death", L"..\\Resources\\Sound\\player_death_01.wav");
+		mSuccessSound = Resources::Load<Sound>(L"succub_capture", L"..\\Resources\\Sound\\succub_capture_01.wav");
+		mTransSound = Resources::Load<Sound>(L"screen_changer", L"..\\Resources\\Sound\\screen_changer_part1.wav");
 		
 		mAnimator = new Animator();
 
@@ -60,7 +61,7 @@ namespace ya
 
 		mAnimator->CreateAnimation(L"Success", mImage
 			, Vector2(600.0f, 440.0f), Vector2(100.0f, 130.0f)
-			, Vector2(10.0f, -20.0f), 19, 0.15f);
+			, Vector2(10.0f, -20.0f), 19, 0.3f);
 
 		mAnimator->CreateAnimations(L"..\\Resources\\Animations\\Player\\Death", L"Death", Vector2(270, -100));
 
@@ -121,29 +122,29 @@ namespace ya
 		{
 			if (KEY_DOWN(eKeyCode::W))
 			{
+				mDeathSound->Play(false);
 				mAnimator->Play(L"Death", false);
 				mState = PlayerState::DEADSTART;
 			}
 			else if (KEY_DOWN(eKeyCode::A))
 			{
+				mDeathSound->Play(false);
 				mAnimator->Play(L"Death", false);
 				mState = PlayerState::DEADSTART;
 			}
 			else if (KEY_DOWN(eKeyCode::S))
 			{
+				mDeathSound->Play(false);
 				mAnimator->Play(L"Death", false);
 				mState = PlayerState::DEADSTART;
 			}
 			if (KEY_DOWN(eKeyCode::D))
 			{
+				mDeathSound->Play(false);
 				mAnimator->Play(L"Death", false);
 				mState = PlayerState::DEADSTART;
 			}
 		}
-
-		
-
-
 	}
 
 	void Player::Render(HDC hdc)
@@ -170,15 +171,18 @@ namespace ya
 	{
 		mAnimator->Play(L"Idle", true);
 		mState = PlayerState::IDLE;
+		mClearCheck = true; // 클리어 체크 초기화 시점 ( 어차피 공격없이 깨지는 스테이지가 없음 )
 	}
 
 	void Player::StageComplete()
 	{
 		mSumTime += Time::DeltaTime();
 		
-		if (mSumTime > 0.7f)
+		if (mSumTime > 1.5f && mClearCheck)
 		{
 			SceneManager::ChangeScene(eSceneType::Dialog_pand);
+			mSumTime = 0;
+			mClearCheck = false;
 		}
 	}
 
@@ -197,6 +201,7 @@ namespace ya
 				{
 					Monster* monster = dynamic_cast<Monster*>(nextObj);
 					monster->Damaged(Direction::UP);
+					mMonsterAttackSound->Play(false);
 					mAnimator->Play(L"Attack", false);
 					AttackEffect* atk = ya::object::Instantiate<AttackEffect>(nextObj->GetPos(), eColliderLayer::Effect);
 					mState = PlayerState::ATTACK;
@@ -206,6 +211,7 @@ namespace ya
 				{
 					Rock* rock = dynamic_cast<Rock*>(nextObj);
 					rock->Damaged(Direction::UP);
+					mStoneAttackSound->Play(false);
 					mAnimator->Play(L"Attack", false);
 					AttackEffect* atk = ya::object::Instantiate<AttackEffect>(nextObj->GetPos(), eColliderLayer::Effect);
 					mState = PlayerState::ATTACK;
@@ -214,6 +220,7 @@ namespace ya
 			}
 			else
 			{
+				mMoveSound->Play(false);
 				mAnimator->Play(L"Move", true);
 				mDir = Direction::UP;
 				mDest = GetPos();
@@ -237,6 +244,7 @@ namespace ya
 				{
 					Monster* monster = dynamic_cast<Monster*>(nextObj);
 					monster->Damaged(Direction::DOWN);
+					mMonsterAttackSound->Play(false);
 					mAnimator->Play(L"Attack", false);
 					AttackEffect* atk = ya::object::Instantiate<AttackEffect>(nextObj->GetPos(), eColliderLayer::Effect);
 					mState = PlayerState::ATTACK;
@@ -246,6 +254,7 @@ namespace ya
 				{
 					Rock* rock = dynamic_cast<Rock*>(nextObj);
 					rock->Damaged(Direction::DOWN);
+					mStoneAttackSound->Play(false);
 					mAnimator->Play(L"Attack", false);
 					AttackEffect* atk = ya::object::Instantiate<AttackEffect>(nextObj->GetPos(), eColliderLayer::Effect);
 					mState = PlayerState::ATTACK;
@@ -254,6 +263,7 @@ namespace ya
 			}
 			else
 			{
+				mMoveSound->Play(false);
 				mAnimator->Play(L"Move", true);
 				mDir = Direction::DOWN;
 				mDest = GetPos();
@@ -277,6 +287,7 @@ namespace ya
 				{
 					Monster* monster = dynamic_cast<Monster*>(nextObj);
 					monster->Damaged(Direction::LEFT);
+					mMonsterAttackSound->Play(false);
 					mAnimator->Play(L"Attack", false);
 					AttackEffect* atk = ya::object::Instantiate<AttackEffect>(nextObj->GetPos(), eColliderLayer::Effect);
 					mState = PlayerState::ATTACK;
@@ -286,6 +297,7 @@ namespace ya
 				{
 					Rock* rock = dynamic_cast<Rock*>(nextObj);
 					rock->Damaged(Direction::LEFT);
+					mStoneAttackSound->Play(false);
 					mAnimator->Play(L"Attack", false);
 					AttackEffect* atk = ya::object::Instantiate<AttackEffect>(nextObj->GetPos(), eColliderLayer::Effect);
 					mState = PlayerState::ATTACK;
@@ -294,6 +306,7 @@ namespace ya
 			}
 			else
 			{
+				mMoveSound->Play(false);
 				mAnimator->Play(L"Move", true);
 				mDir = Direction::LEFT;
 				mDest = GetPos();
@@ -317,6 +330,7 @@ namespace ya
 				{
 					Monster* monster = dynamic_cast<Monster*>(nextObj);
 					monster->Damaged(Direction::RIGHT);
+					mMonsterAttackSound->Play(false);
 					mAnimator->Play(L"Attack", false);
 					AttackEffect* atk = ya::object::Instantiate<AttackEffect>(nextObj->GetPos(), eColliderLayer::Effect);
 					mState = PlayerState::ATTACK;
@@ -326,6 +340,7 @@ namespace ya
 				{
 					Rock* rock = dynamic_cast<Rock*>(nextObj);
 					rock->Damaged(Direction::RIGHT);
+					mStoneAttackSound->Play(false);
 					mAnimator->Play(L"Attack", false);
 					AttackEffect* atk = ya::object::Instantiate<AttackEffect>(nextObj->GetPos(), eColliderLayer::Effect);
 					mState = PlayerState::ATTACK;
@@ -333,10 +348,13 @@ namespace ya
 				}
 				else if (nextObj->GetObjType() == eGameObjectType::NPC)
 				{
+					mSuccessSound->Play(false);
 					mAnimator->Play(L"Success", false);
 				}
 			}
-			else {
+			else
+			{
+				mMoveSound->Play(false);
 				mAnimator->Play(L"Move", true);
 				mDir = Direction::RIGHT;
 				mDest = GetPos();
@@ -421,6 +439,7 @@ namespace ya
 
 		if (mSumTime > 1.5f)
 		{
+			mTransSound->Play(false);
 			UIManager::Push(eUIType::TPANEL);
 			mState = PlayerState::DEAD;
 

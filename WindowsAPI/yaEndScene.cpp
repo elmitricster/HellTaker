@@ -14,6 +14,7 @@
 #include "yaAnimator.h"
 #include "yaImage.h"
 #include "yaDialogButton.h"
+#include "yaSound.h"
 
 namespace ya
 {
@@ -27,6 +28,10 @@ namespace ya
 
 	void EndScene::Initialize()
 	{
+		mTransSound = Resources::Load<Sound>(L"screen_changer", L"..\\Resources\\Sound\\screen_changer_part1.wav");
+		mBgSound = Resources::Load<Sound>(L"Luminescent", L"..\\Resources\\Sound\\Luminescent.wav");
+		mEnterSound = Resources::Load<Sound>(L"dialogue_text_end", L"..\\Resources\\Sound\\dialogue_text_end_01.wav");
+
 		mBgImage = new BgImageObject(Vector2(-500.0f, -500.0f));
 		mBgImage->SetImage(L"EndBG01", L"end_CutScene01.bmp");
 		mBgImage->Initialize();
@@ -34,6 +39,7 @@ namespace ya
 		AddGameObject(mBgImage, eColliderLayer::BackGround);
 
 		mDialogBtn = ya::object::Instantiate<DialogButton>(Vector2{ 800, 800 }, eColliderLayer::CutScene);
+
 	}
 
 	void EndScene::Tick()
@@ -43,6 +49,7 @@ namespace ya
 		if (KEY_DOWN(eKeyCode::ENTER))
 		{
 			cutSceneNum++;
+			mEnterSound->Play(false);
 		}
 
 		if (cutSceneNum == 1)
@@ -62,6 +69,12 @@ namespace ya
 
 		if (cutSceneNum == 4)
 		{
+			if (mCheck)
+			{
+				mBgSound->Play(true);
+				mCheck = false;
+			}
+
 			mBgImage->Death();
 		}
 
@@ -118,6 +131,13 @@ namespace ya
 	void EndScene::Enter()
 	{
 		LoadFont();
+
+		mTransSound->Play(false);
+
+		UIManager::Push(eUIType::TPANEL);
+
+		mBGMSound->Stop(true);
+		
 	}
 
 	void EndScene::Exit()

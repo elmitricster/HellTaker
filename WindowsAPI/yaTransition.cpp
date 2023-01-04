@@ -8,6 +8,7 @@
 #include "yaAnimator.h"
 #include "yaCamera.h"
 #include "yaUIManager.h"
+#include "yaSound.h"
 
 namespace ya
 {

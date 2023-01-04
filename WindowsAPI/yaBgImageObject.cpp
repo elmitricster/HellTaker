@@ -80,4 +80,5 @@ namespace ya
 		
 		mImage = Resources::Load<Image>(key, path);
 	}
+
 }

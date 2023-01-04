@@ -4,6 +4,7 @@
 namespace ya
 {
 	class Image;
+	class Sound;
 	class Rock : public GameObject
 	{
 	public:
@@ -36,6 +37,8 @@ namespace ya
 
 		Animator* mAnimator;
 		Image* mImage;
+
+		Sound* mMoveSound;
 	};
 
 }

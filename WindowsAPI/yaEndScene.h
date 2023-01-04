@@ -3,6 +3,9 @@
 
 namespace ya
 {
+	class DialogButton;
+	class BgImageObject;
+	class Sound;
 	class EndScene : public Scene
 	{
 	public:
@@ -22,7 +25,6 @@ namespace ya
 		void WriteNameText(HDC hdc, int posX, int posY, int width, int height, std::wstring _szMessage);
 		void WriteScriptText(HDC hdc, int posX, int posY, int width, int height, std::wstring _szMessage);
 
-
 	private:
 		BgImageObject* mBgImage;
 		DialogButton* mDialogBtn;
@@ -32,6 +34,11 @@ namespace ya
 		HFONT mScriptFont;
 
 		int cutSceneNum = 0;
+		bool mCheck = true;
+
+		Sound* mTransSound;
+		Sound* mBgSound;
+		Sound* mEnterSound;
 
 	};
 }

@@ -42,6 +42,7 @@ namespace ya
 		Direction mDir;
 		Vector2 mDest;
 		float mSumTime = 0.0f;
+		bool mClearCheck = true;
 
 		float mCoff;
 		float mSpeed;
@@ -53,7 +54,12 @@ namespace ya
 	
 		PlayScene* mpScene;
 
-		Sound* mSound;
+		Sound* mMoveSound;
+		Sound* mMonsterAttackSound;
+		Sound* mStoneAttackSound;
+		Sound* mDeathSound;
+		Sound* mSuccessSound;
+		Sound* mTransSound;
 
 	private:
 		void CountDown(int mNum = 1);

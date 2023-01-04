@@ -38,7 +38,8 @@ namespace ya
 		Rock* rocks[4];
 		NPC* mNPC;
 		FlameBase* flameBases[4];
-		Sound* mBgSound;
+		//Sound* mBgSound;
+		Sound* mTransSound;
 
 		int InitMoveCnt;
 		int CurMoveCnt;

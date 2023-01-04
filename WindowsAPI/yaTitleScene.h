@@ -38,8 +38,13 @@ namespace ya
 
 		int cutSceneNum = 0;
 		int btnState = 0;
+		bool mCheck = true;
 
 		Sound* mBgSound;
+		Sound* mEnterSound;
+		Sound* mBtnChangeSound;
+		Sound* mBtnSelectSound;
+
 	};
 
 }

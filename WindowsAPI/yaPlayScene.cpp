@@ -34,6 +34,9 @@ namespace ya
 
 	void PlayScene::Initialize()
 	{
+		mTransSound = Resources::Load<Sound>(L"screen_changer", L"..\\Resources\\Sound\\screen_changer_part1.wav");
+		//mBgSound = Resources::Load<Sound>(L"Vitality", L"..\\Resources\\Sound\\Vitality.wav");
+
 		SetInitMoveCnt(23);
 		SetCurMoveCnt(23);
 
@@ -42,9 +45,6 @@ namespace ya
 		BgImageObject* bg = new BgImageObject();
 		bg->SetImage(L"chapterBG01", L"chapterBG0001.bmp");
 		bg->Initialize();
-
-		mBgSound = Resources::Load<Sound>(L"Vitality", L"..\\Resources\\Sound\\Vitality.wav");
-		mBgSound->Play(true);
 
 		AddGameObject(bg, eColliderLayer::BackGround);
 
@@ -83,9 +83,6 @@ namespace ya
 		flameBases[3]->SetImage(L"flame02", L"FLAMEbase02.bmp");
 
 		LoveSign* lovesign = ya::object::Instantiate<LoveSign>(Vector2{ 1005, 620 }, eColliderLayer::LoveSign);
-
-		// UI
-		
 
 
 		// Wall
@@ -147,7 +144,7 @@ namespace ya
 
 		mPlayerPos = mPlayer->GetPos();
 
-		TileMap::CheckSuccess(mPlayer);
+		//TileMap::CheckSuccess(mPlayer);
 
 		if (KEY_DOWN(eKeyCode::N))
 		{
@@ -157,6 +154,8 @@ namespace ya
 
 		if (KEY_DOWN(eKeyCode::R))
 		{
+			mTransSound->Play(false);
+
 			UIManager::Push(eUIType::TPANEL);
 
 			mPlayer->SetState(PlayerState::DEAD);
@@ -181,6 +180,12 @@ namespace ya
 
 	void PlayScene::Enter()
 	{
+		mPlayer->SetState(PlayerState::DEAD);
+
+		mBGMSound->Play(true);
+		mTransSound->Play(false);
+
+		// UI
 		UIManager::Push(eUIType::LEFTBG);
 		HUD* hud3 = UIManager::GetUiInstant<HUD>(eUIType::LEFTBG);
 		hud3->SetTarget(mPlayer);
@@ -204,13 +209,6 @@ namespace ya
 		UIManager::Push(eUIType::FUNC);
 
 		UIManager::Push(eUIType::TPANEL);
-
-		/*eSceneType type = SceneManager::GetPlaySceneType();
-
-		if (type == eSceneType::End)
-		{
-			mPlayer->Victory();
-		}*/
 	}
 
 	void PlayScene::Exit()

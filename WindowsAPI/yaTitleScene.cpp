@@ -31,8 +31,10 @@ namespace ya
 
 	void TitleScene::Initialize()
 	{
-		//mBgSound = Resources::Load<Sound>(L"Apropos", L"..\\Resources\\Sound\\Apropos.wav");
-		//mBgSound->Play(true);
+		mBgSound = Resources::Load<Sound>(L"Apropos", L"..\\Resources\\Sound\\Apropos.wav");
+		mEnterSound = Resources::Load<Sound>(L"dialogue_text_end", L"..\\Resources\\Sound\\dialogue_text_end_01.wav");
+		mBtnChangeSound = Resources::Load<Sound>(L"button_menu_highlight", L"..\\Resources\\Sound\\button_menu_highlight_01.wav");
+		mBtnSelectSound = Resources::Load<Sound>(L"button_menu_confirm", L"..\\Resources\\Sound\\button_menu_confirm_01.wav");
 
 		mBgImage = new BgImageObject(Vector2(0.0f, 150.0f));
 		mBgImage->SetImage(L"TitleBG01", L"TitleBG01.bmp");
@@ -65,6 +67,8 @@ namespace ya
 		if (KEY_DOWN(eKeyCode::ENTER))
 		{
 			cutSceneNum++;
+
+			mEnterSound->Play(false);
 		}
 
 		if (cutSceneNum == 1)
@@ -83,12 +87,16 @@ namespace ya
 
 			if (KEY_DOWN(eKeyCode::S))
 			{
+				mBtnChangeSound->Play(false);
+
 				if (btnState < 3)
 					btnState += 1;
 			}
 
 			if (KEY_DOWN(eKeyCode::W))
 			{
+				mBtnChangeSound->Play(false);
+
 				if (btnState > 0)
 					btnState -= 1;
 			}
@@ -120,6 +128,12 @@ namespace ya
 
 		if (cutSceneNum == 3)
 		{
+			if (mCheck)
+			{
+				mBtnSelectSound->Play(false);
+				mCheck = false;
+			}
+
 			mDialogBtn->SetPos(Vector2{ 800, 800 });
 
 			mSelectBtn[0]->Death();
@@ -361,11 +375,14 @@ namespace ya
 	void TitleScene::Enter()
 	{
 		LoadFont();
+
+		mBgSound->Play(true);
+
 	}
 
 	void TitleScene::Exit()
 	{
-		//UIManager::Push(eUIType::TPANEL);
+		mBgSound->Stop(true);
 
 		RemoveFontResource(L"HeirofLightRegular.ttf");
 		RemoveFontResource(L"HeirofLightBold.ttf");

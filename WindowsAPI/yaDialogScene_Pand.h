@@ -3,11 +3,13 @@
 
 namespace ya
 {
+	class BgImageObject;
 	class DialogueNPC;
 	class DialogButton;
 	class SelectButton;
 	class DialogDeath;
 	class SuccessEffect;
+	class Sound;
 	class DialogScene_Pand : public Scene
 	{
 	public:
@@ -43,6 +45,13 @@ namespace ya
 		int cutSceneDeathNum = 0;
 		int btnState = 0;
 		bool mCheck = true;
+
+		Sound* mEnterSound;
+		Sound* mDialogStartSound;
+		Sound* mDialogSuccessSound;
+		Sound* mBtnChangeSound;
+		Sound* mBtnSelectSound;
+		Sound* mBadEndSound;
 	};
 
 }

@@ -10,38 +10,12 @@
 #include "yaCamera.h"
 #include "yaPlayer.h"
 #include "yaTileMap.h"
+#include "yaSound.h"
 
 namespace ya
 {
 	Monster::Monster()
 	{
-	//	SetName(L"Monster");
-	//	SetPos({ 870, 380 });
-	//	SetScale({ 0.8333f, 0.8333f });
-
-	//	if (mImage == nullptr)
-	//	{
-	//		mImage = Resources::Load<Image>(L"Monster", L"..\\Resources\\Image\\Monster.bmp");
-	//	}
-
-	//	mAnimator = new Animator();
-
-	//	mAnimator->CreateAnimation(L"Idle", mImage
-	//		, Vector2(0.0f, 0.0f), Vector2(100.0f, 120.0f)
-	//		, Vector2(5.0f, -20.0f), 12, 0.12f);
-
-	//	mAnimator->CreateAnimation(L"Damaged", mImage
-	//		, Vector2(0.0f, 220.0f), Vector2(100.0f, 120.0f)
-	//		, Vector2(5.0f, -20.0f), 13, 0.12f);
-
-	//	mAnimator->Play(L"Idle", true);
-
-	//	mAnimator->FindEvents(L"Damaged")->mCompleteEvent = std::bind(&Monster::WalkComplete, this);
-	//	mAnimator->GetCompleteEvent(L"Damaged") = std::bind(&Monster::WalkComplete, this);
-
-	//	//AddComponent(new Animator());
-	//	//AddComponent(new Collider());
-	//	AddComponent(mAnimator);
 	}
 
 	Monster::Monster(Vector2 position)
@@ -56,6 +30,8 @@ namespace ya
 		{
 			mImage = Resources::Load<Image>(L"Monster", L"..\\Resources\\Image\\Monster.bmp");
 		}
+
+		mDeadSound = Resources::Load<Sound>(L"enemy_die", L"..\\Resources\\Sound\\enemy_die_01.wav");
 
 		mAnimator = new Animator();
 		AddComponent(mAnimator);
@@ -224,6 +200,7 @@ namespace ya
 		GameObject* other = TileMap::GetGameObject(index);
 		if (other != nullptr)
 		{
+			mDeadSound->Play(false);
 			this->Death();
 			TileMap::PushGameObject(mIndex, nullptr);
 		}

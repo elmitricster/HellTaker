@@ -19,6 +19,7 @@
 #include "yaSelectButton.h"
 #include "yaSuccessEffect.h"
 #include "yaDialogDeath.h"
+#include "yaSound.h"
 
 namespace ya
 {
@@ -32,22 +33,28 @@ namespace ya
 
 	void DialogScene_Pand::Initialize()
 	{
+		mEnterSound = Resources::Load<Sound>(L"dialogue_text_end", L"..\\Resources\\Sound\\dialogue_text_end_01.wav");
+		mDialogStartSound = Resources::Load<Sound>(L"dialogue_start", L"..\\Resources\\Sound\\dialogue_start_01.wav");
+		mDialogSuccessSound = Resources::Load<Sound>(L"dialogue_success", L"..\\Resources\\Sound\\dialogue_success_01.wav");
+		mBtnChangeSound = Resources::Load<Sound>(L"button_dialogue_highlight", L"..\\Resources\\Sound\\button_dialogue_highlight_01.wav");
+		mBtnSelectSound = Resources::Load<Sound>(L"button_dialogue_confirm", L"..\\Resources\\Sound\\button_dialogue_confirm_01.wav");
+		mBadEndSound = Resources::Load<Sound>(L"bad_end_screen", L"..\\Resources\\Sound\\bad_end_screen_01.wav");
+
 		/*mBgImage = new BgImageObject(Vector2(0.0f, 150.0f));
 		mBgImage->SetImage(L"dialogueBG01", L"dialogueBG01.bmp");
 		mBgImage->Initialize();
 
 		AddGameObject(mBgImage, eColliderLayer::BackGround);
 
-		mDialogNPC = ya::object::Instantiate<DialogueNPC>(Vector2{ 790, 332 }, eColliderLayer::CutScene);
-		mDialogBtn = ya::object::Instantiate<DialogButton>(Vector2{ 800, 800 }, eColliderLayer::CutScene);
+		mDialogNPC = ya::object::Instantiate<DialogueNPC>(Vector2{ 790.0f, 332.0f }, eColliderLayer::CutScene);
+		mDialogBtn = ya::object::Instantiate<DialogButton>(Vector2{ 800.0f, 800.0f }, eColliderLayer::CutScene);
 
-		mSelectBtn[0] = ya::object::Instantiate<SelectButton>(Vector2{ -500, -500 }, eColliderLayer::CutScene);
-		mSelectBtn[1] = ya::object::Instantiate<SelectButton>(Vector2{ -500, -500 }, eColliderLayer::CutScene);
-		mSelectBtn[2] = ya::object::Instantiate<SelectButton>(Vector2{ -500, -500 }, eColliderLayer::CutScene);
+		mSelectBtn[0] = ya::object::Instantiate<SelectButton>(Vector2{ -500.0f, -500.0f }, eColliderLayer::CutScene);
+		mSelectBtn[1] = ya::object::Instantiate<SelectButton>(Vector2{ -500.0f, -500.0f }, eColliderLayer::CutScene);
+		mSelectBtn[2] = ya::object::Instantiate<SelectButton>(Vector2{ -500.0f, -500.0f }, eColliderLayer::CutScene);
 		mSelectBtn[2]->SetImage(L"selectBtn", L"Button02.bmp");
-		mSelectBtn[3] = ya::object::Instantiate<SelectButton>(Vector2{ -500, -500 }, eColliderLayer::CutScene);
+		mSelectBtn[3] = ya::object::Instantiate<SelectButton>(Vector2{ -500.0f, -500.0f }, eColliderLayer::CutScene);
 		mSelectBtn[3]->SetImage(L"selectBtn", L"Button02.bmp");*/
-
 	}
 
 	void DialogScene_Pand::Tick()
@@ -57,66 +64,70 @@ namespace ya
 		if (KEY_DOWN(eKeyCode::ENTER))
 		{
 			cutSceneNum++;
-		}
-
-		if (cutSceneNum == 0)
-		{
-
+			mEnterSound->Play(false);
 		}
 
 		if (cutSceneNum == 1)
 		{
 			mDialogBtn->SetPos(Vector2{ -500.0f, -500.0f });
 
-			mSelectBtn[0]->SetPos(Vector2{ 800, 770 });
-			mSelectBtn[1]->SetPos(Vector2{ 800, 850 });
+			mSelectBtn[0]->SetPos(Vector2{ 800.0f, 770.0f });
+			mSelectBtn[1]->SetPos(Vector2{ 800.0f, 850.0f });
 
 			if (KEY_DOWN(eKeyCode::S))
 			{
+				mBtnChangeSound->Play(false);
+
 				if (btnState < 2)
 					btnState += 1;
 			}
 
 			if (KEY_DOWN(eKeyCode::W))
 			{
+				mBtnChangeSound->Play(false);
+
 				if (btnState > 0)
 					btnState -= 1;
 			}
 
 			if (btnState == 0)
 			{
-				mSelectBtn[2]->SetPos(Vector2{ 800, 770 });
-				mSelectBtn[3]->SetPos(Vector2{ -500, -500 });
+				mSelectBtn[2]->SetPos(Vector2{ 800.0f, 770.0f });
+				mSelectBtn[3]->SetPos(Vector2{ -500.0f, -500.0f });
 
 				if (KEY_DOWN(eKeyCode::SPACE))
 				{
+					mBtnSelectSound->Play(false);
+
 					cutSceneNum = 5;
-					mSelectBtn[0]->SetPos(Vector2{ -500, -500 });
-					mSelectBtn[1]->SetPos(Vector2{ -500, -500 });
-					mSelectBtn[2]->SetPos(Vector2{ -500, -500 });
-					mSelectBtn[3]->SetPos(Vector2{ -500, -500 });
+
+					mSelectBtn[0]->SetPos(Vector2{ -500.0f, -500.0f });
+					mSelectBtn[1]->SetPos(Vector2{ -500.0f, -500.0f });
+					mSelectBtn[2]->SetPos(Vector2{ -500.0f, -500.0f });
+					mSelectBtn[3]->SetPos(Vector2{ -500.0f, -500.0f });
 
 					mDialogBtn->SetPos(Vector2{ 800.0f, 800.0f });
-
 				}
 			}
 			else if (btnState == 1)
 			{
-				mSelectBtn[2]->SetPos(Vector2{ -500, -500 });
-				mSelectBtn[3]->SetPos(Vector2{ 800, 850 });
+				mSelectBtn[2]->SetPos(Vector2{ -500.0f, -500.0f });
+				mSelectBtn[3]->SetPos(Vector2{ 800.0f, 850.0f });
 			}
 		}
 			
 		if (cutSceneNum == 2 && mCheck)
 		{
+			mDialogSuccessSound->Play(false);
+
 			mDialogNPC->SetImage(L"Pand_flust", L"Pand_flust.bmp");
 			mDialogNPC->SetPos(Vector2{ 790, 352 });
 
-			mSelectBtn[0]->SetPos(Vector2{ -500, -500 });
-			mSelectBtn[1]->SetPos(Vector2{ -500, -500 });
-			mSelectBtn[2]->SetPos(Vector2{ -500, -500 });
+			mSelectBtn[0]->SetPos(Vector2{ -500.0f, -500.0f });
+			mSelectBtn[1]->SetPos(Vector2{ -500.0f, -500.0f });
+			mSelectBtn[2]->SetPos(Vector2{ -500.0f, -500.0f });
 
-			mSuccessEffect = ya::object::Instantiate<SuccessEffect>(Vector2{ 900, 820 }, eColliderLayer::Effect);
+			mSuccessEffect = ya::object::Instantiate<SuccessEffect>(Vector2{ 900.0f, 820.0f }, eColliderLayer::Effect);
 			
 			mCheck = false;
 		}
@@ -129,11 +140,13 @@ namespace ya
 
 		if (cutSceneNum == 6 && mCheck)
 		{
-			mDialogBtn->SetPos(Vector2{ -500, -500 });
-			mBgImage->SetPos(Vector2{ -500, -500 });
-			mDialogNPC->SetPos(Vector2{ -500, -500 });
+			mBadEndSound->Play(false);
 
-			mDeathEffect = ya::object::Instantiate<DialogDeath>(Vector2{ 900, 450 }, eColliderLayer::Effect);
+			mDialogBtn->SetPos(Vector2{ -500.0f, -500.0f });
+			mBgImage->SetPos(Vector2{ -500.0f, -500.0f });
+			mDialogNPC->SetPos(Vector2{ -500.0f, -500.0f });
+
+			mDeathEffect = ya::object::Instantiate<DialogDeath>(Vector2{ 900.0f, 450.0f }, eColliderLayer::Effect);
 
 			mCheck = false;
 		}
@@ -144,6 +157,7 @@ namespace ya
 			SceneManager::ChangeScene(eSceneType::Play);
 		}
 	}
+
 	void DialogScene_Pand::Render(HDC hdc)
 	{
 		Scene::Render(hdc);
@@ -319,8 +333,11 @@ namespace ya
 
 	void DialogScene_Pand::Enter()
 	{
+		mDialogStartSound->Play(false);
+
 		LoadFont();
 
+		btnState = 0;
 		cutSceneNum = 0;
 		mCheck = true;
 

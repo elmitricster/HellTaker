@@ -5,6 +5,7 @@ namespace ya
 {	
 	class Animator;
 	class Image;
+	class Sound;
 	class Transition : public GameObject
 	{
 	public:
