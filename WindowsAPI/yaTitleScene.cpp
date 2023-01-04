@@ -36,23 +36,7 @@ namespace ya
 		mBtnChangeSound = Resources::Load<Sound>(L"button_menu_highlight", L"..\\Resources\\Sound\\button_menu_highlight_01.wav");
 		mBtnSelectSound = Resources::Load<Sound>(L"button_menu_confirm", L"..\\Resources\\Sound\\button_menu_confirm_01.wav");
 
-		mBgImage = new BgImageObject(Vector2(0.0f, 150.0f));
-		mBgImage->SetImage(L"TitleBG01", L"TitleBG01.bmp");
-		mBgImage->Initialize();
-
-		AddGameObject(mBgImage, eColliderLayer::BackGround);
-
-		mDialogNPC = ya::object::Instantiate<BeelNPC>(Vector2{ -500, -500 }, eColliderLayer::CutScene);
-		mDialogBtn = ya::object::Instantiate<DialogButton>(Vector2{ 800, 800 }, eColliderLayer::CutScene);
-		mSelectBtn[0] = ya::object::Instantiate<SelectButton>(Vector2{-500, -500}, eColliderLayer::CutScene);
-		mSelectBtn[1] = ya::object::Instantiate<SelectButton>(Vector2{ -500, -500 }, eColliderLayer::CutScene);
-		mSelectBtn[2] = ya::object::Instantiate<SelectButton>(Vector2{ -500, -500 }, eColliderLayer::CutScene);
-		mSelectBtn[3] = ya::object::Instantiate<SelectButton>(Vector2{ -500, -500 }, eColliderLayer::CutScene);
-		mSelectBtn[3]->SetImage(L"selectBtn", L"Button02.bmp");
-		mSelectBtn[4] = ya::object::Instantiate<SelectButton>(Vector2{ -500, -500 }, eColliderLayer::CutScene);
-		mSelectBtn[4]->SetImage(L"selectBtn", L"Button02.bmp");
-		mSelectBtn[5] = ya::object::Instantiate<SelectButton>(Vector2{ -500, -500 }, eColliderLayer::CutScene);
-		mSelectBtn[5]->SetImage(L"selectBtn", L"Button02.bmp");
+		
 	}
 
 	void TitleScene::Tick()
@@ -377,6 +361,26 @@ namespace ya
 		LoadFont();
 
 		mBgSound->Play(true);
+		
+		cutSceneNum = 0;
+
+		mBgImage = new BgImageObject(Vector2(0.0f, 150.0f));
+		mBgImage->SetImage(L"TitleBG01", L"TitleBG01.bmp");
+		mBgImage->Initialize();
+
+		AddGameObject(mBgImage, eColliderLayer::BackGround);
+
+		mDialogNPC = ya::object::Instantiate<BeelNPC>(Vector2{ -500, -500 }, eColliderLayer::CutScene);
+		mDialogBtn = ya::object::Instantiate<DialogButton>(Vector2{ 800, 800 }, eColliderLayer::CutScene);
+		mSelectBtn[0] = ya::object::Instantiate<SelectButton>(Vector2{ -500, -500 }, eColliderLayer::CutScene);
+		mSelectBtn[1] = ya::object::Instantiate<SelectButton>(Vector2{ -500, -500 }, eColliderLayer::CutScene);
+		mSelectBtn[2] = ya::object::Instantiate<SelectButton>(Vector2{ -500, -500 }, eColliderLayer::CutScene);
+		mSelectBtn[3] = ya::object::Instantiate<SelectButton>(Vector2{ -500, -500 }, eColliderLayer::CutScene);
+		mSelectBtn[3]->SetImage(L"selectBtn", L"Button02.bmp");
+		mSelectBtn[4] = ya::object::Instantiate<SelectButton>(Vector2{ -500, -500 }, eColliderLayer::CutScene);
+		mSelectBtn[4]->SetImage(L"selectBtn", L"Button02.bmp");
+		mSelectBtn[5] = ya::object::Instantiate<SelectButton>(Vector2{ -500, -500 }, eColliderLayer::CutScene);
+		mSelectBtn[5]->SetImage(L"selectBtn", L"Button02.bmp");
 
 	}
 
@@ -390,5 +394,15 @@ namespace ya
 		DeleteObject(mCounterFont);
 		DeleteObject(mNameFont);
 		DeleteObject(mScriptFont);
+		
+		mBgImage->Death();
+		mDialogNPC->Death();
+		mDialogBtn->Death();
+		mSelectBtn[0]->Death();
+		mSelectBtn[1]->Death();
+		mSelectBtn[2]->Death();
+		mSelectBtn[3]->Death();
+		mSelectBtn[4]->Death();
+		mSelectBtn[5]->Death();
 	}
 }

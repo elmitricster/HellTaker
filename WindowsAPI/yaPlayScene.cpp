@@ -213,6 +213,8 @@ namespace ya
 
 	void PlayScene::Exit()
 	{
+		mPlayer->SetState(PlayerState::DEAD);
+
 		UIManager::Pop(eUIType::STEP);
 		UIManager::Pop(eUIType::ROUND);
 		UIManager::Pop(eUIType::LEFTBG);
