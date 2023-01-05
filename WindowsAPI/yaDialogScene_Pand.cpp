@@ -369,10 +369,10 @@ namespace ya
 
 		mDialogNPC->Death();
 		mDialogBtn->Death();
+		mBgImage->Death();
 		mSelectBtn[0]->Death();
 		mSelectBtn[1]->Death();
 		mSelectBtn[2]->Death();
 		mSelectBtn[3]->Death();
-		mBgImage->Death();
 	}
 }

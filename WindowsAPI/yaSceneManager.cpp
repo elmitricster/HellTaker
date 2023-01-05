@@ -2,6 +2,7 @@
 #include "yaLogoScene.h"
 #include "yaTitleScene.h"
 #include "yaPlayScene.h"
+#include "yaHelpScene.h"
 #include "yaDialogScene_Pand.h"
 #include "yaEndScene.h"
 #include "yaToolScene.h"
@@ -31,13 +32,16 @@ namespace ya
 		mScenes[(UINT)eSceneType::Play] = new PlayScene();
 		mScenes[(UINT)eSceneType::Play]->Initialize();
 
+		mScenes[(UINT)eSceneType::Help] = new HelpScene();
+		mScenes[(UINT)eSceneType::Help]->Initialize();
+
 		mScenes[(UINT)eSceneType::Dialog_pand] = new DialogScene_Pand();
 		mScenes[(UINT)eSceneType::Dialog_pand]->Initialize();
 
 		mScenes[(UINT)eSceneType::End] = new EndScene();
 		mScenes[(UINT)eSceneType::End]->Initialize();
 
-		ChangeScene(eSceneType::Title);
+		ChangeScene(eSceneType::Play);
 		// 업캐스팅
 		// 다운캐스팅
 

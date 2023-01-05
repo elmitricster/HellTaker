@@ -239,6 +239,9 @@
       <Filter>Engine\Scene</Filter>
     </ClInclude>
     <ClInclude Include="yaDialogDeath.h" />
+    <ClInclude Include="yaHelpScene.h">
+      <Filter>Engine\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="WindowsAPI.rc">
@@ -414,5 +417,8 @@
       <Filter>Engine\Scene</Filter>
     </ClCompile>
     <ClCompile Include="yaDialogDeath.cpp" />
+    <ClCompile Include="yaHelpScene.cpp">
+      <Filter>Engine\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

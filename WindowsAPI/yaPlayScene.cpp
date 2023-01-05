@@ -135,7 +135,6 @@ namespace ya
 		TileMap::PushGameObject(Index(7, 4), wall);
 		TileMap::PushGameObject(Index(2, 3), wall);
 		TileMap::PushGameObject(Index(2, 4), wall);
-
 	}
 
 	void PlayScene::Tick()
@@ -159,6 +158,11 @@ namespace ya
 			UIManager::Push(eUIType::TPANEL);
 
 			mPlayer->SetState(PlayerState::DEAD);
+		}
+
+		if (KEY_DOWN(eKeyCode::L))
+		{
+			SceneManager::ChangeScene(eSceneType::Help);
 		}
 	}
 
