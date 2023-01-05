@@ -45,8 +45,6 @@ namespace ya
 			}
 		}
 
-
-		
 		if (KEY_PREESE(eKeyCode::UP))
 		{
 			mLookPosition.y -= 600.0f * Time::DeltaTime();

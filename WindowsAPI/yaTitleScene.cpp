@@ -41,10 +41,8 @@ namespace ya
 	{
 		Scene::Tick();
 
-		/*if (KEY_DOWN(eKeyCode::N))
-		{
-			SceneManager::ChangeScene(eSceneType::Play);
-		}*/
+		//mBgImage->SetPos(mBgImage->GetPos() + Vector2(10.0f * Time::DeltaTime(), 0.0f));
+		//mBgImage2->SetPos(mBgImage2->GetPos() + Vector2(10.0f * Time::DeltaTime(), 0.0f));
 
 		if (KEY_DOWN(eKeyCode::ENTER))
 		{
@@ -56,7 +54,6 @@ namespace ya
 		if (cutSceneNum == 1)
 		{
 			mDialogNPC->SetPos(Vector2{ 790, 291 });
-			//mDialogBtn->Death();
 		}
 
 		if (cutSceneNum == 2)
@@ -65,7 +62,6 @@ namespace ya
 			mSelectBtn[0]->SetPos(Vector2{ 800, 700 });
 			mSelectBtn[1]->SetPos(Vector2{ 800, 770 });
 			mSelectBtn[2]->SetPos(Vector2{ 800, 840 });
-
 
 			if (KEY_DOWN(eKeyCode::S))
 			{
@@ -364,9 +360,15 @@ namespace ya
 
 		mBgImage = new BgImageObject(Vector2(0.0f, 150.0f));
 		mBgImage->SetImage(L"TitleBG01", L"TitleBG01.bmp");
-		mBgImage->Initialize();
+		mBgImage->SetScale(Vector2{ 0.833f, 0.833f });
 
+		/*mBgImage2 = new BgImageObject(Vector2(0.0f, 300.0f));
+		mBgImage2->SetImage(L"TitleBG02", L"TitleBG02.bmp");
+		mBgImage2->SetScale(Vector2{ 0.833f, 0.833f });*/
+		
 		AddGameObject(mBgImage, eColliderLayer::BackGround);
+		//AddGameObject(mBgImage2, eColliderLayer::BackGround);
+		
 
 		mDialogNPC = ya::object::Instantiate<BeelNPC>(Vector2{ -500, -500 }, eColliderLayer::CutScene);
 		mDialogBtn = ya::object::Instantiate<DialogButton>(Vector2{ 800, 800 }, eColliderLayer::CutScene);

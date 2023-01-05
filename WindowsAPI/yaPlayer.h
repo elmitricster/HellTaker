@@ -43,6 +43,7 @@ namespace ya
 		Vector2 mDest;
 		float mSumTime = 0.0f;
 		bool mClearCheck = true;
+		bool mFlip = true;
 
 		float mCoff;
 		float mSpeed;

@@ -7,6 +7,7 @@ namespace ya
 	class DialogButton;
 	class SelectButton;
 	class Sound;
+	class BgImageObject;
 	class TitleScene : public Scene
 	{
 	public:
@@ -30,6 +31,7 @@ namespace ya
 		BeelNPC* mDialogNPC;
 		DialogButton* mDialogBtn;
 		BgImageObject* mBgImage;
+		BgImageObject* mBgImage2;
 		SelectButton* mSelectBtn[6];
 
 		HFONT mCounterFont;

@@ -65,6 +65,12 @@ namespace ya
 
 		mAnimator->CreateAnimations(L"..\\Resources\\Animations\\Player\\Death", L"Death", Vector2(270, -100));
 
+		mAnimator->CreateAnimations(L"..\\Resources\\Animations\\Player\\Move", L"rMove", Vector2(0.0f, -5.0f));
+		
+		mAnimator->CreateAnimations(L"..\\Resources\\Animations\\Player\\Idle", L"rIdle", Vector2(5.0f, -5.0f));
+
+		mAnimator->CreateAnimations(L"..\\Resources\\Animations\\Player\\Attack", L"rAttack", Vector2(5.0f, -5.0f));
+
 		mAnimator->Play(L"Idle", true);
 
 		//mAnimator->FindEvents(L"Move")->mCompleteEvent = std::bind(&Player::AttackComplete, this);
@@ -72,6 +78,9 @@ namespace ya
 
 		mAnimator->FindEvents(L"Attack")->mCompleteEvent = std::bind(&Player::AttackComplete, this);
 		mAnimator->GetCompleteEvent(L"Attack") = std::bind(&Player::AttackComplete, this);
+
+		mAnimator->FindEvents(L"rAttack")->mCompleteEvent = std::bind(&Player::AttackComplete, this);
+		mAnimator->GetCompleteEvent(L"rAttack") = std::bind(&Player::AttackComplete, this);
 
 		//mAnimator->FindEvents(L"Death")->mEndEvent = std::bind(&Player::DeathComplete, this);
 		//mAnimator->GetEndEvent(L"Death") = std::bind(&Player::DeathComplete, this);
@@ -169,6 +178,16 @@ namespace ya
 
 	void Player::AttackComplete()
 	{
+		//if (mFlip == true) // D키
+		//{
+		//	mAnimator->Play(L"Idle", true);
+		//	
+		//}
+		//else if (mFlip == false) // A키
+		//{
+		//	mAnimator->Play(L"Idle", true);
+		//}
+
 		mAnimator->Play(L"Idle", true);
 		mState = PlayerState::IDLE;
 		mClearCheck = true; // 클리어 체크 초기화 시점 ( 어차피 공격없이 깨지는 스테이지가 없음 )
@@ -288,26 +307,28 @@ namespace ya
 					Monster* monster = dynamic_cast<Monster*>(nextObj);
 					monster->Damaged(Direction::LEFT);
 					mMonsterAttackSound->Play(false);
-					mAnimator->Play(L"Attack", false);
+					mAnimator->Play(L"rAttack", false);
 					AttackEffect* atk = ya::object::Instantiate<AttackEffect>(nextObj->GetPos(), eColliderLayer::Effect);
 					mState = PlayerState::ATTACK;
 					CountDown();
+					mFlip = false;
 				}
 				else if (nextObj->GetObjType() == eGameObjectType::Rock)
 				{
 					Rock* rock = dynamic_cast<Rock*>(nextObj);
 					rock->Damaged(Direction::LEFT);
 					mStoneAttackSound->Play(false);
-					mAnimator->Play(L"Attack", false);
+					mAnimator->Play(L"rAttack", false);
 					AttackEffect* atk = ya::object::Instantiate<AttackEffect>(nextObj->GetPos(), eColliderLayer::Effect);
 					mState = PlayerState::ATTACK;
 					CountDown();
+					mFlip = false;
 				}
 			}
 			else
 			{
 				mMoveSound->Play(false);
-				mAnimator->Play(L"Move", true);
+				mAnimator->Play(L"rMove", true);
 				mDir = Direction::LEFT;
 				mDest = GetPos();
 				mDest.x -= 80.0f;
@@ -315,6 +336,7 @@ namespace ya
 				mState = PlayerState::MOVE;
 				mIndex.x--;
 				CountDown();
+				mFlip = false;
 			}
 		}
 		if (KEY_DOWN(eKeyCode::D))
