@@ -37,7 +37,7 @@ namespace ya
 		mScenes[(UINT)eSceneType::End] = new EndScene();
 		mScenes[(UINT)eSceneType::End]->Initialize();
 
-		ChangeScene(eSceneType::Play);
+		ChangeScene(eSceneType::Title);
 		// 업캐스팅
 		// 다운캐스팅
 
