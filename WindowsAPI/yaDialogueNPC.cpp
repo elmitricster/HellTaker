@@ -52,9 +52,21 @@ namespace ya
 
 		finalPos = Camera::CalculatePos(finalPos);
 
-		TransparentBlt(hdc, finalPos.x, finalPos.y, rect.x, rect.y
+		/*TransparentBlt(hdc, finalPos.x, finalPos.y, rect.x, rect.y
 			, mImage->GetDC(), 0, 0, mImage->GetWidth(), mImage->GetHeight()
-			, RGB(255, 0, 255));
+			, RGB(255, 0, 255));*/
+
+		BLENDFUNCTION func = {};
+		func.BlendOp = AC_SRC_OVER;
+		func.BlendFlags = 0;
+		func.AlphaFormat = AC_SRC_ALPHA;
+		func.SourceConstantAlpha = 255; // 0 - 225
+
+
+		AlphaBlend(hdc, finalPos.x, finalPos.y, rect.x, rect.y,
+			mImage->GetDC(), 0, 0, mImage->GetWidth(), mImage->GetHeight()
+			, func);
+
 
 		GameObject::Render(hdc);
 	}

@@ -44,15 +44,14 @@ namespace ya
 			
 		pos += mSpriteSheet[mSpriteIndex].offset;
 
-		//BLENDFUNCTION func = {};
-		//func.BlendOp = AC_SRC_OVER;
-		//func.BlendFlags = 0;
-		//func.AlphaFormat = AC_SRC_ALPHA;
-		//func.SourceConstantAlpha = 255; // 0 - 225
 
+		BLENDFUNCTION func = {};
+		func.BlendOp = AC_SRC_OVER;
+		func.BlendFlags = 0;
+		func.AlphaFormat = AC_SRC_ALPHA;
+		func.SourceConstantAlpha = 255; // 0 - 225
 
-		//Draw
-		/*AlphaBlend(hdc
+		AlphaBlend(hdc
 			, int(pos.x - mSpriteSheet[mSpriteIndex].size.x / 2.0f)
 			, int(pos.y - mSpriteSheet[mSpriteIndex].size.y / 2.0f)
 			, int(mSpriteSheet[mSpriteIndex].size.x * scale.x)
@@ -62,7 +61,7 @@ namespace ya
 			, int(mSpriteSheet[mSpriteIndex].leftTop.y)
 			, int(mSpriteSheet[mSpriteIndex].size.x)
 			, int(mSpriteSheet[mSpriteIndex].size.y)
-			, func);*/
+			, func);
 
 		
 	/*	if (true)
@@ -104,7 +103,7 @@ namespace ya
 		}*/
 
 
-		TransparentBlt(hdc
+		/*TransparentBlt(hdc
 			, int(pos.x - mSpriteSheet[mSpriteIndex].size.x / 2.0f)
 			, int(pos.y - mSpriteSheet[mSpriteIndex].size.y / 2.0f)
 			, int(mSpriteSheet[mSpriteIndex].size.x * scale.x)
@@ -114,7 +113,7 @@ namespace ya
 			, int(mSpriteSheet[mSpriteIndex].leftTop.y)
 			, int(mSpriteSheet[mSpriteIndex].size.x)
 			, int(mSpriteSheet[mSpriteIndex].size.y)
-			, RGB(255, 0, 255));
+			, RGB(255, 0, 255));*/
 
 	}
 
