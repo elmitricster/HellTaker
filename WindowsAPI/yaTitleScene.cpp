@@ -41,8 +41,16 @@ namespace ya
 	{
 		Scene::Tick();
 
-		//mBgImage->SetPos(mBgImage->GetPos() + Vector2(10.0f * Time::DeltaTime(), 0.0f));
-		//mBgImage2->SetPos(mBgImage2->GetPos() + Vector2(10.0f * Time::DeltaTime(), 0.0f));
+		mBgImage->SetPos(mBgImage->GetPos() + Vector2(20.0f * Time::DeltaTime(), 0.0f));
+		mBgImage2->SetPos(mBgImage2->GetPos() + Vector2(20.0f * Time::DeltaTime(), 0.0f));
+		mBgImage3->SetPos(mBgImage3->GetPos() + Vector2(20.0f * Time::DeltaTime(), 0.0f));
+
+		if (mBgImage2->GetPos().x > 0.0f)
+		{
+			mBgImage->SetPos(Vector2{ -650.0f, 150.0f });
+			mBgImage2->SetPos(Vector2{ -1700.0f, 150.0f });
+			mBgImage3->SetPos(Vector2{ 0.0f, 150.0f });
+		}
 
 		if (KEY_DOWN(eKeyCode::ENTER))
 		{
@@ -118,7 +126,6 @@ namespace ya
 			mSelectBtn[1]->Death();
 			mSelectBtn[2]->Death();
 			mSelectBtn[3]->Death();
-
 		}
 
 		if (cutSceneNum == 4)
@@ -129,32 +136,43 @@ namespace ya
 		if (cutSceneNum == 5)
 		{
 			mDialogNPC->SetPos(Vector2{ -500, -500 });
+
+			mBgImage->SetPos(Vector2{ 0.0f, -500.0f });
+			mBgImage2->SetPos(Vector2{ 0.0f, -500.0f });
+			mBgImage3->SetPos(Vector2{ 0.0f, -500.0f });
 		}
 
 		if (cutSceneNum == 6)
 		{
 			mBgImage->SetImage(L"titleCS01", L"title_CutScene01.bmp");
 			mBgImage->SetPos(Vector2{ 0.0f, 0.0f });
+
+			mBgImage2->SetPos(Vector2{ 0.0f, -500.0f });
+			mBgImage3->SetPos(Vector2{ 0.0f, -500.0f });
 		}
 
 		if (cutSceneNum == 7)
 		{
 			mBgImage->SetImage(L"titleCS02", L"title_CutScene02.bmp");
 			mBgImage->SetPos(Vector2{ 0.0f, 0.0f });
+
+			mBgImage2->SetPos(Vector2{ 0.0f, -500.0f });
+			mBgImage3->SetPos(Vector2{ 0.0f, -500.0f });
 		}
 
 		if (cutSceneNum == 8)
 		{
 			mBgImage->SetImage(L"titleCS03", L"title_CutScene03.bmp");
 			mBgImage->SetPos(Vector2{ 0.0f, 0.0f });
+
+			mBgImage2->SetPos(Vector2{ 0.0f, -500.0f });
+			mBgImage3->SetPos(Vector2{ 0.0f, -500.0f });
 		}
 
 		if (cutSceneNum == 9)
 		{
 			SceneManager::ChangeScene(eSceneType::Play);
 		}
-
-		
 	}
 
 	void TitleScene::Render(HDC hdc)
@@ -222,6 +240,63 @@ namespace ya
 		{
 			WriteScriptText(hdc, 800, 670, 100, 100, titleDialog8);
 		}
+	}
+
+	void TitleScene::Enter()
+	{
+		LoadFont();
+
+		mBgSound->Play(true);
+
+		cutSceneNum = 0;
+
+		mBgImage = new BgImageObject(Vector2(0.0f, 150.0f));
+		mBgImage->SetImage(L"TitleBG01", L"TitleBG01.bmp");
+		AddGameObject(mBgImage, eColliderLayer::BackGround);
+
+		mBgImage2 = new BgImageObject(Vector2(-1050.0f, 150.0f));
+		mBgImage2->SetImage(L"TitleBG02", L"TitleBG02.bmp");
+		AddGameObject(mBgImage2, eColliderLayer::BackGround);
+
+		mBgImage3 = new BgImageObject(Vector2(650.0f, 150.0f));
+		mBgImage3->SetImage(L"TitleBG02", L"TitleBG02.bmp");
+		AddGameObject(mBgImage3, eColliderLayer::BackGround);
+
+		mDialogNPC = ya::object::Instantiate<BeelNPC>(Vector2{ -500, -500 }, eColliderLayer::CutScene);
+		mDialogBtn = ya::object::Instantiate<DialogButton>(Vector2{ 800, 800 }, eColliderLayer::CutScene);
+		mSelectBtn[0] = ya::object::Instantiate<SelectButton>(Vector2{ -500, -500 }, eColliderLayer::CutScene);
+		mSelectBtn[1] = ya::object::Instantiate<SelectButton>(Vector2{ -500, -500 }, eColliderLayer::CutScene);
+		mSelectBtn[2] = ya::object::Instantiate<SelectButton>(Vector2{ -500, -500 }, eColliderLayer::CutScene);
+		mSelectBtn[3] = ya::object::Instantiate<SelectButton>(Vector2{ -500, -500 }, eColliderLayer::CutScene);
+		mSelectBtn[3]->SetImage(L"selectBtn", L"Button02.bmp");
+		mSelectBtn[4] = ya::object::Instantiate<SelectButton>(Vector2{ -500, -500 }, eColliderLayer::CutScene);
+		mSelectBtn[4]->SetImage(L"selectBtn", L"Button02.bmp");
+		mSelectBtn[5] = ya::object::Instantiate<SelectButton>(Vector2{ -500, -500 }, eColliderLayer::CutScene);
+		mSelectBtn[5]->SetImage(L"selectBtn", L"Button02.bmp");
+	}
+
+	void TitleScene::Exit()
+	{
+		mBgSound->Stop(true);
+
+		RemoveFontResource(L"HeirofLightRegular.ttf");
+		RemoveFontResource(L"HeirofLightBold.ttf");
+
+		DeleteObject(mCounterFont);
+		DeleteObject(mNameFont);
+		DeleteObject(mScriptFont);
+
+		mBgImage->Death();
+		mBgImage2->Death();
+		mBgImage3->Death();
+		mDialogNPC->Death();
+		mDialogBtn->Death();
+		mSelectBtn[0]->Death();
+		mSelectBtn[1]->Death();
+		mSelectBtn[2]->Death();
+		mSelectBtn[3]->Death();
+		mSelectBtn[4]->Death();
+		mSelectBtn[5]->Death();
 	}
 
 	void TitleScene::LoadFont()
@@ -347,62 +422,5 @@ namespace ya
 		// restore text color and font
 		SetTextColor(hdc, oldTextColor);
 		SelectObject(hdc, oldFont);
-	}
-
-
-	void TitleScene::Enter()
-	{
-		LoadFont();
-
-		mBgSound->Play(true);
-		
-		cutSceneNum = 0;
-
-		mBgImage = new BgImageObject(Vector2(0.0f, 150.0f));
-		mBgImage->SetImage(L"TitleBG01", L"TitleBG01.bmp");
-		mBgImage->SetScale(Vector2{ 0.833f, 0.833f });
-
-		/*mBgImage2 = new BgImageObject(Vector2(0.0f, 300.0f));
-		mBgImage2->SetImage(L"TitleBG02", L"TitleBG02.bmp");
-		mBgImage2->SetScale(Vector2{ 0.833f, 0.833f });*/
-		
-		AddGameObject(mBgImage, eColliderLayer::BackGround);
-		//AddGameObject(mBgImage2, eColliderLayer::BackGround);
-		
-
-		mDialogNPC = ya::object::Instantiate<BeelNPC>(Vector2{ -500, -500 }, eColliderLayer::CutScene);
-		mDialogBtn = ya::object::Instantiate<DialogButton>(Vector2{ 800, 800 }, eColliderLayer::CutScene);
-		mSelectBtn[0] = ya::object::Instantiate<SelectButton>(Vector2{ -500, -500 }, eColliderLayer::CutScene);
-		mSelectBtn[1] = ya::object::Instantiate<SelectButton>(Vector2{ -500, -500 }, eColliderLayer::CutScene);
-		mSelectBtn[2] = ya::object::Instantiate<SelectButton>(Vector2{ -500, -500 }, eColliderLayer::CutScene);
-		mSelectBtn[3] = ya::object::Instantiate<SelectButton>(Vector2{ -500, -500 }, eColliderLayer::CutScene);
-		mSelectBtn[3]->SetImage(L"selectBtn", L"Button02.bmp");
-		mSelectBtn[4] = ya::object::Instantiate<SelectButton>(Vector2{ -500, -500 }, eColliderLayer::CutScene);
-		mSelectBtn[4]->SetImage(L"selectBtn", L"Button02.bmp");
-		mSelectBtn[5] = ya::object::Instantiate<SelectButton>(Vector2{ -500, -500 }, eColliderLayer::CutScene);
-		mSelectBtn[5]->SetImage(L"selectBtn", L"Button02.bmp");
-
-	}
-
-	void TitleScene::Exit()
-	{
-		mBgSound->Stop(true);
-
-		RemoveFontResource(L"HeirofLightRegular.ttf");
-		RemoveFontResource(L"HeirofLightBold.ttf");
-
-		DeleteObject(mCounterFont);
-		DeleteObject(mNameFont);
-		DeleteObject(mScriptFont);
-		
-		mBgImage->Death();
-		mDialogNPC->Death();
-		mDialogBtn->Death();
-		mSelectBtn[0]->Death();
-		mSelectBtn[1]->Death();
-		mSelectBtn[2]->Death();
-		mSelectBtn[3]->Death();
-		mSelectBtn[4]->Death();
-		mSelectBtn[5]->Death();
 	}
 }

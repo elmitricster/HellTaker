@@ -72,14 +72,14 @@ namespace ya
 				if (mObjects[y][x]->IsDeath())
 					continue;
 
-				Vector2 pos = mObjects[y][x]->GetPos();
+				/*Vector2 pos = mObjects[y][x]->GetPos();
 				pos = Camera::CalculatePos(pos);
 				if (pos.x < -100 
 					|| pos.y < -100)
 					continue;
 				if (pos.x > mWindowInfo.width + 100 
 					|| pos.y > mWindowInfo.height + 100)
-					continue;
+					continue;*/
 
 				mObjects[y][x]->Render(hdc);
 			}

@@ -32,6 +32,7 @@ namespace ya
 		DialogButton* mDialogBtn;
 		BgImageObject* mBgImage;
 		BgImageObject* mBgImage2;
+		BgImageObject* mBgImage3;
 		SelectButton* mSelectBtn[6];
 
 		HFONT mCounterFont;

@@ -48,7 +48,6 @@ namespace ya
 		{
 			SceneManager::ChangeScene(eSceneType::Play);
 		}
-
 	}
 
 	void HelpScene::Render(HDC hdc)
@@ -82,7 +81,6 @@ namespace ya
 			WriteNameText(hdc, 800, 610, 100, 100, npcName);
 			WriteScriptText(hdc, 800, 670, 100, 100, helpDialog4);
 		}
-
 	}
 
 	void HelpScene::Enter()

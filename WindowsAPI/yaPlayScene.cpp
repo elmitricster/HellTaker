@@ -179,7 +179,6 @@ namespace ya
 			+ L" y : " + std::to_wstring(mPlayerPos.y);
 
 		TextOut(hdc, 500, 60, pos.c_str(), pos.length());*/
-
 	}
 
 	void PlayScene::Enter()
@@ -272,9 +271,5 @@ namespace ya
 		rocks[1]->SetPos(Vector2{ 640, 560 });
 		rocks[2]->SetPos(Vector2{ 640, 640 });
 		rocks[3]->SetPos(Vector2{ 800, 640 });
-
 	}
-
-
-	
 }
