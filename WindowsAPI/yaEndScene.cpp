@@ -75,8 +75,6 @@ namespace ya
 			mTransSound->Play(false);
 			SceneManager::ChangeScene(eSceneType::Title);
 		}
-
-
 	}
 
 	void EndScene::Render(HDC hdc)
@@ -130,7 +128,7 @@ namespace ya
 		cutSceneNum = 0;
 		mCheck = true;
 
-		mBgImage = new BgImageObject(Vector2(-500.0f, -500.0f));
+		mBgImage = new BgImageObject(Vector2(-1000.0f, -1000.0f));
 		mBgImage->SetImage(L"EndBG01", L"end_CutScene01.bmp");
 		mBgImage->Initialize();
 
